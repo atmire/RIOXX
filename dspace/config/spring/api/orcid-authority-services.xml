@@ -11,10 +11,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd"
+           http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+
        default-autowire-candidates="*Service,*DAO,javax.sql.DataSource">
 
     <context:annotation-config /> <!-- allows us to use spring annotations in beans -->
@@ -28,23 +31,44 @@
     <bean name="AuthorityTypes" class="org.dspace.authority.AuthorityTypes">
         <property name="types">
             <list>
+                <bean class="org.dspace.authority.FunderAuthorityValue"/>
                 <bean class="org.dspace.authority.orcid.OrcidAuthorityValue"/>
                 <bean class="org.dspace.authority.PersonAuthorityValue"/>
+                <bean class="org.dspace.authority.ProjectAuthorityValue"/>
             </list>
         </property>
         <property name="fieldDefaults">
             <map>
+                <entry key="rioxxterms_funder">
+                    <bean class="org.dspace.authority.FunderAuthorityValue"/>
+                </entry>
                 <entry key="dc_contributor_author">
                     <bean class="org.dspace.authority.PersonAuthorityValue"/>
+                </entry>
+                <entry key="rioxxterms_identifier_project">
+                    <bean class="org.dspace.authority.ProjectAuthorityValue"/>
                 </entry>
             </map>
         </property>
     </bean>
 
-    <alias name="OrcidSource" alias="AuthoritySource"/>
+  <!--  <alias name="OrcidSource" alias="AuthoritySource"/>
+    <bean name="OrcidSource" class="org.dspace.authority.orcid.Orcid">
+        <constructor-arg value="http://pub.orcid.org"/>
+    </bean>-->
+
+    <alias name="restSources" alias="AuthoritySource"/>
+
     <bean name="OrcidSource" class="org.dspace.authority.orcid.Orcid">
         <constructor-arg value="http://pub.orcid.org"/>
     </bean>
 
+    <util:map id="restSources" map-class="java.util.HashMap" value-type="org.dspace.authority.rest.RestSource">
+        <entry key="dc_contributor_author">
+              <ref bean="OrcidSource" />
+        </entry>
+    </util:map>
+
+    <bean name="ProjectService" class="org.dspace.project.ProjectService"/>
 
 </beans>

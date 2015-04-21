@@ -76,7 +76,16 @@
          <groupId>org.dspace</groupId>
          <artifactId>dspace-api</artifactId>
       </dependency>
-      <dependency>
+
+       <dependency>
+           <groupId>org.dspace</groupId>
+           <artifactId>dspace-oai</artifactId>
+           <classifier>classes</classifier>
+           <scope>provided</scope>
+       </dependency>
+
+
+       <dependency>
          <groupId>org.dspace</groupId>
          <artifactId>dspace-api-lang</artifactId>
       </dependency>
