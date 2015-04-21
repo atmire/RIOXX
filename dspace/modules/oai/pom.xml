@@ -41,6 +41,16 @@
                             </includes>
                         </resource>
                     </webResources>
+                    <overlays>
+                    <overlay>
+                        <groupId>org.dspace</groupId>
+                        <artifactId>dspace-oai</artifactId>
+                        <type>war</type>
+                        <excludes>
+                            <exclude>WEB-INF/classes/**</exclude>
+                        </excludes>
+                    </overlay>
+                    </overlays>
                 </configuration>
                 <executions>
                     <execution>
