@@ -18,12 +18,12 @@ import java.sql.SQLException;
  * Date: 21/04/15
  * Time: 15:18
  */
-public class ItemsWithBitstreamFilter  extends DSpaceFilter {
+public class ItemsWithBitstreamFilter extends DSpaceFilter {
 
     private Context context;
     private static Logger log = LogManager.getLogger(ItemsWithBitstreamFilter.class);
 
-    public ItemsWithBitstreamFilter (Context context) {
+    public ItemsWithBitstreamFilter(Context context) {
         this.context = context;
     }
 

@@ -275,7 +275,7 @@
 
         <Filter id="rioxxFilter">
             <Definition>
-                <Custom ref="iemsWithBitstreamsFilter"/>
+                <Custom ref="itemsWithBitstreamsFilter"/>
             </Definition>
 
         </Filter>
@@ -367,7 +367,7 @@
             </Configuration>
         </CustomCondition>
 
-        <CustomCondition id="iemsWithBitstreamsFilter">
+        <CustomCondition id="itemsWithBitstreamsFilter">
             <Class>com.atmire.xoai.filter.ItemsWithBitstreamFilter</Class>
         </CustomCondition>
 
