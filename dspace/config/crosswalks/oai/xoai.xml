@@ -92,10 +92,6 @@
         <Context baseurl="rioxx" name="Rioxx Context">
             <!-- Date format, field prefixes, etc are ensured by the transformer -->
             <Transformer ref="rioxxTransformer"/>
-            <!-- The driver filter -->
-            <Filter ref="rioxxFilter"/>
-            <!-- Just an alias, in fact it returns all items within the driver context -->
-            <Set ref="rioxxSet"/>
             <!-- Metadata Formats -->
             <Format ref="rioxx"/>
             <Description>
@@ -193,6 +189,7 @@
             <XSLT>metadataFormats/rioxx.xsl</XSLT>
             <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
             <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+            <Filter ref="rioxxFilter"/>
         </Format>
 
     </Formats>

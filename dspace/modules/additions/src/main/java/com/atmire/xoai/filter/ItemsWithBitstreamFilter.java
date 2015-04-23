@@ -34,7 +34,7 @@ public class ItemsWithBitstreamFilter extends DSpaceFilter {
 
     @Override
     public SolrFilterResult buildSolrQuery() {
-        return new SolrFilterResult("*:*");
+    return new SolrFilterResult("item.hasbitstream:true");
     }
 
     @Override

@@ -23,7 +23,6 @@
                      xmlns:dcterms="http://purl.org/dc/terms/"
                      xmlns:ali="http://ali.niso.org/2014/ali/1.0">
 
-            <!-- dc.title -->
             <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='available']/doc:element/doc:field[@name='value']">
                 <ali:free_to_read>
                     <xsl:attribute name="start_date">
@@ -98,6 +97,13 @@
                     <xls:value-of select="."/>
                 </dc:subject>
             </xsl:for-each>
+
+            <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='title']/doc:element/doc:field[@name='value']">
+                <dc:title>
+                    <xls:value-of select="."/>
+                </dc:title>
+            </xsl:for-each>
+
 
             <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']">
                 <dcterms:dateAccepted>
