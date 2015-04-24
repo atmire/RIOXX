@@ -42,10 +42,10 @@
         </property>
     </bean>
 
-    <alias name="OrcidSource" alias="AuthoritySource"/>
+  <!--  <alias name="OrcidSource" alias="AuthoritySource"/>
     <bean name="OrcidSource" class="org.dspace.authority.orcid.Orcid">
         <constructor-arg value="http://pub.orcid.org"/>
-    </bean>
+    </bean>-->
 
 
 </beans>
