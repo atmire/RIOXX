@@ -279,8 +279,14 @@
 
         <Filter id="rioxxFilter">
             <Definition>
-                <Custom ref="itemsWithBitstreamsFilter"/>
-
+                <And>
+                    <LeftCondition>
+                        <Custom ref="typeCondition"/>
+                    </LeftCondition>
+                    <RightCondition>
+                        <Custom ref="itemsWithBitstreamsFilter"/>
+                    </RightCondition>
+                </And>
             </Definition>
 
         </Filter>
@@ -347,6 +353,28 @@
             </Configuration>
         </CustomCondition>
 
+        <CustomCondition id="typeCondition">
+            <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
+            <Configuration>
+                <string name="field">dc.type</string>
+                <string name="operator">ends_with</string>
+                <list name="values">
+                    <string>Book</string>
+                    <string>Book chapter</string>
+                    <string>Book edited</string>
+                    <string>Conference Paper/Proceeding/Abstract</string>
+                    <string>Journal Article/Review</string>
+                    <string>Manual/Guide</string>
+                    <string>Monograph</string>
+                    <string>Policy briefing report</string>
+                    <string>Technical Report</string>
+                    <string>Technical Standard</string>
+                    <string>Thesis</string>
+                    <string>Consultancy Report</string>
+                    <string>Working paper</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
         <CustomCondition id="driverAccessCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>
