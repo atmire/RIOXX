@@ -46,5 +46,14 @@
         <xsl:value-of select="$sub" />
     </xsl:template>
 
+    <xsl:template match="doc:metadata/doc:element[@name='dc']/doc:element[@name='type']/doc:element/doc:field[@name='value']">
+        <xsl:if test="contains($nonSuppressedTypes,./text())">
+            <xsl:copy-of select="."/>
+        </xsl:if>
+    </xsl:template>
 
+    <xsl:variable name="nonSuppressedTypes">
+        Book|Book chapter|Book edited|Conference Paper/Proceeding/Abstract|Article|Manual/Guide|Monograph|Policy briefing report|Technical Report|Technical Standard|Thesis|Consultancy Report|Working paper
+    </xsl:variable>
 </xsl:stylesheet>
+

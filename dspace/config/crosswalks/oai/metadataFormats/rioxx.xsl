@@ -155,7 +155,7 @@
             </xsl:for-each>
 
             <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='type']/doc:element/doc:field[@name='value']">
-                <rioxxterms:type>
+               <rioxxterms:type>
                     <xls:value-of select="."/>
                 </rioxxterms:type>
             </xsl:for-each>

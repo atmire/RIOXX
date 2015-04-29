@@ -192,6 +192,13 @@
             <Filter ref="rioxxFilter"/>
         </Format>
 
+        <Format id="rioxx">
+            <Prefix>rioxx</Prefix>
+            <XSLT>metadataFormats/rioxx.xsl</XSLT>
+            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
+            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+            <Filter ref="rioxxFilter"/>
+        </Format>
     </Formats>
 
     <Transformers>
@@ -272,14 +279,7 @@
 
         <Filter id="rioxxFilter">
             <Definition>
-                <And>
-                    <LeftCondition>
-                        <Custom ref="driverDocumentTypeCondition"/>
-                    </LeftCondition>
-                    <RightCondition>
-                        <Custom ref="itemsWithBitstreamsFilter"/>
-                    </RightCondition>
-                </And>
+                <Custom ref="itemsWithBitstreamsFilter"/>
 
             </Definition>
 
