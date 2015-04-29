@@ -17,7 +17,7 @@
     <xsl:output omit-xml-declaration="yes" method="xml" indent="yes" />
 
     <xsl:template match="/">
-        <rioxx xmlns="http://www.rioxx.net/schema/v2.0/rioxx/"
+        <rioxx:rioxx xmlns:rioxx="http://www.rioxx.net/schema/v2.0/rioxx/"
                      xmlns:rioxxterms="http://www.rioxx.net/schema/v2.0/rioxxterms/"
                      xmlns:dc="http://purl.org/dc/elements/1.1/"
                      xmlns:dcterms="http://purl.org/dc/terms/"
@@ -173,7 +173,12 @@
                 </rioxxterms:version_of_record>
             </xsl:for-each>
 
+            <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='funder']">
+                <rioxxterms:project>
+                    <xls:value-of select="."/>
+                </rioxxterms:project>
+            </xsl:for-each>
 
-        </rioxx>
+        </rioxx:rioxx>
     </xsl:template>
 </xsl:stylesheet>

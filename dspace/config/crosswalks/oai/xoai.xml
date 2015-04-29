@@ -9,7 +9,7 @@
 
 	Developed by DSpace @ Lyncode <dspace@lyncode.com>
  -->
-<Configuration indented="false" maxListIdentifiersSize="100" maxListRecordsSize="100"
+<Configuration indented="true" maxListIdentifiersSize="100" maxListRecordsSize="100"
                maxListSetsSize="100" stylesheet="static/style.xsl"
                xmlns="http://www.lyncode.com/XOAIConfiguration">
 
@@ -272,7 +272,15 @@
 
         <Filter id="rioxxFilter">
             <Definition>
-                <Custom ref="itemsWithBitstreamsFilter"/>
+                <And>
+                    <LeftCondition>
+                        <Custom ref="driverDocumentTypeCondition"/>
+                    </LeftCondition>
+                    <RightCondition>
+                        <Custom ref="itemsWithBitstreamsFilter"/>
+                    </RightCondition>
+                </And>
+
             </Definition>
 
         </Filter>
