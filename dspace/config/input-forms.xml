@@ -94,6 +94,17 @@
          <required></required>
        </field>
 
+         <field>
+             <dc-schema>dc</dc-schema>
+             <dc-element>identifier</dc-element>
+             <dc-qualifier>project</dc-qualifier>
+             <repeatable>true</repeatable>
+             <label>Project id</label>
+             <input-type>onebox</input-type>
+             <hint></hint>
+             <required></required>
+         </field>
+
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
