@@ -102,7 +102,7 @@ public class ItemIteratorScript extends ContextScript {
      * and all items from a collection or community present in "includes".
      *
      * @param includes An array of handles or item IDs
-     * @throws SQLException
+     * @throws java.sql.SQLException
      */
     protected Set<Integer> getItemIDs(String[] includes) throws SQLException {
         Set<Integer> ids = new HashSet<Integer>();

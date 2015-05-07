@@ -82,9 +82,9 @@ public abstract class PopulateAuthorityFromXML<T extends AuthorityValue> extends
                 ServiceManager serviceManager = IndexingUtils.getServiceManager();
                 AuthorityIndexingService indexingService = IndexingUtils.getIndexingService(serviceManager);
 
-                newAuthorityValues = new ArrayList<>();
-                updatedAuhtorityValues = new ArrayList<>();
-                unchangedAuhtorityValues = new ArrayList<>();
+                newAuthorityValues = new ArrayList<T>();
+                updatedAuhtorityValues = new ArrayList<T>();
+                unchangedAuhtorityValues = new ArrayList<T>();
 
                 for (T value : validAuthorityValues) {
                     T toIndex = valueToIndex(indexingService, value);
