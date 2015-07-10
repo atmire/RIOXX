@@ -7,7 +7,7 @@
  */
 package org.dspace.xoai.services.impl.xoai;
 
-import com.atmire.xoai.filter.ItemsWithBitstreamFilter;
+import org.dspace.xoai.filter.ItemsWithBitstreamFilter;
 import com.lyncode.xoai.dataprovider.data.Filter;
 import com.lyncode.xoai.dataprovider.filter.Scope;
 import com.lyncode.xoai.dataprovider.filter.conditions.*;

@@ -1,4 +1,4 @@
-package com.atmire.util;
+package org.dspace.util;
 
 import org.apache.log4j.Logger;
 import org.apache.xpath.XPathAPI;

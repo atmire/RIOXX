@@ -401,7 +401,7 @@
         </CustomCondition>
 
         <CustomCondition id="itemsWithBitstreamsFilter">
-            <Class>com.atmire.xoai.filter.ItemsWithBitstreamFilter</Class>
+            <Class>org.dspace.xoai.filter.ItemsWithBitstreamFilter</Class>
         </CustomCondition>
 
     </Filters>

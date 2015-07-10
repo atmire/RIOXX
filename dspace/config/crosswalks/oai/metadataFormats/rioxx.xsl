@@ -174,10 +174,10 @@
             </xsl:for-each>
 
             <xsl:variable name="projectIdentifier">
-                <xsl:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
+                <xsl:value-of select="doc:metadata/doc:element[@name='riox']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
 
             </xsl:variable>
-            <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='funder']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='funder']">
                 <rioxxterms:project>
                     <xsl:attribute name="funder_name">
                         <xls:value-of select="doc:element/doc:field[@name='value']"/>

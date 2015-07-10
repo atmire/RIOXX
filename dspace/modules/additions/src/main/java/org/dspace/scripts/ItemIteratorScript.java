@@ -1,4 +1,4 @@
-package com.atmire.scripts;
+package org.dspace.scripts;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;

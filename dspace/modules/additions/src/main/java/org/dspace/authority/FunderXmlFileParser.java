@@ -1,8 +1,7 @@
-package com.atmire.authority;
+package org.dspace.authority;
 
-import com.atmire.util.XMLUtils;
+import org.dspace.util.XMLUtils;
 import org.apache.log4j.Logger;
-import org.dspace.authority.FunderAuthorityValue;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 

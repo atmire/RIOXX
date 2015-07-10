@@ -1,0 +1,27 @@
+<dspace-dc-types>
+
+    <dspace-header>
+        <title>RIOXX Types Registry</title>
+    </dspace-header>
+
+    <dc-schema>
+        <name>rioxx</name>
+        <namespace>http://www.dspace.org/rioxx</namespace>
+    </dc-schema>
+
+
+    <dc-type>
+        <schema>rioxx</schema>
+        <element>funder</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>rioxx</schema>
+        <element>identifier</element>
+        <qualifier>project</qualifier>
+        <scope_note></scope_note>
+    </dc-type>
+
+</dspace-dc-types>

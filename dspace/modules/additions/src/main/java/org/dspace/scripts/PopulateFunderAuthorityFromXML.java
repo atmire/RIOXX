@@ -1,6 +1,6 @@
-package com.atmire.scripts;
+package org.dspace.scripts;
 
-import com.atmire.authority.FunderXmlFileParser;
+import org.dspace.authority.FunderXmlFileParser;
 import org.dspace.authority.AuthorityValue;
 import org.dspace.authority.AuthorityValueFinder;
 import org.dspace.authority.FunderAuthorityValue;

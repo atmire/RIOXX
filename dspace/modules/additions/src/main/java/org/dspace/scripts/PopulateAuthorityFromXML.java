@@ -1,6 +1,6 @@
-package com.atmire.scripts;
+package org.dspace.scripts;
 
-import com.atmire.authority.IndexingUtils;
+import org.dspace.authority.IndexingUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;

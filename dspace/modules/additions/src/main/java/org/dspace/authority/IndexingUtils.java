@@ -1,18 +1,9 @@
-package com.atmire.authority;
+package org.dspace.authority;
 
 import org.apache.log4j.Logger;
-import org.dspace.authority.AuthorityValue;
 import org.dspace.authority.indexer.AuthorityIndexingService;
-import org.dspace.authorize.AuthorizeException;
-import org.dspace.content.Item;
-import org.dspace.content.ItemIterator;
-import org.dspace.core.Context;
 import org.dspace.kernel.ServiceManager;
 import org.dspace.utils.DSpace;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by: Antoine Snyers (antoine at atmire dot com)

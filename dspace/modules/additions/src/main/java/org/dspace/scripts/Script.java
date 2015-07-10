@@ -1,4 +1,4 @@
-package com.atmire.scripts;
+package org.dspace.scripts;
 
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
