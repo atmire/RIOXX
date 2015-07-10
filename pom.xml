@@ -248,33 +248,7 @@
    </build>
    
    <profiles>
-       <profile>
-           <id>atmire-dev</id>
-           <properties>
-               <clientname>rioxx42</clientname>
-               <tomcat.port>11730</tomcat.port>
-               <dspace.dir>/home2/${clientname}/dspace</dspace.dir>
-               <dspace.url>https://dev.atmire.com/dspace-${clientname}</dspace.url>
-               <dspace.hostname>dev.atmire.com</dspace.hostname>
-               <db.name>postgres</db.name>
-               <db.driver>org.postgresql.Driver</db.driver>
-               <db.url>jdbc:postgresql://localhost:5432/dspace-${clientname}</db.url>
-               <db.username>dspace</db.username>
-               <db.password>dspace</db.password>
-               <mail.server>no-mail-server</mail.server>
-               <mail.from.address>noreply@atmire.com</mail.from.address>
-               <feedback.recipient>noreply@atmire.com</feedback.recipient>
-               <mail.admin>noreply@atmire.com</mail.admin>
-               <alert.recipient>noreply@atmire.com</alert.recipient>
-               <solr.server>http://localhost:${tomcat.port}/solr</solr.server>
-               <authenticate.AuthenticationMethod>org.dspace.authenticate.PasswordAuthentication</authenticate.AuthenticationMethod>
 
-               <dspace.install.dir>${dspace.dir}</dspace.install.dir>
-               <default.db.url>${db.url}</default.db.url>
-               <dspace.baseUrl>https://dev.atmire.com/</dspace.baseUrl>
-
-           </properties>
-       </profile>
        <!-- By default the main dspace.cfg file will be filtered during the build
             using the "build.properties" file. This profile takes effect, unless
             "-Denv" is passed in (see 'environment' profile below for more info). -->
