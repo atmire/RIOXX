@@ -85,7 +85,7 @@
        </field>
 
        <field>
-         <dc-schema>dc</dc-schema>
+         <dc-schema>rioxx</dc-schema>
          <dc-element>funder</dc-element>
          <repeatable>true</repeatable>
          <label>Funder</label>
@@ -95,7 +95,7 @@
        </field>
 
          <field>
-             <dc-schema>dc</dc-schema>
+             <dc-schema>rioxx</dc-schema>
              <dc-element>identifier</dc-element>
              <dc-qualifier>project</dc-qualifier>
              <repeatable>true</repeatable>

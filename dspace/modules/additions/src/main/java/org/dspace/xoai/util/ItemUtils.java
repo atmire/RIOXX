@@ -109,7 +109,7 @@ public class ItemUtils
                     }
                     valueElem = qualifier;
                 }
-                if(val.schema.equals("dc")&&val.element.equals("funder")){
+                if(val.schema.equals("rioxx")&&val.element.equals("funder")){
                     try {
                         AuthorityValueFinder authorityValueFinder = new AuthorityValueFinder();
                         AuthorityValue authorityValue =authorityValueFinder.findByUID(new Context(), val.authority);

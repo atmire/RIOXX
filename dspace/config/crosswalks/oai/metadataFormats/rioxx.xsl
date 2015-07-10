@@ -174,7 +174,7 @@
             </xsl:for-each>
 
             <xsl:variable name="projectIdentifier">
-                <xsl:value-of select="doc:metadata/doc:element[@name='riox']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
+                <xsl:value-of select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
 
             </xsl:variable>
             <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='funder']">

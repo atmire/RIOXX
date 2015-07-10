@@ -147,7 +147,7 @@ public class FunderAuthorityValue extends AuthorityValue {
         authorityValue.setId(UUID.randomUUID().toString());
         authorityValue.updateLastModifiedDate();
         authorityValue.setCreationDate(new Date());
-        authorityValue.setField("dc_funder");
+        authorityValue.setField("rioxx_funder");
         return authorityValue;
     }
 
