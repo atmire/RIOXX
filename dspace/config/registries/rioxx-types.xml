@@ -9,7 +9,6 @@
         <namespace>http://www.dspace.org/rioxx</namespace>
     </dc-schema>
 
-
     <dc-type>
         <schema>rioxx</schema>
         <element>funder</element>
@@ -21,6 +20,13 @@
         <schema>rioxx</schema>
         <element>identifier</element>
         <qualifier>project</qualifier>
+        <scope_note></scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>rioxx</schema>
+        <element>identifier</element>
+        <qualifier>doi</qualifier>
         <scope_note></scope_note>
     </dc-type>
 

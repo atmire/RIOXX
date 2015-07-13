@@ -167,7 +167,7 @@
                 </rioxxterms:version>
             <!--</xsl:for-each>-->
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='identifier']/doc:element[@name='doi']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='identifier']/doc:element[@name='doi']/doc:element/doc:field[@name='value']">
                 <rioxxterms:version_of_record>
                     <xls:value-of select="."/>
                 </rioxxterms:version_of_record>
