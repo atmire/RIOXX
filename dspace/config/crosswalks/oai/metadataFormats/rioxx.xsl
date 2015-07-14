@@ -24,9 +24,9 @@
                      xmlns:ali="http://ali.niso.org/2014/ali/1.0">
 
 
-            <ali:free_to_read primary="true">
+            <ali:free_to_read>
                 <xsl:if test="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']">
-                    <xsl:attribute name="ali:start_date">
+                    <xsl:attribute name="start_date">
                         <xsl:value-of select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']" />
                     </xsl:attribute>
                 </xsl:if>
@@ -69,7 +69,7 @@
             </xsl:for-each>
 
             <xsl:for-each select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='url']">
-                <dc:identifier>
+                <dc:identifier primary="true">
                     <xls:value-of select="."/>
                 </dc:identifier>
             </xsl:for-each>

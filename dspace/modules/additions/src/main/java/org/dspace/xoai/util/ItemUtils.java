@@ -171,8 +171,7 @@ public class ItemUtils
         try
         {
             bs = item.getBundles();
-            for (Bundle b : bs)
-            {
+            for (Bundle b : bs) {
                 Element bundle = create("bundle");
                 bundles.getElement().add(bundle);
                 bundle.getField()
@@ -181,8 +180,22 @@ public class ItemUtils
                 Element bitstreams = create("bitstreams");
                 bundle.getElement().add(bitstreams);
                 Bitstream[] bits = b.getBitstreams();
-                for (Bitstream bit : bits)
-                {
+
+                Bitstream bit = null;
+
+                for (Bitstream bitstream : bits) {
+
+                    if (b.getPrimaryBitstreamID() != -1) {
+                        if (bit.getID() == b.getPrimaryBitstreamID()) {
+                            bit = bitstream;
+                        }
+                    } else if (b.getName().equals("ORIGINAL")) {
+                        bit = bitstream;
+                    }
+
+                }
+
+                if (bit != null) {
                     Element bitstream = create("bitstream");
                     bitstreams.getElement().add(bitstream);
                     String url = "";
@@ -194,29 +207,23 @@ public class ItemUtils
                     // get handle of parent Item of this bitstream, if there
                     // is one:
                     Bundle[] bn = bit.getBundles();
-                    if (bn.length > 0)
-                    {
+                    if (bn.length > 0) {
                         Item bi[] = bn[0].getItems();
-                        if (bi.length > 0)
-                        {
+                        if (bi.length > 0) {
                             handle = bi[0].getHandle();
                         }
                     }
-                    if (bsName == null)
-                    {
+                    if (bsName == null) {
                         String ext[] = bit.getFormat().getExtensions();
                         bsName = "bitstream_" + sid
                                 + (ext.length > 0 ? ext[0] : "");
                     }
-                    if (handle != null && baseUrl != null)
-                    {
+                    if (handle != null && baseUrl != null) {
                         url = baseUrl + "/bitstream/"
                                 + handle + "/"
                                 + sid + "/"
                                 + URLUtils.encode(bsName);
-                    }
-                    else
-                    {
+                    } else {
                         url = URLUtils.encode(bsName);
                     }
 
@@ -226,14 +233,7 @@ public class ItemUtils
                     String name = bit.getName();
                     String description = bit.getDescription();
 
-                    if(b.getPrimaryBitstreamID()!=-1) {
-                        if(bit.getID() == b.getPrimaryBitstreamID()) {
-                            addEmbargoField(bit,bitstream);
-                        }
-                    }
-                    else if(b.getName().equals("ORIGINAL")){
-                        addEmbargoField(bit,bitstream);
-                    }
+                    addEmbargoField(bit, bitstream);
 
                     if (name != null)
                         bitstream.getField().add(
