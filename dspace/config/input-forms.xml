@@ -175,7 +175,7 @@ it, please enter the types and the actual numbers or codes.</hint>
 
 
        <field>
-         <dc-schema>ali</dc-schema>
+         <dc-schema>rioxx</dc-schema>
          <dc-element>license_ref</dc-element>
          <dc-qualifier>uri</dc-qualifier>
          <repeatable>false</repeatable>
@@ -186,7 +186,7 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
-         <dc-schema>ali</dc-schema>
+         <dc-schema>rioxx</dc-schema>
          <dc-element>license_ref</dc-element>
          <dc-qualifier>startdate</dc-qualifier>
          <repeatable>false</repeatable>

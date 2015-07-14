@@ -43,9 +43,9 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="start_date">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='ali']/doc:element[@name='license_ref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
+                            <xsl:value-of select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='license_ref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
                         </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='ali']/doc:element[@name='license_ref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+                        <xls:value-of select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='license_ref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </ali:license_ref>
