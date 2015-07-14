@@ -172,6 +172,64 @@ it, please enter the types and the actual numbers or codes.</hint>
          <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
          <required></required>
        </field>
+
+
+       <field>
+         <dc-schema>ali</dc-schema>
+         <dc-element>license_ref</dc-element>
+         <dc-qualifier>uri</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>License uri</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the license uri</hint>
+         <required>you must enter the license uri</required>
+       </field>
+
+       <field>
+         <dc-schema>ali</dc-schema>
+         <dc-element>license_ref</dc-element>
+         <dc-qualifier>startdate</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>License start date</label>
+         <input-type>date</input-type>
+         <hint>Enter the license start date</hint>
+         <required>You must enter the license start date</required>
+       </field>
+
+       <field>
+         <dc-schema>dcterms</dc-schema>
+         <dc-element>dateAccepted</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date accepted</label>
+         <input-type>date</input-type>
+         <hint>Enter the date of acceptation</hint>
+         <required>You must enter the date of acceptation</required>
+       </field>
+
+       <field>
+         <dc-schema>rioxxterms</dc-schema>
+         <dc-element>version</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Version</label>
+         <input-type value-pairs-name="rioxxterms_version">dropdown</input-type>
+         <hint>Select the version</hint>
+         <required>You must select a version</required>
+       </field>
+
+       <field>
+         <dc-schema>rioxxterms</dc-schema>
+         <dc-element>version_of_record </dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>DOI</label>
+         <input-type>onebox</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+
+
      </page>
 
      <page number="2">
@@ -377,10 +435,6 @@ it, please enter the types and the actual numbers or codes.</hint>
      -->
    <value-pairs value-pairs-name="common_iso_languages" dc-term="language_iso">
      <pair>
-       <displayed-value>N/A</displayed-value>
-       <stored-value></stored-value>
-     </pair>
-     <pair>
        <displayed-value>English (United States)</displayed-value>
        <stored-value>en_US</stored-value>
       </pair>
@@ -421,6 +475,42 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>other</stored-value>
      </pair>
    </value-pairs>
+
+   <value-pairs value-pairs-name="rioxxterms_version" dc-term="rioxxterms_version">
+     <pair>
+       <displayed-value>Not Applicable (or Unknown)</displayed-value>
+       <stored-value>NA</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Author's Original</displayed-value>
+       <stored-value>AO</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Submitted Manuscript Under Review</displayed-value>
+       <stored-value>SMUR</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Accepted Manuscript</displayed-value>
+       <stored-value>AM</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Proof</displayed-value>
+       <stored-value>P</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Version of Record</displayed-value>
+       <stored-value>VoR</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Corrected Version of Record</displayed-value>
+       <stored-value>CVoR</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Enhanced Version of Record</displayed-value>
+       <stored-value>EVoR</stored-value>
+     </pair>
+   </value-pairs>
+
 
  </form-value-pairs>
 

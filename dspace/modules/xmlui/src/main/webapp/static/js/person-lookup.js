@@ -10,7 +10,7 @@ function AuthorLookup(url, authorityInput, collectionID) {
     var funderField = url.indexOf("rioxx_funder") != -1;
 
 //    TODO i18n
-    var content = $('<div title="Person Lookup">' +
+    var content = $('<div title="Lookup">' +
     '<table class="dttable">' +
     '<thead>' +
     '<th>Name</th>' +
@@ -27,7 +27,7 @@ function AuthorLookup(url, authorityInput, collectionID) {
     '<span/>' +
     '</li>' +
     '<li class="vcard-add">' +
-    '<input class="ds-button-field" value="Add This Person" type="button"/>' +
+    '<input class="ds-button-field" value="Add This Result" type="button"/>' +
     '</li>' +
     '</ul>' +
     '</div>');
@@ -50,11 +50,11 @@ function AuthorLookup(url, authorityInput, collectionID) {
             }
         ],
         "oLanguage": {
-            "sInfo": 'Showing _START_ to _END_ of _TOTAL_ people',
-            "sInfoEmpty": 'Showing 0 to 0 of 0 people',
-            "sInfoFiltered": '(filtered from _MAX_ total people)',
-            "sLengthMenu": '_MENU_ people/page',
-            "sZeroRecords": 'No people found'
+            "sInfo": 'Showing _START_ to _END_ of _TOTAL_ results',
+            "sInfoEmpty": 'Showing 0 to 0 of 0 results',
+            "sInfoFiltered": '(filtered from _MAX_ total results)',
+            "sLengthMenu": '_MENU_ results/page',
+            "sZeroRecords": 'No results found'
         },
         "bAutoWidth": false,
         "bJQueryUI": true,

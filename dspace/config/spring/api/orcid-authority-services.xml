@@ -38,6 +38,9 @@
                 <entry key="rioxx_funder">
                     <bean class="org.dspace.authority.FunderAuthorityValue"/>
                 </entry>
+                <entry key="dc_contributor_author">
+                    <bean class="org.dspace.authority.PersonAuthorityValue"/>
+                </entry>
             </map>
         </property>
     </bean>

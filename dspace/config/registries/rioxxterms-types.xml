@@ -1,0 +1,34 @@
+<dspace-dc-types>
+
+    <dspace-header>
+        <title>rioxxterms Types Registry</title>
+    </dspace-header>
+
+    <dc-schema>
+        <name>rioxxterms</name>
+        <namespace>http://www.dspace.org/rioxxterms</namespace>
+    </dc-schema>
+
+    <dc-type>
+        <schema>rioxxterms</schema>
+        <element>apc</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>rioxxterms</schema>
+        <element>version</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
+
+    <dc-type>
+        <schema>rioxxterms</schema>
+        <element>version_of_record</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
+</dspace-dc-types>

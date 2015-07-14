@@ -16,21 +16,26 @@ import org.dspace.authority.AuthorityValue;
 import org.dspace.authority.AuthorityValueFinder;
 import org.dspace.authority.FunderAuthorityValue;
 import org.dspace.authorize.AuthorizeException;
+import org.dspace.authorize.AuthorizeManager;
+import org.dspace.authorize.ResourcePolicy;
 import org.dspace.content.Bitstream;
 import org.dspace.content.Bundle;
-import org.dspace.content.Metadatum;
 import org.dspace.content.Item;
+import org.dspace.content.Metadatum;
 import org.dspace.content.authority.Choices;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.core.Utils;
+import org.dspace.eperson.Group;
 import org.dspace.xoai.data.DSpaceItem;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -221,6 +226,15 @@ public class ItemUtils
                     String name = bit.getName();
                     String description = bit.getDescription();
 
+                    if(b.getPrimaryBitstreamID()!=-1) {
+                        if(bit.getID() == b.getPrimaryBitstreamID()) {
+                            addEmbargoField(bit,bitstream);
+                        }
+                    }
+                    else if(b.getName().equals("ORIGINAL")){
+                        addEmbargoField(bit,bitstream);
+                    }
+
                     if (name != null)
                         bitstream.getField().add(
                                 createValue("name", name));
@@ -321,5 +335,25 @@ public class ItemUtils
         }
 
         return metadata;
+    }
+
+    private static void addEmbargoField(Bitstream bit, Element bitstream) throws SQLException {
+        Context context = new Context();
+
+        List<ResourcePolicy> policies = AuthorizeManager.getPoliciesActionFilter(context, bit, Constants.READ);
+        Group group = Group.find(context, Group.ANONYMOUS_ID);
+
+        for (ResourcePolicy policy : policies) {
+            if (group.equals(policy.getGroup())) {
+                Date startDate = policies.get(0).getStartDate();
+
+                if (startDate!=null && startDate.after(new Date())) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    bitstream.getField().add(
+                            createValue("embargo", formatter.format(startDate)));
+                }
+            }
+        }
+        context.abort();
     }
 }
