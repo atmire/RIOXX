@@ -208,18 +208,18 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
-         <dc-schema>rioxxterms</dc-schema>
+         <dc-schema>rioxx</dc-schema>
          <dc-element>version</dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
          <label>Version</label>
-         <input-type value-pairs-name="rioxxterms_version">dropdown</input-type>
+         <input-type value-pairs-name="rioxx_version">dropdown</input-type>
          <hint>Select the version</hint>
          <required>You must select a version</required>
        </field>
 
        <field>
-         <dc-schema>rioxxterms</dc-schema>
+         <dc-schema>rioxx</dc-schema>
          <dc-element>version_of_record </dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
@@ -476,7 +476,7 @@ it, please enter the types and the actual numbers or codes.</hint>
      </pair>
    </value-pairs>
 
-   <value-pairs value-pairs-name="rioxxterms_version" dc-term="rioxxterms_version">
+   <value-pairs value-pairs-name="rioxx_version" dc-term="rioxx_version">
      <pair>
        <displayed-value>Not Applicable (or Unknown)</displayed-value>
        <stored-value>NA</stored-value>

@@ -23,4 +23,26 @@
         <scope_note></scope_note>
     </dc-type>
 
+    <dc-type>
+        <schema>rioxx</schema>
+        <element>apc</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>rioxx</schema>
+        <element>version</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
+
+    <dc-type>
+        <schema>rioxx</schema>
+        <element>version_of_record</element>
+        <!-- unqualified -->
+        <scope_note></scope_note>
+    </dc-type>
+
 </dspace-dc-types>

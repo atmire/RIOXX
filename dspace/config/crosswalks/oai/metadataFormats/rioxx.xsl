@@ -122,7 +122,7 @@
                 </dcterms:dateAccepted>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='apc']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='apc']/doc:element/doc:field[@name='value']">
                 <rioxxterms:apc>
                     <xls:value-of select="."/>
                 </rioxxterms:apc>
@@ -163,13 +163,13 @@
                 </rioxxterms:type>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='version']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='version']/doc:element/doc:field[@name='value']">
                 <rioxxterms:version>
                     <xls:value-of select="."/>
                 </rioxxterms:version>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='version_of_record']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='version_of_record']/doc:element/doc:field[@name='value']">
                 <rioxxterms:version_of_record>
                     <xls:value-of select="."/>
                 </rioxxterms:version_of_record>
