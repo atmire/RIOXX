@@ -205,5 +205,6 @@ public class FunderAuthorityValue extends AuthorityValue {
         setFundingBodyType(value.getFundingBodyType());
         setFundingBodySubType(value.getFundingBodySubType());
         setNameVariants(value.getNameVariants());
+        setValue(value.getValue());
     }
 }
