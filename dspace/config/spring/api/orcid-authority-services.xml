@@ -11,10 +11,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd"
+           http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+
        default-autowire-candidates="*Service,*DAO,javax.sql.DataSource">
 
     <context:annotation-config /> <!-- allows us to use spring annotations in beans -->
@@ -50,5 +53,19 @@
         <constructor-arg value="http://pub.orcid.org"/>
     </bean>-->
 
+    <alias name="restSources" alias="AuthoritySource"/>
+
+    <util:map id="restSources" map-class="java.util.HashMap" value-type="org.dspace.authority.rest.RestSource">
+        <entry key="rioxx_funder">
+            <bean  class="org.dspace.authority.orcid.Orcid">
+                <constructor-arg value="http://pub.orcid.org"/>
+            </bean>
+        </entry>
+        <entry key="dc_contributor_author">
+            <bean class="org.dspace.authority.orcid.Orcid">
+                <constructor-arg value="http://pub.orcid.org"/>
+            </bean>
+        </entry>
+    </util:map>
 
 </beans>
