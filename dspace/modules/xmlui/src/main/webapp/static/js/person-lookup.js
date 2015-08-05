@@ -72,7 +72,11 @@ function AuthorLookup(url, authorityInput, collectionID) {
                 autoOpen: true,
                 resizable: false,
                 modal: false,
-                width: 600
+                width: 600,
+                close: function(event, ui)
+                {
+                    $(this).dialog('destroy').remove();
+                }
             });
             $('.dataTables_wrapper').parent().attr('style', 'width: auto; min-height: 121px; height: auto;');
             var searchFilter = $('.dataTables_filter > input');
@@ -203,11 +207,13 @@ function AuthorLookup(url, authorityInput, collectionID) {
                 wrapper.find('.vcard-wrapper .no-vcard-selected:hidden').show();
             }
 
-            $('body').one('click', '#lookup-more-button', function(){
+            $('body').undelegate();
+
+            $('body').delegate('#lookup-more-button', 'click', function(){
                 button = lessButton;
                 datatable.fnFilter($('.dataTables_filter > input').val());
             });
-            $('body').one('click', '#lookup-less-button', function(){
+            $('body').delegate('#lookup-less-button', 'click', function(){
                 button = moreButton;
                 datatable.fnFilter($('.dataTables_filter > input').val());
             });
