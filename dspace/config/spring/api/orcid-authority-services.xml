@@ -56,11 +56,6 @@
     <alias name="restSources" alias="AuthoritySource"/>
 
     <util:map id="restSources" map-class="java.util.HashMap" value-type="org.dspace.authority.rest.RestSource">
-        <entry key="rioxx_funder">
-            <bean  class="org.dspace.authority.orcid.Orcid">
-                <constructor-arg value="http://pub.orcid.org"/>
-            </bean>
-        </entry>
         <entry key="dc_contributor_author">
             <bean class="org.dspace.authority.orcid.Orcid">
                 <constructor-arg value="http://pub.orcid.org"/>

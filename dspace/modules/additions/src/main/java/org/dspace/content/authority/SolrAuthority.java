@@ -17,7 +17,6 @@ import org.apache.solr.common.params.CommonParams;
 import org.dspace.authority.AuthoritySearchService;
 import org.dspace.authority.AuthorityValue;
 import org.dspace.authority.rest.RestSource;
-import org.dspace.content.MetadataField;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.utils.DSpace;
 
@@ -39,6 +38,7 @@ public class SolrAuthority implements ChoiceAuthority {
     private boolean externalResults = false;
 
     public Choices getMatches(String field, String text, int collection, int start, int limit, String locale, boolean bestMatch) {
+        source = null;
         if(restSources.containsKey(field)){
             source=restSources.get(field);
         }
