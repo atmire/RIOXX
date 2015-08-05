@@ -359,6 +359,7 @@
                 <string name="field">dc.type</string>
                 <string name="operator">ends_with</string>
                 <list name="values">
+                    <string>Article</string>
                     <string>Book</string>
                     <string>Book chapter</string>
                     <string>Book edited</string>
@@ -372,6 +373,7 @@
                     <string>Thesis</string>
                     <string>Consultancy Report</string>
                     <string>Working paper</string>
+                    <string>Working Paper</string>
                 </list>
             </Configuration>
         </CustomCondition>

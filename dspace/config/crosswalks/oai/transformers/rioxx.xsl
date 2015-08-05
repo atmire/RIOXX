@@ -46,14 +46,42 @@
         <xsl:value-of select="$sub" />
     </xsl:template>
 
-    <xsl:template match="doc:metadata/doc:element[@name='dc']/doc:element[@name='type']/doc:element/doc:field[@name='value']">
-        <xsl:if test="contains($nonSuppressedTypes,./text())">
-            <xsl:copy-of select="."/>
-        </xsl:if>
+    <xsl:template match="doc:metadata/doc:element[@name='dc']/doc:element[@name='type']/doc:element/doc:field[@name='value']/text()">
+        <xsl:variable name="value">
+            <xsl:value-of select="."/>
+        </xsl:variable>
+
+        <!--DSpace types-->
+        <xsl:choose>
+            <xsl:when test="$value = 'Book'">
+                <xsl:text>Book</xsl:text>
+            </xsl:when>
+            <xsl:when test="$value = 'Book chapter'">
+                <xsl:text>Book chapter</xsl:text>
+            </xsl:when>
+            <xsl:when test="$value = 'Article'">
+                <xsl:text>Journal Article/Review</xsl:text>
+            </xsl:when>
+            <xsl:when test="$value = 'Technical Report'">
+                <xsl:text>Technical Report</xsl:text>
+            </xsl:when>
+            <xsl:when test="$value = 'Thesis'">
+                <xsl:text>Thesis</xsl:text>
+            </xsl:when>
+            <xsl:when test="$value = 'Working Paper'">
+                <xsl:text>Working paper</xsl:text>
+            </xsl:when>
+
+
+            <xsl:when test="contains($nonSuppressedTypes,$value)">
+               <xsl:value-of select="$value"/>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
+    <!--RIOXX types without DSpace equivalent-->
     <xsl:variable name="nonSuppressedTypes">
-        Book|Book chapter|Book edited|Conference Paper/Proceeding/Abstract|Article|Manual/Guide|Monograph|Policy briefing report|Technical Report|Technical Standard|Thesis|Consultancy Report|Working paper
+        Book edited|Conference Paper/Proceeding/Abstract|Review|Manual/Guide|Monograph|Policy briefing report|Technical Standard|Consultancy Report|Working paper
     </xsl:variable>
 </xsl:stylesheet>
 
