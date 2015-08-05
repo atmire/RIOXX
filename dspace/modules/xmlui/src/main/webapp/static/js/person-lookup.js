@@ -91,15 +91,6 @@ function AuthorLookup(url, authorityInput, collectionID) {
             setTimeout(function () {
                 searchFilter.trigger($.Event("keyup", {keyCode: 13}));
             }, 50);
-
-            $('body').one('click', '#lookup-more-button', function(){
-                button = lessButton;
-                datatable.fnFilter($('.dataTables_filter > input').val());
-            });
-            $('body').one('click', '#lookup-less-button', function(){
-                button = moreButton;
-                datatable.fnFilter($('.dataTables_filter > input').val());
-            });
         },
         "fnInfoCallback": function (oSettings, iStart, iEnd, iMax, iTotal, sPre) {
             return "Showing " + iEnd + " results. " + button;
@@ -211,6 +202,15 @@ function AuthorLookup(url, authorityInput, collectionID) {
                 wrapper.find('.vcard-wrapper .vcard:visible').hide();
                 wrapper.find('.vcard-wrapper .no-vcard-selected:hidden').show();
             }
+
+            $('body').one('click', '#lookup-more-button', function(){
+                button = lessButton;
+                datatable.fnFilter($('.dataTables_filter > input').val());
+            });
+            $('body').one('click', '#lookup-less-button', function(){
+                button = moreButton;
+                datatable.fnFilter($('.dataTables_filter > input').val());
+            });
         },
         "fnServerData": function (sSource, aoData, fnCallback) {
             var sEcho;
