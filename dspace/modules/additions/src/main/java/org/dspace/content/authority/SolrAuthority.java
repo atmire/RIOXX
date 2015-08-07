@@ -20,10 +20,7 @@ import org.dspace.authority.rest.RestSource;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.utils.DSpace;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -35,10 +32,16 @@ import java.util.Map;
 public class SolrAuthority implements ChoiceAuthority {
 
     private static final Logger log = Logger.getLogger(SolrAuthority.class);
-    private RestSource source = new DSpace().getServiceManager().getServiceByName("AuthoritySource", RestSource.class);
+    //private RestSource source = new DSpace().getServiceManager().getServiceByName("AuthoritySource", RestSource.class);
+    private RestSource source =null;
+    private Map <String,RestSource>restSources = new DSpace().getServiceManager().getServiceByName("AuthoritySource", HashMap.class);
     private boolean externalResults = false;
 
     public Choices getMatches(String field, String text, int collection, int start, int limit, String locale, boolean bestMatch) {
+        source = null;
+        if(restSources.containsKey(field)){
+            source=restSources.get(field);
+        }
         if(limit == 0)
             limit = 10;
 
