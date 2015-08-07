@@ -1378,7 +1378,7 @@
         <!--Only create the <span> if there is content in the <dri:help> node-->
         <xsl:if test="./text() or ./node()">
             <p class="help-block">
-                <xsl:apply-templates />
+                <i18n:text><xsl:value-of select="./text()"/></i18n:text>
             </p>
         </xsl:if>
     </xsl:template>

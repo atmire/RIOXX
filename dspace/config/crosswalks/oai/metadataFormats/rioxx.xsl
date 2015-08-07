@@ -43,9 +43,9 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="start_date">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='license_ref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
+                            <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
                         </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='license_ref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+                        <xls:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </ali:license_ref>
@@ -122,7 +122,7 @@
                 </dcterms:dateAccepted>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='apc']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='apc']/doc:element/doc:field[@name='value']">
                 <rioxxterms:apc>
                     <xls:value-of select="."/>
                 </rioxxterms:apc>
@@ -157,29 +157,37 @@
                 </rioxxterms:publication_date>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='type']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='type']/doc:element/doc:field[@name='value']">
                <rioxxterms:type>
                     <xls:value-of select="."/>
                 </rioxxterms:type>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='version']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='type']/doc:element/doc:field[@name='value']">
+                <xsl:if test="not(//doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='type'])">
+                    <rioxxterms:type>
+                        <xls:value-of select="."/>
+                    </rioxxterms:type>
+                </xsl:if>
+            </xsl:for-each>
+
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='version']/doc:element/doc:field[@name='value']">
                 <rioxxterms:version>
                     <xls:value-of select="."/>
                 </rioxxterms:version>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='version_of_record']/doc:element/doc:field[@name='value']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='versionofrecord']/doc:element/doc:field[@name='value']">
                 <rioxxterms:version_of_record>
                     <xls:value-of select="."/>
                 </rioxxterms:version_of_record>
             </xsl:for-each>
 
             <xsl:variable name="projectIdentifier">
-                <xsl:value-of select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
+                <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
 
             </xsl:variable>
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxx']/doc:element[@name='funder']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='funder']">
                 <rioxxterms:project>
                     <xsl:attribute name="rioxxterms:funder_name">
                         <xls:value-of select="doc:element/doc:field[@name='value']"/>
@@ -192,7 +200,6 @@
                     <xsl:value-of select="$projectIdentifier"/>
                 </rioxxterms:project>
             </xsl:for-each>
-
         </rioxx:rioxx>
     </xsl:template>
 </xsl:stylesheet>

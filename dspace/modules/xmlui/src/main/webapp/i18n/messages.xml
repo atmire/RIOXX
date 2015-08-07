@@ -2502,4 +2502,11 @@
     <message key="xmlui.mirage2.choice-authority-control.loading">Loading...</message>
 
     <message key="xmlui.mirage2.item-list.thumbnail">Thumbnail</message>
+
+	<message key="xmlui.Submission.submit.input.rioxxterms.licenseref.uri.hint">
+		<p>HTTP URI to a resource which expresses the license terms specifying how the resource may be used. In the absence of any other license, the copyright holder reserves all rights automatically. As a convenience, you can use any of the two URLs to explicitly convey this state:</p>
+		<br/>
+		<p><a href="http://www.rioxx.net/licenses/all-rights-reserved">http://www.rioxx.net/licenses/all-rights-reserved</a></p>
+		<p><a href="http://www.rioxx.net/licenses/under-embargo-all-rights-reserved">http://www.rioxx.net/licenses/under-embargo-all-rights-reserved</a></p>
+	</message>
 </catalogue>

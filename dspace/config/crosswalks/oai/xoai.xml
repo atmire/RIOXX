@@ -281,7 +281,7 @@
             <Definition>
                 <And>
                     <LeftCondition>
-                        <Custom ref="typeCondition"/>
+                        <Custom ref="rioxxTypeExistsCondition"/>
                     </LeftCondition>
                     <RightCondition>
                         <Custom ref="itemsWithBitstreamsFilter"/>
@@ -327,6 +327,16 @@
             </Configuration>
         </CustomCondition>
 
+        <CustomCondition id="rioxxTypeExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">dc.type</string>
+                    <string name="field">rioxxterms.type</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
         <CustomCondition id="driverDocumentTypeCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>
@@ -353,30 +363,6 @@
             </Configuration>
         </CustomCondition>
 
-        <CustomCondition id="typeCondition">
-            <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
-            <Configuration>
-                <string name="field">dc.type</string>
-                <string name="operator">ends_with</string>
-                <list name="values">
-                    <string>Article</string>
-                    <string>Book</string>
-                    <string>Book chapter</string>
-                    <string>Book edited</string>
-                    <string>Conference Paper/Proceeding/Abstract</string>
-                    <string>Journal Article/Review</string>
-                    <string>Manual/Guide</string>
-                    <string>Monograph</string>
-                    <string>Policy briefing report</string>
-                    <string>Technical Report</string>
-                    <string>Technical Standard</string>
-                    <string>Thesis</string>
-                    <string>Consultancy Report</string>
-                    <string>Working paper</string>
-                    <string>Working Paper</string>
-                </list>
-            </Configuration>
-        </CustomCondition>
         <CustomCondition id="driverAccessCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>

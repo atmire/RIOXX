@@ -76,6 +76,10 @@
             <xsl:when test="contains($nonSuppressedTypes,$value)">
                <xsl:value-of select="$value"/>
             </xsl:when>
+
+            <xsl:otherwise>
+                <xsl:text>Other</xsl:text>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 

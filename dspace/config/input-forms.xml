@@ -85,24 +85,24 @@
        </field>
 
        <field>
-         <dc-schema>rioxx</dc-schema>
+         <dc-schema>rioxxterms</dc-schema>
          <dc-element>funder</dc-element>
          <repeatable>true</repeatable>
          <label>Funder</label>
          <input-type>onebox</input-type>
-         <hint></hint>
+         <hint>Use the lookup functionality to select the funder of your resource. If the funder is not included in the list, you may enter the funder’s name manually. If the resource is funded internally, search for your own institution in the list or enter it manually if it does not appear in the list.</hint>
          <required></required>
        </field>
 
          <field>
-             <dc-schema>rioxx</dc-schema>
+             <dc-schema>rioxxterms</dc-schema>
              <dc-element>identifier</dc-element>
              <dc-qualifier>project</dc-qualifier>
              <repeatable>true</repeatable>
              <label>Project id</label>
              <input-type>onebox</input-type>
-             <hint></hint>
-             <required></required>
+             <hint>The element MUST contain one project ID, an alphanumeric identifier provided by the funder in its original format. In cases where the resource has been funded internally, an appropriate internal code might be used.</hint>
+             <required>You must enter a project ID.</required>
          </field>
 
        <field>
@@ -163,6 +163,17 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
+         <dc-schema>rioxxterms</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Rioxxterms Type</label>
+         <input-type value-pairs-name="rioxxterms_types">dropdown</input-type>
+         <hint>Select the type(s) of content of the item. To select more than one value in the list, you may have to hold down the "CTRL" or "Shift" key.</hint>
+         <required></required>
+       </field>
+
+       <field>
          <dc-schema>dc</dc-schema>
          <dc-element>language</dc-element>
          <dc-qualifier>iso</dc-qualifier>
@@ -175,25 +186,25 @@ it, please enter the types and the actual numbers or codes.</hint>
 
 
        <field>
-         <dc-schema>rioxx</dc-schema>
-         <dc-element>license_ref</dc-element>
+         <dc-schema>rioxxterms</dc-schema>
+         <dc-element>licenseref</dc-element>
          <dc-qualifier>uri</dc-qualifier>
          <repeatable>false</repeatable>
          <label>License uri</label>
          <input-type>onebox</input-type>
-         <hint>Enter the license uri</hint>
+         <hint>xmlui.Submission.submit.input.rioxxterms.licenseref.uri.hint</hint>
          <required>you must enter the license uri</required>
        </field>
 
        <field>
-         <dc-schema>rioxx</dc-schema>
-         <dc-element>license_ref</dc-element>
+         <dc-schema>rioxxterms</dc-schema>
+         <dc-element>licenseref</dc-element>
          <dc-qualifier>startdate</dc-qualifier>
          <repeatable>false</repeatable>
          <label>License start date</label>
          <input-type>date</input-type>
-         <hint>Enter the license start date</hint>
-         <required>You must enter the license start date</required>
+         <hint>Please complete the date upon which the usage license takes effect.</hint>
+         <required>You must enter the date upon which the usage license takes effect.</required>
        </field>
 
        <field>
@@ -208,24 +219,24 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
-         <dc-schema>rioxx</dc-schema>
+         <dc-schema>rioxxterms</dc-schema>
          <dc-element>version</dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
          <label>Version</label>
-         <input-type value-pairs-name="rioxx_version">dropdown</input-type>
-         <hint>Select the version</hint>
-         <required>You must select a version</required>
+         <input-type value-pairs-name="rioxxterms_version">dropdown</input-type>
+         <hint>Select which version of the resource you are describing and for which you will upload the file.</hint>
+         <required>You must select the version</required>
        </field>
 
        <field>
-         <dc-schema>rioxx</dc-schema>
-         <dc-element>version_of_record </dc-element>
+         <dc-schema>rioxxterms</dc-schema>
+         <dc-element>versionofrecord </dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
-         <label>DOI</label>
+         <label>Version of record (DOI)</label>
          <input-type>onebox</input-type>
-         <hint></hint>
+         <hint>Please enter the persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this must be used.</hint>
          <required></required>
        </field>
 
@@ -430,6 +441,67 @@ it, please enter the types and the actual numbers or codes.</hint>
      </pair>
    </value-pairs>
 
+   <value-pairs value-pairs-name="rioxxterms_types" dc-term="type">
+     <pair>
+       <displayed-value>Book</displayed-value>
+       <stored-value>Book</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Book chapter</displayed-value>
+       <stored-value>Book chapter</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Book edited</displayed-value>
+       <stored-value>Book edited</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Conference Paper/Proceeding/Abstract</displayed-value>
+       <stored-value>Conference Paper/Proceeding/Abstract</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Journal Article/Review</displayed-value>
+       <stored-value>Journal Article/Review</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Manual/Guide</displayed-value>
+       <stored-value>Manual/Guide</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Monograph</displayed-value>
+       <stored-value>Monograph</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Policy briefing report</displayed-value>
+       <stored-value>Policy briefing report</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Technical Report</displayed-value>
+       <stored-value>Technical Report</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Technical Standard</displayed-value>
+       <stored-value>Technical Standard</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Thesis</displayed-value>
+       <stored-value>Thesis</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Other</displayed-value>
+       <stored-value>Other</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Consultancy Report</displayed-value>
+       <stored-value>Consultancy Report</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Working paper</displayed-value>
+       <stored-value>Working paper</stored-value>
+     </pair>
+
+   </value-pairs>
+
+
    <!-- default language order: (from dspace 1.2.1)
         "en_US", "en", "es", "de", "fr", "it", "ja", "zh", "other", ""
      -->
@@ -476,7 +548,7 @@ it, please enter the types and the actual numbers or codes.</hint>
      </pair>
    </value-pairs>
 
-   <value-pairs value-pairs-name="rioxx_version" dc-term="rioxx_version">
+   <value-pairs value-pairs-name="rioxxterms_version" dc-term="rioxxterms_version">
      <pair>
        <displayed-value>Not Applicable (or Unknown)</displayed-value>
        <stored-value>NA</stored-value>
