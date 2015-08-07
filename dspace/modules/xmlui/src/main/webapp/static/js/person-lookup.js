@@ -7,7 +7,7 @@
  */
 function AuthorLookup(url, authorityInput, collectionID) {
 
-    var funderField = url.indexOf("rioxx_funder") != -1;
+    var funderField = url.indexOf("rioxxterms_funder") != -1;
 
 //    TODO i18n
     var content = $('<div title="Lookup">' +

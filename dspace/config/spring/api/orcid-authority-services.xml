@@ -35,7 +35,7 @@
         </property>
         <property name="fieldDefaults">
             <map>
-                <entry key="rioxx_funder">
+                <entry key="rioxxterms_funder">
                     <bean class="org.dspace.authority.FunderAuthorityValue"/>
                 </entry>
                 <entry key="dc_contributor_author">
