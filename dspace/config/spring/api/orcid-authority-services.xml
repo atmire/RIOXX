@@ -55,11 +55,13 @@
 
     <alias name="restSources" alias="AuthoritySource"/>
 
+    <bean name="OrcidSource" class="org.dspace.authority.orcid.Orcid">
+        <constructor-arg value="http://pub.orcid.org"/>
+    </bean>
+
     <util:map id="restSources" map-class="java.util.HashMap" value-type="org.dspace.authority.rest.RestSource">
         <entry key="dc_contributor_author">
-            <bean class="org.dspace.authority.orcid.Orcid">
-                <constructor-arg value="http://pub.orcid.org"/>
-            </bean>
+              <ref bean="OrcidSource" />
         </entry>
     </util:map>
 
