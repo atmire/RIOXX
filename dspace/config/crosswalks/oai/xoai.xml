@@ -94,6 +94,7 @@
             <Transformer ref="rioxxTransformer"/>
             <!-- Metadata Formats -->
             <Format ref="rioxx"/>
+            <Format ref="xoai"/>
             <Description>
                 This contexts complies with RIOXX rules.
             </Description>

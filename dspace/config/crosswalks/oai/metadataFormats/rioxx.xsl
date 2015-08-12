@@ -68,8 +68,8 @@
                 </dc:format>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='url']">
-                <dc:identifier primary="true">
+            <xsl:for-each select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream'][doc:field[@name='primary']='true']/doc:field[@name='url']">
+                <dc:identifier>
                     <xls:value-of select="."/>
                 </dc:identifier>
             </xsl:for-each>
@@ -141,6 +141,12 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
+                    <xsl:if test="parent::doc:element/doc:field[@name='authorityID']">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="parent::doc:element/doc:field[@name='authorityID']"/>
+
+                        </xsl:attribute>
+                    </xsl:if>
                     <xls:value-of select="."/>
                 </rioxxterms:author>
             </xsl:for-each>
@@ -192,9 +198,9 @@
                     <xsl:attribute name="rioxxterms:funder_name">
                         <xls:value-of select="doc:element/doc:field[@name='value']"/>
                     </xsl:attribute>
-                    <xsl:if test="doc:field[@name='authorityID']">
+                    <xsl:if test="doc:element/doc:field[@name='authorityID']">
                         <xsl:attribute name="rioxxterms:funder_id">
-                            <xls:value-of select="doc:field[@name='authorityID']"/>
+                            <xls:value-of select="doc:element/doc:field[@name='authorityID']"/>
                         </xsl:attribute>
                     </xsl:if>
                     <xsl:value-of select="$projectIdentifier"/>
