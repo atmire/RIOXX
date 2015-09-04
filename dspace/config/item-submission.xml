@@ -197,6 +197,15 @@
 		<xmlui-binding>org.dspace.app.xmlui.aspect.submission.submit.InitialQuestionsStep</xmlui-binding>
 	    <workflow-editable>true</workflow-editable>
 	  </step> -->
+
+       <!--Step 1 will be to add a project.-->
+       <step>
+           <heading>submit.progressbar.project</heading>
+           <processing-class>org.dspace.submit.step.ProjectStep</processing-class>
+           <jspui-binding>org.dspace.app.webui.submit.step.JSPDescribeStep</jspui-binding>
+           <xmlui-binding>org.dspace.app.xmlui.aspect.submission.submit.ProjectStep</xmlui-binding>
+           <workflow-editable>true</workflow-editable>
+       </step>
       
       <!--Step 2 will be to Describe the item.-->
       <step>

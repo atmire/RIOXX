@@ -2509,4 +2509,17 @@
 		<p><a href="http://www.rioxx.net/licenses/all-rights-reserved">http://www.rioxx.net/licenses/all-rights-reserved</a></p>
 		<p><a href="http://www.rioxx.net/licenses/under-embargo-all-rights-reserved">http://www.rioxx.net/licenses/under-embargo-all-rights-reserved</a></p>
 	</message>
+
+
+	<message key="xmlui.Submission.submit.ProjectStep.head">Projects</message>
+	<message key="xmlui.Submission.submit.progressbar.project">Projects</message>
+	<message key="xmlui.Submission.submit.ProjectStep.project.label">Project</message>
+	<message key="xmlui.Submission.submit.ProjectStep.project.hint">Select an existing project or fill in a new project</message>
+	<message key="xmlui.Submission.submit.ProjectStep.funder.label">Funder</message>
+	<message key="xmlui.Submission.submit.ProjectStep.funder.hint">Select a funder if you want to add a new project</message>
+	<message key="xmlui.Submission.submit.ProjectStep.remove">Remove</message>
+	<message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>
+	<message key="xmlui.Submission.submit.ProjectStep.lookup_project_error">Unable to find the project..</message>
+
+
 </catalogue>
