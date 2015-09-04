@@ -85,27 +85,6 @@
        </field>
 
        <field>
-         <dc-schema>rioxxterms</dc-schema>
-         <dc-element>funder</dc-element>
-         <repeatable>true</repeatable>
-         <label>Funder</label>
-         <input-type>onebox</input-type>
-         <hint>Use the lookup functionality to select the funder of your resource. If the funder is not included in the list, you may enter the funder’s name manually. If the resource is funded internally, search for your own institution in the list or enter it manually if it does not appear in the list.</hint>
-         <required></required>
-       </field>
-
-         <field>
-             <dc-schema>rioxxterms</dc-schema>
-             <dc-element>identifier</dc-element>
-             <dc-qualifier>project</dc-qualifier>
-             <repeatable>true</repeatable>
-             <label>Project id</label>
-             <input-type>onebox</input-type>
-             <hint>The element MUST contain one project ID, an alphanumeric identifier provided by the funder in its original format. In cases where the resource has been funded internally, an appropriate internal code might be used.</hint>
-             <required>You must enter a project ID.</required>
-         </field>
-
-       <field>
          <dc-schema>dc</dc-schema>
          <dc-element>publisher</dc-element>
          <dc-qualifier></dc-qualifier>
