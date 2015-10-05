@@ -189,21 +189,21 @@
                 </rioxxterms:version_of_record>
             </xsl:for-each>
 
-            <xsl:variable name="projectIdentifier">
-                <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value']"/>
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='funder']/doc:element/doc:field[@name='value']">
+                <xsl:variable name="pos">
+                    <xsl:value-of select="position()"/>
+                </xsl:variable>
 
-            </xsl:variable>
-            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='funder']">
                 <rioxxterms:project>
                     <xsl:attribute name="rioxxterms:funder_name">
-                        <xls:value-of select="doc:element/doc:field[@name='value']"/>
+                        <xls:value-of select="."/>
                     </xsl:attribute>
-                    <xsl:if test="doc:element/doc:field[@name='authorityID']">
+                    <xsl:if test="../doc:field[@name='authorityID'][position()=$pos]">
                         <xsl:attribute name="rioxxterms:funder_id">
-                            <xls:value-of select="doc:element/doc:field[@name='authorityID']"/>
+                            <xls:value-of select="../doc:field[@name='authorityID'][position()=$pos]"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <xsl:value-of select="$projectIdentifier"/>
+                    <xsl:value-of select="../../../doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value'][position()=$pos]"/>
                 </rioxxterms:project>
             </xsl:for-each>
         </rioxx:rioxx>
