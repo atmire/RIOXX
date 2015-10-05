@@ -54,6 +54,25 @@ public class ProjectStep extends AbstractSubmissionStep {
         newProject = (ProjectAuthorityValue) request.getSession().getAttribute("newProject");
     }
 
+    public void addPageMeta(PageMeta pageMeta) throws SAXException, WingException,
+            UIException, SQLException, IOException, AuthorizeException
+    {
+        super.addPageMeta(pageMeta);
+        int collectionID = submission.getCollection().getID();
+        pageMeta.addMetadata("choice", "collection").addContent(String.valueOf(collectionID));
+        pageMeta.addMetadata("stylesheet", "screen", "datatables", true).addContent("../../static/Datatables/DataTables-1.8.0/media/css/datatables.css");
+        pageMeta.addMetadata("javascript", "static", "datatables", true).addContent("static/Datatables/DataTables-1.8.0/media/js/jquery.dataTables.min.js");
+        pageMeta.addMetadata("stylesheet", "screen", "person-lookup", true).addContent("../../static/css/authority/person-lookup.css");
+        pageMeta.addMetadata("javascript", null, "person-lookup", true).addContent("../../static/js/person-lookup.js");
+
+
+        String jumpTo = submissionInfo.getJumpToField();
+        if (jumpTo != null)
+        {
+            pageMeta.addMetadata("page", "jumpTo").addContent(jumpTo);
+        }
+    }
+
     @Override
     public void addBody(Body body) throws SAXException, WingException, UIException, SQLException, IOException, AuthorizeException, ProcessingException {
         Item item = submission.getItem();

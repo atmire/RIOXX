@@ -8,6 +8,7 @@
 function AuthorLookup(url, authorityInput, collectionID) {
 
     var funderField = url.indexOf("rioxxterms_funder") != -1;
+    var projectField = url.indexOf("rioxxterms_identifier_project") != -1;
 
 //    TODO i18n
     var content = $('<div title="Lookup">' +
@@ -122,17 +123,18 @@ function AuthorLookup(url, authorityInput, collectionID) {
                 var vcard = wrapper.find('.vcard');
                 vcard.data('authorityID', aData['authority']);
                 vcard.data('name', aData['value']);
+                vcard.data('funder', aData['Funder']);
 
                 var notDisplayed = ['insolr', 'value', 'authority'];
                 var predefinedOrder = ['last-name', 'first-name'];
-                if (funderField) {
+                if (funderField || projectField) {
                     notDisplayed.push(['last-name', 'first-name']);
                     predefinedOrder = [];
                 }
                 var variable = vcard.find('.variable');
                 variable.empty();
 
-                    if(!funderField) {
+                    if(!funderField && !projectField) {
                 predefinedOrder.forEach(function (entry) {
                     variableItem(aData, entry, variable);
                 });
@@ -183,6 +185,10 @@ function AuthorLookup(url, authorityInput, collectionID) {
                         }
                         else { // other input types
                             $('input[name=' + authorityInput + ']').val(vcard.data('name'));
+
+                            if(projectField){
+                                $('input[name=rioxxterms_funder]').val(vcard.data('funder'));
+                            }
                         }
 
                         $('input[name=' + authorityInput + '_authority]').val(vcard.data('authorityID'));
