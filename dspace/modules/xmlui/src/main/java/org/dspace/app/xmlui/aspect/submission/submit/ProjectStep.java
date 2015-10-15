@@ -38,9 +38,8 @@ public class ProjectStep extends AbstractSubmissionStep {
     protected static final Message T_required_field = message("xmlui.Submission.submit.DescribeStep.required_field");
 
     protected static final Message T_project_label = message("xmlui.Submission.submit.ProjectStep.project.label");
-    protected static final Message T_project_hint = message("xmlui.Submission.submit.ProjectStep.project.hint");
     protected static final Message T_funder_label = message("xmlui.Submission.submit.ProjectStep.funder.label");
-    protected static final Message T_funder_hint = message("xmlui.Submission.submit.ProjectStep.funder.hint");
+    protected static final Message T_project_funder_hint = message("xmlui.Submission.submit.ProjectStep.project_funder.hint");
     protected static final Message T_remove = message("xmlui.Submission.submit.ProjectStep.remove");
     protected static final Message T_create_project_error = message("xmlui.Submission.submit.ProjectStep.create_project_error");
     protected static final Message T_lookup_project_error = message("xmlui.Submission.submit.ProjectStep.lookup_project_error");
@@ -87,10 +86,12 @@ public class ProjectStep extends AbstractSubmissionStep {
         form.setHead(T_head);
 
         String fieldName = "rioxxterms_identifier_project";
-        renderOneboxField(form, fieldName, false, true, T_project_label, T_project_hint);
+        renderOneboxField(form, fieldName, false, true, T_project_label, null);
 
         fieldName = "rioxxterms_funder";
-        renderOneboxField(form, fieldName, true, false, T_funder_label, T_funder_hint);
+        renderOneboxField(form, fieldName, true, false, T_funder_label, null);
+
+        form.addItem().addHidden("project_funder_help").setValue(T_project_funder_hint);
 
         Metadatum[] dcValues = item.getMetadata("rioxxterms", "identifier", "project", Item.ANY);
 
@@ -141,7 +142,9 @@ public class ProjectStep extends AbstractSubmissionStep {
 
         // Setup the select field
         text.setLabel(label);
-        text.setHelp(hint);
+        if(hint!=null) {
+            text.setHelp(hint);
+        }
         String fieldKey = MetadataAuthorityManager.makeFieldKey("rioxxterms", "identifier", "project");
         text.setAuthorityControlled();
         text.setAuthorityRequired(MetadataAuthorityManager.getManager().isAuthorityRequired(fieldKey));

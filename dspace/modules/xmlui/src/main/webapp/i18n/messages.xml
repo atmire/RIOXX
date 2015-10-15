@@ -2375,6 +2375,8 @@
   <message key="xmlui.ChoiceLookupTransformer.results">Results @1@ to @2@ of @3@ for "@4@"</message>
   <message key="xmlui.ChoiceLookupTransformer.fail">Failed to load choice data: </message>
   <message key="xmlui.ChoiceLookupTransformer.lookup">Lookup</message>
+	<message key="xmlui.ChoiceLookupTransformer.lookup_project">Lookup Project</message>
+	<message key="xmlui.ChoiceLookupTransformer.lookup_funder">Lookup Funder</message>
 
   <!-- Choice Lookup - sample config for dc.publisher field -->
   <message key="xmlui.ChoiceLookupTransformer.field.dc_publisher.help">Name of Publisher</message>
@@ -2514,9 +2516,11 @@
 	<message key="xmlui.Submission.submit.ProjectStep.head">Projects</message>
 	<message key="xmlui.Submission.submit.progressbar.project">Projects</message>
 	<message key="xmlui.Submission.submit.ProjectStep.project.label">Project</message>
-	<message key="xmlui.Submission.submit.ProjectStep.project.hint">Select an existing project or fill in a new project</message>
 	<message key="xmlui.Submission.submit.ProjectStep.funder.label">Funder</message>
-	<message key="xmlui.Submission.submit.ProjectStep.funder.hint">Select a funder if you want to add a new project</message>
+	<message key="xmlui.Submission.submit.ProjectStep.project_funder.hint"><p>To add a new project fill in the project name in the first field, then click "Lookup Funder" to select the funder that is associated with this project.</p>
+	<p>To add an existing project click on "Lookup Project" to select a project. The funder associated with the selected project will automatically be filled in.</p>
+		<p>When both the project and funder fields are filled in, click on "Add" to add the project to the item. </p>
+	</message>
 	<message key="xmlui.Submission.submit.ProjectStep.remove">Remove</message>
 	<message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>
 	<message key="xmlui.Submission.submit.ProjectStep.lookup_project_error">Unable to find the project..</message>
