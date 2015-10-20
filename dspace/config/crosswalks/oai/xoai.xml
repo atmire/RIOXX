@@ -9,7 +9,7 @@
 
 	Developed by DSpace @ Lyncode <dspace@lyncode.com>
  -->
-<Configuration indented="false" maxListIdentifiersSize="100" maxListRecordsSize="100"
+<Configuration indented="true" maxListIdentifiersSize="100" maxListRecordsSize="100"
                maxListSetsSize="100" stylesheet="static/style.xsl"
                xmlns="http://www.lyncode.com/XOAIConfiguration">
 
@@ -82,6 +82,24 @@
                 This contexts complies with OpenAIRE rules.
             </Description>
         </Context>
+
+        <!--
+            RIOXX Guidelines 2.0:
+
+            - http://rioxx.net/v2-0-final/
+
+         -->
+        <Context baseurl="rioxx" name="Rioxx Context">
+            <!-- Date format, field prefixes, etc are ensured by the transformer -->
+            <Transformer ref="rioxxTransformer"/>
+            <!-- Metadata Formats -->
+            <Format ref="rioxx"/>
+            <Format ref="xoai"/>
+            <Description>
+                This contexts complies with RIOXX rules.
+            </Description>
+        </Context>
+
     </Contexts>
 
 
@@ -167,6 +185,21 @@
             <Namespace>http://irdb.nii.ac.jp/oai</Namespace>
             <SchemaLocation>http://irdb.nii.ac.jp/oai/junii2-3-1.xsd</SchemaLocation>
         </Format>
+        <Format id="rioxx">
+            <Prefix>rioxx</Prefix>
+            <XSLT>metadataFormats/rioxx.xsl</XSLT>
+            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
+            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+            <Filter ref="rioxxFilter"/>
+        </Format>
+
+        <Format id="rioxx">
+            <Prefix>rioxx</Prefix>
+            <XSLT>metadataFormats/rioxx.xsl</XSLT>
+            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
+            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+            <Filter ref="rioxxFilter"/>
+        </Format>
     </Formats>
 
     <Transformers>
@@ -176,6 +209,10 @@
         <Transformer id="openaireTransformer">
             <XSLT>transformers/openaire.xsl</XSLT>
         </Transformer>
+        <Transformer id="rioxxTransformer">
+            <XSLT>transformers/rioxx.xsl</XSLT>
+        </Transformer>
+
     </Transformers>
 
 
@@ -278,6 +315,20 @@
             </Definition>
         </Filter>
 
+        <Filter id="rioxxFilter">
+            <Definition>
+                <And>
+                    <LeftCondition>
+                        <Custom ref="rioxxTypeExistsCondition"/>
+                    </LeftCondition>
+                    <RightCondition>
+                        <Custom ref="itemsWithBitstreamsFilter"/>
+                    </RightCondition>
+                </And>
+            </Definition>
+
+        </Filter>
+
         <!-- UKETD Filter for records returned by OAI-PMH.
              By default, return an Item record:
                 * If it is a "thesis"
@@ -321,6 +372,15 @@
             </Configuration>
         </CustomCondition>
 
+        <CustomCondition id="rioxxTypeExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">dc.type</string>
+                    <string name="field">rioxxterms.type</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
         <!-- This condition determines if an Item has a "dc.contributor.author" -->
         <CustomCondition id="authorExistsCondition">
             <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
@@ -403,6 +463,11 @@
                 <string name="value">info:eu-repo/grantAgreement/EC/FP</string>
             </Configuration>
         </CustomCondition>
+
+        <CustomCondition id="itemsWithBitstreamsFilter">
+            <Class>org.dspace.xoai.filter.ItemsWithBitstreamFilter</Class>
+        </CustomCondition>
+
     </Filters>
 
     <Sets>
@@ -416,5 +481,11 @@
             <Name>EC_fundedresources set</Name>
             <!-- Just an alias -->
         </Set>
+        <Set id="rioxxSet">
+            <Spec>rioxx</Spec>
+            <Name>RIOXX set</Name>
+            <!-- Just an alias -->
+        </Set>
+
     </Sets>
 </Configuration>
