@@ -19,12 +19,7 @@ import java.sql.SQLException;
  */
 public class ItemsWithBitstreamFilter extends DSpaceFilter {
 
-    private Context context;
     private static Logger log = LogManager.getLogger(ItemsWithBitstreamFilter.class);
-
-    public ItemsWithBitstreamFilter(Context context) {
-        this.context = context;
-    }
 
     @Override
     public DatabaseFilterResult buildDatabaseQuery(Context context) {
