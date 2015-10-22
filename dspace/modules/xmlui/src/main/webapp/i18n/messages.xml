@@ -2517,9 +2517,8 @@
 	<message key="xmlui.Submission.submit.progressbar.project">Projects</message>
 	<message key="xmlui.Submission.submit.ProjectStep.project.label">Project</message>
 	<message key="xmlui.Submission.submit.ProjectStep.funder.label">Funder</message>
-	<message key="xmlui.Submission.submit.ProjectStep.project_funder.hint"><p>To add a new project fill in the project name in the first field, then click "Lookup Funder" to select the funder that is associated with this project.</p>
-	<p>To add an existing project click on "Lookup Project" to select a project. The funder associated with the selected project will automatically be filled in.</p>
-		<p>When both the project and funder fields are filled in, click on "Add" to add the project to the item. </p>
+	<message key="xmlui.Submission.submit.ProjectStep.project_funder.hint"><p>Please first verify if the project you are trying to associate with this submission already exists. Click on “Lookup Project” to search for an existing project identifier that was already associated with another submission. When selected, the associated funder will be automatically filled out as well.</p>
+	<p>If you have established that the project was not entered before in this repository, you can create a new project. To associate this submission with a new project, please enter the project’s identifier, as provided by the associated funder. After filling out this identifier, click “Lookup Funder” to associate the correct funder. It is not possible to provide a free text entry for the associated funder. If your funder does not appear in the list, please contact {0}.</p>
 	</message>
 	<message key="xmlui.Submission.submit.ProjectStep.remove">Remove</message>
 	<message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>

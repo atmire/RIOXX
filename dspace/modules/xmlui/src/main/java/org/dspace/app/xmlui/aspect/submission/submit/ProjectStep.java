@@ -18,6 +18,7 @@ import org.dspace.content.Item;
 import org.dspace.content.Metadatum;
 import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.content.authority.MetadataAuthorityManager;
+import org.dspace.core.ConfigurationManager;
 import org.dspace.project.ProjectService;
 import org.dspace.utils.DSpace;
 import org.xml.sax.SAXException;
@@ -91,7 +92,7 @@ public class ProjectStep extends AbstractSubmissionStep {
         fieldName = "rioxxterms_funder";
         renderOneboxField(form, fieldName, true, false, T_funder_label, null);
 
-        form.addItem().addHidden("project_funder_help").setValue(T_project_funder_hint);
+        form.addItem().addHidden("project_funder_help").setValue(ConfigurationManager.getProperty("mail.admin"));
 
         Metadatum[] dcValues = item.getMetadata("rioxxterms", "identifier", "project", Item.ANY);
 

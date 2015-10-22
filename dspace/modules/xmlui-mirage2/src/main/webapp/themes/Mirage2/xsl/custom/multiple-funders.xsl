@@ -39,9 +39,18 @@
                 <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project']"/>
             </div>
 
-            <i18n:text>
-                <xsl:value-of select="//dri:field[@id='aspect.submission.StepTransformer.field.project_funder_help']/dri:value"/>
-            </i18n:text>
+            <i18n:translate>
+                <i18n:text>xmlui.Submission.submit.ProjectStep.project_funder.hint</i18n:text>
+                <i18n:param>
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:text>mailto:</xsl:text>
+                            <xsl:value-of select="//dri:field[@id='aspect.submission.StepTransformer.field.project_funder_help']/dri:value"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="//dri:field[@id='aspect.submission.StepTransformer.field.project_funder_help']/dri:value"/>
+                    </a>
+                </i18n:param>
+            </i18n:translate>
 
             <br/>
 
