@@ -34,6 +34,7 @@
                 <bean class="org.dspace.authority.FunderAuthorityValue"/>
                 <bean class="org.dspace.authority.orcid.OrcidAuthorityValue"/>
                 <bean class="org.dspace.authority.PersonAuthorityValue"/>
+                <bean class="org.dspace.authority.ProjectAuthorityValue"/>
             </list>
         </property>
         <property name="fieldDefaults">
@@ -43,6 +44,9 @@
                 </entry>
                 <entry key="dc_contributor_author">
                     <bean class="org.dspace.authority.PersonAuthorityValue"/>
+                </entry>
+                <entry key="rioxxterms_identifier_project">
+                    <bean class="org.dspace.authority.ProjectAuthorityValue"/>
                 </entry>
             </map>
         </property>
@@ -64,5 +68,7 @@
               <ref bean="OrcidSource" />
         </entry>
     </util:map>
+
+    <bean name="ProjectService" class="org.dspace.project.ProjectService"/>
 
 </beans>

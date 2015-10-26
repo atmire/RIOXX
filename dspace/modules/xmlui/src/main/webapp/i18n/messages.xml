@@ -2375,6 +2375,8 @@
   <message key="xmlui.ChoiceLookupTransformer.results">Results @1@ to @2@ of @3@ for "@4@"</message>
   <message key="xmlui.ChoiceLookupTransformer.fail">Failed to load choice data: </message>
   <message key="xmlui.ChoiceLookupTransformer.lookup">Lookup</message>
+    <message key="xmlui.ChoiceLookupTransformer.lookup_project">Lookup Project</message>
+    <message key="xmlui.ChoiceLookupTransformer.lookup_funder">Lookup Funder</message>
 
   <!-- Choice Lookup - sample config for dc.publisher field -->
   <message key="xmlui.ChoiceLookupTransformer.field.dc_publisher.help">Name of Publisher</message>
@@ -2509,4 +2511,16 @@
 		<p><a href="http://www.rioxx.net/licenses/all-rights-reserved">http://www.rioxx.net/licenses/all-rights-reserved</a></p>
 		<p><a href="http://www.rioxx.net/licenses/under-embargo-all-rights-reserved">http://www.rioxx.net/licenses/under-embargo-all-rights-reserved</a></p>
 	</message>
+
+    <message key="xmlui.Submission.submit.ProjectStep.head">Projects</message>
+    <message key="xmlui.Submission.submit.progressbar.project">Projects</message>
+    <message key="xmlui.Submission.submit.ProjectStep.project.label">Project</message>
+    <message key="xmlui.Submission.submit.ProjectStep.funder.label">Funder</message>
+    <message key="xmlui.Submission.submit.ProjectStep.project_funder.hint"><p>Please first verify if the project you are trying to associate with this submission already exists. Click on “Lookup Project” to search for an existing project identifier that was already associated with another submission. When selected, the associated funder will be automatically filled out as well.</p>
+        <p>If you have established that the project was not entered before in this repository, you can create a new project. To associate this submission with a new project, please enter the project’s identifier, as provided by the associated funder. After filling out this identifier, click “Lookup Funder” to associate the correct funder. It is not possible to provide a free text entry for the associated funder. If your funder does not appear in the list, please contact {0}.</p>
+    </message>
+    <message key="xmlui.Submission.submit.ProjectStep.remove">Remove</message>
+    <message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>
+    <message key="xmlui.Submission.submit.ProjectStep.lookup_project_error">Unable to find the project..</message>
+
 </catalogue>

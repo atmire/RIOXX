@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 
 
     The contents of this file are subject to the license and copyright
@@ -7,8 +7,8 @@
     tree and available online at
 
     http://www.dspace.org/license/
-    
-	Developed by DSpace @ Lyncode <dspace@lyncode.com> 
+
+	Developed by DSpace @ Lyncode <dspace@lyncode.com>
 	Following Driver Guidelines 2.0:
 		- http://www.driver-support.eu/managers.html#guidelines
 
@@ -81,6 +81,13 @@
                 <xsl:text>Other</xsl:text>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']">
+
+    </xsl:template>
+
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][descendant-or-self::doc:element[@name='bitstream']/doc:field[@name='primary']='true']">
+        <xsl:copy-of select="." />
     </xsl:template>
 
     <!--RIOXX types without DSpace equivalent-->

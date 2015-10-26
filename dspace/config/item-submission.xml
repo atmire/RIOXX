@@ -198,7 +198,9 @@
 	    <workflow-editable>true</workflow-editable>
 	  </step> -->
       
-      <!--Step 2 will be to Describe the item.-->
+
+
+      <!--Step 1 will be to Describe the item.-->
       <step>
         <heading>submit.progressbar.describe</heading>
         <processing-class>org.dspace.submit.step.DescribeStep</processing-class>
@@ -206,6 +208,15 @@
 		<xmlui-binding>org.dspace.app.xmlui.aspect.submission.submit.DescribeStep</xmlui-binding>
         <workflow-editable>true</workflow-editable>
       </step>
+
+       <!--Step 2 will be to add a project.-->
+       <step>
+           <heading>submit.progressbar.project</heading>
+           <processing-class>org.dspace.submit.step.ProjectStep</processing-class>
+           <jspui-binding>org.dspace.app.webui.submit.step.JSPDescribeStep</jspui-binding>
+           <xmlui-binding>org.dspace.app.xmlui.aspect.submission.submit.ProjectStep</xmlui-binding>
+           <workflow-editable>true</workflow-editable>
+       </step>
 
        <!--Step 3 will be to Manage Item access.
        <step>
