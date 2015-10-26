@@ -45,7 +45,7 @@ public class AuthorityValueFinder {
     }
 
     public List<AuthorityValue> findByExactValue(Context context, String field, String value) {
-        String queryString = "value:\"" + value + "\" AND field:" + field;
+        String queryString = "value:\"" + value + "\" AND field:\"" + field + "\"";
         return find(context, queryString);
     }
 
@@ -55,8 +55,14 @@ public class AuthorityValueFinder {
         return findings.size() > 0 ? findings.get(0) : null;
     }
 
+    public AuthorityValue findByProjectID(Context context, String projectID) {
+        String queryString = "value:\"" + projectID + "\"";
+        List<AuthorityValue> findings = find(context, queryString);
+        return findings.size() > 0 ? findings.get(0) : null;
+    }
+
     public List<AuthorityValue> findByValue(Context context, String field, String value) {
-        String queryString = "value:" + value + " AND field:" + field;
+        String queryString = "value:\"" + value + "\" AND field:\"" + field + "\"";
         return find(context, queryString);
     }
 
@@ -66,20 +72,20 @@ public class AuthorityValueFinder {
     }
 
     public AuthorityValue findByOrcidID(Context context, String orcid_id) {
-        String queryString = "orcid_id:" + orcid_id;
+        String queryString = "orcid_id:\"" + orcid_id + "\"";
         List<AuthorityValue> findings = find(context, queryString);
         return findings.size() > 0 ? findings.get(0) : null;
     }
 
     public List<AuthorityValue> findByName(Context context, String schema, String element, String qualifier, String name) {
         String field = fieldParameter(schema, element, qualifier);
-        String queryString = "first_name:" + name + " OR last_name:" + name + " OR name_variant:" + name + " AND field:" + field;
+        String queryString = "first_name:\"" + name + "\" OR last_name:\"" + name + "\" OR name_variant:\"" + name + "\" AND field:\"" + field + "\"";
         return find(context, queryString);
     }
 
     public List<AuthorityValue> findByAuthorityMetadata(Context context, String schema, String element, String qualifier, String value) {
         String field = fieldParameter(schema, element, qualifier);
-        String queryString = "all_Labels:" + value + " AND field:" + field;
+        String queryString = "all_Labels:\"" + value + "\" AND field:\"" + field + "\"";
         return find(context, queryString);
     }
 
