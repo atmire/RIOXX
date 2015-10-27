@@ -62,7 +62,7 @@ Existing fields from the dc and dcterms namespace were used where possible. A nu
 |  DSpace metadata   |  RIOXX element    |   example DSpace value |  example RIOXX value    |    
 | ------------------ | ----------------- | ---------------------- | ----------------------- |
 | Bitstream metadata|ali:free_to_read | See separate table with bitstream derived metadata below. | See separate table with bitstream derived metadata below.
-| dc.rights.uri | ali:license_ref  |  [http://creativecommons.org/licenses/by/3.0/igo/](http://creativecommons.org/licenses/by/3.0/igo/)|  `<ali:license_ref start_date="2015-01-20"> ` <br> ` http://creativecommons.org/licenses/by/3.0/igo/ ` <br> ` </ali:license_ref> ` |
+| dc.rights.uri | ali:license_ref  |  [http://creativecommons.org/licenses/by/3.0/igo/](http://creativecommons.org/licenses/by/3.0/igo/)|  `XML <ali:license_ref start_date="2015-01-20"> ` <br> ` http://creativecommons.org/licenses/by/3.0/igo/ ` <br> ` </ali:license_ref> ` |
 | dc.date.issued| ali:license_ref:startdate | 2015-01-20| ` <ali:license_ref start_date="2015-01-20"> ` <br> `  http://creativecommons.org/licenses/by/3.0/igo/ `<br> `</ali:license_ref> `|
 | dc.coverage| dc:coverage| Columbus, Ohio, USA; Lat: 39 57 N Long: 082 59 W| ` <dc:coverage> ` <br>  ` Columbus, Ohio, USA; Lat: 39 57 N Long: 082 59 W ` <br> ` </dc:coverage> `|
 | dc.description.abstract| dc:description| example item | ` <dc:description> `<br> `example item`<br>`</dc:description>`|
