@@ -134,11 +134,11 @@ Right now, this only affects institutions that use the XMLUI, since the JSPUI ha
 
 ## Prerequisites ##
 
-The RIOXX application profile has been released as a "patch" for DSpace as this allows for the easiest installation process of the incremental codebase. The code needed to install and deploy the RIOXX Application Profile can be found in the "//**rioxx_changes.patch**//" patch file, which needs to be applied to your DSpace source code.
+The RIOXX application profile has been released as a "patch" for DSpace as this allows for the easiest installation process of the incremental codebase. The code needed to install and deploy the RIOXX Application Profile can be found in the *rioxx_changes.patch* patch file, which needs to be applied to your DSpace source code.
 
 **__Important note__**: Below, we will explain you how to apply the patch to your existing installation. This will affect your source code. Before applying a patch, it is **always** recommended to create backup of your DSpace source code.
 
-In order to apply the patch, you will need to locate the **DSpace source code** on your server. That source code directory contains a directory â€œ *dspace* â€, as well as the following files: " _LICENSE_", " _NOTICE_ ", " _README_ ", ....
+In order to apply the patch, you will need to locate the **DSpace source code** on your server. That source code directory contains a directory _dspace_ , as well as the following files:  _LICENSE_,  _NOTICE_ ,  _README_ , ....
 
 For every release of DSpace, generally two release packages are available. One package has "src" in its name and the other one doesn't. The difference is that the release labelled "src" contains ALL of the DSpace source code, while the other release retrieves precompiled packages for specific DSpace artifacts from maven central. **The RIOXX patches were designed to work on both "src" and other release packages of DSpace**. 
 
@@ -175,7 +175,10 @@ pom.xml
 ### 2. Run the Git command to check whether the patch can be correctly applied. ###
 
 Run the following command where <patch file> needs to be replaced with the name of the patch:
-git apply ~-~-check <patch file>
+
+``` 
+git apply --check <patch file>
+```
 
 This command will return whether it is possible to apply the patch to your installation. This should pose no problems in case the DSpace is not customized or in case not much customizations are present.   
 In case, the check is successful, the patch can be installed as explained in the next steps. 
@@ -356,4 +359,3 @@ The RIOXX OAI-PMH endpoint has been developed in such a way that it only exposes
 
 According to the specification, dc.source is mandatory where applicable (ISSN or ISBN). Currently, DSpace is not enforcing this in the OAI-PMH endpoint and will just expose ISSN or ISBN when they are present in the metadata.   
 Again, aside from these metadatafields, make sure that the item contains a bitstream (file). Metadata records without bitstreams will not be exposed through the RIOXX OAI-PMH endpoint.
-~{~{/code}}
