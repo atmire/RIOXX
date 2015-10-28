@@ -138,7 +138,7 @@ The RIOXX application profile has been released as a "patch" for DSpace as this 
 
 **__Important note__**: Below, we will explain you how to apply the patch to your existing installation. This will affect your source code. Before applying a patch, it is **always** recommended to create backup of your DSpace source code.
 
-In order to apply the patch, you will need to locate the **DSpace source code** on your server. That source code directory contains a directory _dspace_ , as well as the following files:  _LICENSE_,  _NOTICE_ ,  _README_ , ....
+In order to apply the patch, you will need to locate the **DSpace source code** on your server. That source code directory contains a directory _dspace_, as well as the following files:  _LICENSE_,  _NOTICE_ ,  _README_ , ....
 
 For every release of DSpace, generally two release packages are available. One package has "src" in its name and the other one doesn't. The difference is that the release labelled "src" contains ALL of the DSpace source code, while the other release retrieves precompiled packages for specific DSpace artifacts from maven central. **The RIOXX patches were designed to work on both "src" and other release packages of DSpace**. 
 
