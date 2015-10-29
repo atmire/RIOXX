@@ -82,6 +82,13 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']">
+
+    </xsl:template>
+
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][descendant-or-self::doc:element[@name='bitstream']/doc:field[@name='primary']='true']">
+        <xsl:copy-of select="." />
+    </xsl:template>
 
     <!--RIOXX types without DSpace equivalent-->
     <xsl:variable name="nonSuppressedTypes">
