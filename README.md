@@ -133,8 +133,11 @@ Right now, this only affects institutions that use the XMLUI, since the JSPUI ha
 ## multiple funders and project <a name="multiple-funders"></a> ##
 
 The item submission has been updated with a new step called projects. This step allows the submitter to associate his submission with one or more projects. Each of these projects is associated with a funder. 
+
 Using the 'Lookup Project' button the submitter can lookup projects that are already associated with another submission. When a project is selected, the associated funder will be automatically filled out as well.
+
 if a project was not entered before, the submitter can create a new project. The new project's identifier must be filled out in the project input field and a funder to associate with the new project must be selected by using the 'Lookup Funder' button. 
+
 It is not possible to create a new funder during the submission, only existing funders can be selected. Refer to section [7. XMLUI only: Load Fundref authority data](#XMLUI-only) in the Patch Installation procedures to learn how to load funder data into DSpace.
 
 
