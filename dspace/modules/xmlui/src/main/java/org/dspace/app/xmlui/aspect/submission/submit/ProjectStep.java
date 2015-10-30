@@ -92,7 +92,7 @@ public class ProjectStep extends AbstractSubmissionStep {
         fieldName = "rioxxterms_funder";
         renderOneboxField(form, fieldName, true, false, T_funder_label, null);
 
-        form.addItem().addHidden("project_funder_help").setValue(ConfigurationManager.getProperty("mail.admin"));
+        form.addItem("project_funder_help","").addContent(T_project_funder_hint.parameterize(ConfigurationManager.getProperty("mail.admin")));
 
         Metadatum[] dcValues = item.getMetadata("rioxxterms", "identifier", "project", Item.ANY);
 

@@ -39,9 +39,7 @@
 
             <br/>
 
-            <i18n:text>
-                <xsl:value-of select="//dri:field[@id='aspect.submission.StepTransformer.field.project_funder_help']/dri:value"/>
-            </i18n:text>
+            <xsl:apply-templates select="dri:item[@id='aspect.submission.StepTransformer.item.project_funder_help']"/>
 
             <br/>
 

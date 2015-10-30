@@ -142,17 +142,6 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
-         <dc-schema>rioxxterms</dc-schema>
-         <dc-element>type</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Rioxxterms Type</label>
-         <input-type value-pairs-name="rioxxterms_types">dropdown</input-type>
-         <hint>Select the type(s) of content of the item. To select more than one value in the list, you may have to hold down the "CTRL" or "Shift" key.</hint>
-         <required></required>
-       </field>
-
-       <field>
          <dc-schema>dc</dc-schema>
          <dc-element>language</dc-element>
          <dc-qualifier>iso</dc-qualifier>
@@ -162,64 +151,6 @@ it, please enter the types and the actual numbers or codes.</hint>
          <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
          <required></required>
        </field>
-
-
-       <field>
-         <dc-schema>rioxxterms</dc-schema>
-         <dc-element>licenseref</dc-element>
-         <dc-qualifier>uri</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>License uri</label>
-         <input-type>onebox</input-type>
-         <hint>xmlui.Submission.submit.input.rioxxterms.licenseref.uri.hint</hint>
-         <required>you must enter the license uri</required>
-       </field>
-
-       <field>
-         <dc-schema>rioxxterms</dc-schema>
-         <dc-element>licenseref</dc-element>
-         <dc-qualifier>startdate</dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>License start date</label>
-         <input-type>date</input-type>
-         <hint>Please complete the date upon which the usage license takes effect.</hint>
-         <required>You must enter the date upon which the usage license takes effect.</required>
-       </field>
-
-       <field>
-         <dc-schema>dcterms</dc-schema>
-         <dc-element>dateAccepted</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Date accepted</label>
-         <input-type>date</input-type>
-         <hint>Enter the date of acceptation</hint>
-         <required>You must enter the date of acceptation</required>
-       </field>
-
-       <field>
-         <dc-schema>rioxxterms</dc-schema>
-         <dc-element>version</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Version</label>
-         <input-type value-pairs-name="rioxxterms_version">dropdown</input-type>
-         <hint>Select which version of the resource you are describing and for which you will upload the file.</hint>
-         <required>You must select the version</required>
-       </field>
-
-       <field>
-         <dc-schema>rioxxterms</dc-schema>
-         <dc-element>versionofrecord </dc-element>
-         <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Version of record (DOI)</label>
-         <input-type>onebox</input-type>
-         <hint>Please enter the persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this must be used.</hint>
-         <required></required>
-       </field>
-
-
      </page>
 
      <page number="2">
@@ -420,71 +351,14 @@ it, please enter the types and the actual numbers or codes.</hint>
      </pair>
    </value-pairs>
 
-   <value-pairs value-pairs-name="rioxxterms_types" dc-term="type">
-     <pair>
-       <displayed-value>Book</displayed-value>
-       <stored-value>Book</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Book chapter</displayed-value>
-       <stored-value>Book chapter</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Book edited</displayed-value>
-       <stored-value>Book edited</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Conference Paper/Proceeding/Abstract</displayed-value>
-       <stored-value>Conference Paper/Proceeding/Abstract</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Journal Article/Review</displayed-value>
-       <stored-value>Journal Article/Review</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Manual/Guide</displayed-value>
-       <stored-value>Manual/Guide</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Monograph</displayed-value>
-       <stored-value>Monograph</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Policy briefing report</displayed-value>
-       <stored-value>Policy briefing report</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Technical Report</displayed-value>
-       <stored-value>Technical Report</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Technical Standard</displayed-value>
-       <stored-value>Technical Standard</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Thesis</displayed-value>
-       <stored-value>Thesis</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Other</displayed-value>
-       <stored-value>Other</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Consultancy Report</displayed-value>
-       <stored-value>Consultancy Report</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Working paper</displayed-value>
-       <stored-value>Working paper</stored-value>
-     </pair>
-
-   </value-pairs>
-
-
    <!-- default language order: (from dspace 1.2.1)
         "en_US", "en", "es", "de", "fr", "it", "ja", "zh", "other", ""
      -->
    <value-pairs value-pairs-name="common_iso_languages" dc-term="language_iso">
+     <pair>
+       <displayed-value>N/A</displayed-value>
+       <stored-value></stored-value>
+     </pair>
      <pair>
        <displayed-value>English (United States)</displayed-value>
        <stored-value>en_US</stored-value>
@@ -526,42 +400,6 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>other</stored-value>
      </pair>
    </value-pairs>
-
-   <value-pairs value-pairs-name="rioxxterms_version" dc-term="rioxxterms_version">
-     <pair>
-       <displayed-value>Not Applicable (or Unknown)</displayed-value>
-       <stored-value>NA</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Author's Original</displayed-value>
-       <stored-value>AO</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Submitted Manuscript Under Review</displayed-value>
-       <stored-value>SMUR</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Accepted Manuscript</displayed-value>
-       <stored-value>AM</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Proof</displayed-value>
-       <stored-value>P</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Version of Record</displayed-value>
-       <stored-value>VoR</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Corrected Version of Record</displayed-value>
-       <stored-value>CVoR</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>Enhanced Version of Record</displayed-value>
-       <stored-value>EVoR</stored-value>
-     </pair>
-   </value-pairs>
-
 
  </form-value-pairs>
 
