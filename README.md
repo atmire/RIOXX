@@ -47,7 +47,7 @@ It is important to realize that your existing item metadata and item display pag
 
 Because the vast majority of institutions makes at least small tweaks to the submission forms, there is no opportunity to apply a patch to a standardized file. A template submission form file where the new RIOXX fields are highlighted can be found on Github:
 
-[https://github.com/atmire/RIOXX/compare/rc1...master](https://github.com/atmire/RIOXX/compare/rc1...master)
+[https://github.com/atmire/RIOXX/compare/rc1...master](https://github.com/atmire/RIOXX/compare/latest...withinputforms)
 
 # Metadata mapping <a name="Metadata-mapping"></a>
 
@@ -165,6 +165,8 @@ To be able to install the patch, you will need the following prerequisites:
 DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX/compare/unmodified...latest.patch)  
 DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch)  
 DSPACE 5.3 [https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch)
+DSPACE 4.x [https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX4x/compare/unmodified...latest.patch)  
+DSPACE 3.x [https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX3x/compare/unmodified...latest.patch)
 
 
 
