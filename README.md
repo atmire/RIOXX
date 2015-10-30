@@ -7,6 +7,7 @@
 	- [dc:source mandatory where applicable](#dcsource-mandatory)
 	- [dc:type fallback for rioxxterms:type](#dctype-fallback)
 	- [fundref id for funders and orcid id for authors](#fundref-id)
+	- [multiple funders and project](#multiple-funders)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
 	- [Obtaining a recent patch file](#Obtaining-recent-patch)
@@ -128,6 +129,16 @@ Fundref DOI's for funders and ORCID id's for authors are NOT stored in the actua
 The RIOXX OAI-PMH crosswalks retrieves the ORCIDs for authors and fundref ids for funders from the DSpace SOLR Authority cache. This feature was added in DSpace 5, but was backported to DSpace 3.x and 4.x as part of the RIOXX patch.
 
 Right now, this only affects institutions that use the XMLUI, since the JSPUI has no web UI yet for working with this authority cache. However, JSPUI institutions are still compliant with RIOXX as the string representations of funder and author are included in the RIOXX OAI-PMH crosswalk.
+
+## multiple funders and project <a name="multiple-funders"></a> ##
+
+The item submission has been updated with a new step called projects. This step allows the submitter to associate his submission with one or more projects. Each of these projects is associated with a funder. 
+
+Using the 'Lookup Project' button the submitter can lookup projects that are already associated with another submission. When a project is selected, the associated funder will be automatically filled out as well.
+
+if a project was not entered before, the submitter can create a new project. The new project's identifier must be filled out in the project input field and a funder to associate with the new project must be selected by using the 'Lookup Funder' button. 
+
+It is not possible to create a new funder during the submission, only existing funders can be selected. Refer to section [7. XMLUI only: Load Fundref authority data](#XMLUI-only) in the Patch Installation procedures to learn how to load funder data into DSpace.
 
 
 # Patch Installation Procedures <a name="Patch-installation-procedures"></a>#
