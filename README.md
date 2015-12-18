@@ -164,7 +164,7 @@ To be able to install the patch, you will need the following prerequisites:
 
 DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX/compare/unmodified...latest.patch)  
 DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch)  
-DSPACE 5.3 [https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch)
+DSPACE 5.3,5.4 [https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch)
 
 DSPACE 4.x [https://github.com/atmire/RIOXX4x/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX4x/compare/unmodified...latest.patch)
   
