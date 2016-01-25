@@ -184,8 +184,11 @@ public class ItemUtils {
 
 				for (Bitstream bts : bits) {
 					boolean primary=false;
-					if(b.getName().equals("ORIGINAL")&&(b.getPrimaryBitstreamID() != -1||bts.getID()==bits[0].getID()))
-						primary=true;
+                    // Check if current bitstream is in original bundle + 1 of the 2 following
+                    // Bitstream = primary bitstream in bundle -> true
+                    // No primary bitstream found in bundle-> only the first one gets flagged as "primary"
+                    if (b.getName().equals("ORIGINAL") && (b.getPrimaryBitstreamID() == bts.getID() || b.getPrimaryBitstreamID() == -1 && bts.getID() == bits[0].getID()))
+                        primary = true;
 					Bitstream  bit=bts;
 
 					if (bit != null) {
