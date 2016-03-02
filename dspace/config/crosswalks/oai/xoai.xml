@@ -92,7 +92,9 @@
         <Context baseurl="rioxx" name="Rioxx Context">
             <!-- Date format, field prefixes, etc are ensured by the transformer -->
             <Transformer ref="rioxxTransformer"/>
+            <Filter red="rioxxFilter"/>
             <!-- Metadata Formats -->
+	        <Format ref="oaidc"/>
             <Format ref="rioxx"/>
             <Format ref="xoai"/>
             <Description>
@@ -190,15 +192,6 @@
             <XSLT>metadataFormats/rioxx.xsl</XSLT>
             <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
             <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
-            <Filter ref="rioxxFilter"/>
-        </Format>
-
-        <Format id="rioxx">
-            <Prefix>rioxx</Prefix>
-            <XSLT>metadataFormats/rioxx.xsl</XSLT>
-            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
-            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
-            <Filter ref="rioxxFilter"/>
         </Format>
     </Formats>
 
@@ -282,10 +275,66 @@
             <Definition>
                 <And>
                     <LeftCondition>
+                        <And>
+                            <LeftCondition>
+                                <Custom ref="titleExistsCondition"/>
+                            </LeftCondition>
+                            <RightCondition>
+                                <And>
+                                    <LeftCondition>
+                                        <Custom ref="authorExistsCondition"/>
+                                    </LeftCondition>
+                                    <RightCondition>
+                                        <And>
+                                            <LeftCondition>
+                                                <Custom ref="rioxxProjectExistsCondition"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="rioxxFunderExistsCondition"/>
+                                            </RightCondition>
+                                        </And>
+                                    </RightCondition>
+                                </And>
+                            </RightCondition>
+                        </And>
+                    </LeftCondition>
+                    <RightCondition>
+                        <And>
+                            <LeftCondition>
+                                <And>
+                                    <LeftCondition>
                         <Custom ref="rioxxTypeExistsCondition"/>
                     </LeftCondition>
                     <RightCondition>
+                                        <Custom ref="rioxxLicenseExistsCondition"/>
+                                    </RightCondition>
+                                </And>
+                            </LeftCondition>
+                            <RightCondition>
+                                <And>
+                                    <LeftCondition>
+                                        <And>
+                                            <LeftCondition>
+                                                <Custom ref="rioxxDctermsdateacceptedExistsCondition"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="rioxxtermsversionCondition"/>
+                                            </RightCondition>
+                                        </And>
+                                    </LeftCondition>
+                                    <RightCondition>
+                                        <And>
+                                            <LeftCondition>
                         <Custom ref="itemsWithBitstreamsFilter"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="rioxxLangExistsCondition"/>
+                                            </RightCondition>
+                                        </And>
+                                    </RightCondition>
+                                </And>
+                            </RightCondition>
+                        </And>
                     </RightCondition>
                 </And>
             </Definition>
@@ -335,6 +384,57 @@
                     <string name="field">dc.type</string>
                     <string name="field">rioxxterms.type</string>
                 </list>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="rioxxProjectExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">rioxxterms.identifier.project</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+        <CustomCondition id="rioxxFunderExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">rioxxterms.funder</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="rioxxLicenseExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">rioxxterms.licenseref.uri</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+       <CustomCondition id="rioxxLangExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">dc.language.iso</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="rioxxDctermsdateacceptedExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">dcterms.dateAccepted</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="rioxxtermsversionCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">rioxxterms.version</string>
             </Configuration>
         </CustomCondition>
 
