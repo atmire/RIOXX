@@ -78,8 +78,9 @@ Existing fields from the dc and dcterms namespace were used where possible. A nu
 | dc.title| dc:title| Title:Subtitle|`<dc:title>`<br>`Title:Subtitle`<br>`</dc:title>` |
 | dcterms.dateAccepted| dcterms:dateAccepted| 2015-02-10|`<dcterms:dateAccepted>`<br>`2015-02-10`<br>`</dcterms:dateAccepted>`|
 | rioxxterms.apc| rioxxterms:apc| paid|`<rioxxterms:apc>`<br>`paid`<br>`</rioxxterms:apc>`|
-| dc.contributor.author (first)| rioxxterms:author|Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="true">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
-| dc.contributor.author| rioxxterms:contributor|Lawson, Gerry|`<rioxxterms:contributor id="http://orcid.org/0000-0002-1395-3092">`<br>`Lawson, Gerry`<br>`</rioxxterms:contributor>`|
+| dc.contributor.author (first)| rioxxterms:author (+ attribute "first-named-author=true")|Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="true">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
+| dc.contributor.author (others)| rioxxterms:author| Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="false">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
+| dc.contributor.* (non authors)| rioxxterms:contributor| Lawson, Gerry|`<rioxxterms:contributor id="http://orcid.org/0000-0002-1395-3092">`<br>`Lawson, Gerry`<br>`</rioxxterms:contributor>`|
 | rioxxterms.identifier.project| rioxxterms:project| 0123456789|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
 | rioxxterms.funder| rioxxterms:project| Engineering and Physical Sciences Research Council|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
 | dc.date.issued| rioxxterms:publication_date| 2015-02-15 |`<rioxxterms:publication_date>`<br>`2015-02-15`<br>` </rioxxterms:publication_date>`|
