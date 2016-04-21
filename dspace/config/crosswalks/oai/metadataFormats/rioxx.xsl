@@ -26,7 +26,7 @@
 
             <ali:free_to_read>
                 <xsl:if test="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']">
-                    <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
+                    <xsl:attribute name="start_date">
                         <xsl:value-of select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']" />
                     </xsl:attribute>
                 </xsl:if>
@@ -35,17 +35,19 @@
             <ali:license_ref>
                 <xsl:choose>
                     <xsl:when
-                            test="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
-                        <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']" />
-                        </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
-                    </xsl:when>
-                    <xsl:otherwise>
+                            test="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
                         <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
                             <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
                         </xsl:attribute>
                         <xls:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+
+
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
+                            <xsl:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='available']/doc:element/doc:field[@name='value']" />
+                        </xsl:attribute>
+                        <xsl:value-of select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][child::doc:field[@name='name']/text()='LICENSE']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='url']"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </ali:license_ref>
@@ -62,7 +64,7 @@
                 </dc:description>
             </xsl:for-each>
 
-            <xsl:for-each select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='format']">
+            <xsl:for-each select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream'][doc:field[@name='primary']='true']/doc:field[@name='format']">
                 <dc:format>
                     <xls:value-of select="."/>
                 </dc:format>
@@ -190,20 +192,20 @@
             </xsl:for-each>
 
             <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='funder']/doc:element/doc:field[@name='value']">
-                <xsl:variable name="funderAuthorityID">
-                    <xls:value-of select="following-sibling::*[@name='authority']"/>
+                <xsl:variable name="pos">
+                    <xsl:value-of select="position()"/>
                 </xsl:variable>
 
                 <rioxxterms:project>
-                    <xsl:attribute name="funder_name" namespace="http://www.rioxx.net/schema/v2.0/rioxxterms/">
+                    <xsl:attribute name="rioxxterms:funder_name">
                         <xls:value-of select="."/>
                     </xsl:attribute>
-                    <xsl:if test="following-sibling::*[@name='authorityID']">
-                        <xsl:attribute name="funder_id" namespace="http://www.rioxx.net/schema/v2.0/rioxxterms/">
-                            <xls:value-of select="following-sibling::*[@name='authorityID']"/>
+                    <xsl:if test="../doc:field[@name='authorityID'][position()=$pos]">
+                        <xsl:attribute name="rioxxterms:funder_id">
+                            <xls:value-of select="../doc:field[@name='authorityID'][position()=$pos]"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <xsl:value-of select="../../../doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='funderAuthorityID' and text()=$funderAuthorityID]/preceding-sibling::*[@name='value'][1]"/>
+                    <xsl:value-of select="../../../doc:element[@name='identifier']/doc:element[@name='project']/doc:element/doc:field[@name='value'][position()=$pos]"/>
                 </rioxxterms:project>
             </xsl:for-each>
         </rioxx:rioxx>

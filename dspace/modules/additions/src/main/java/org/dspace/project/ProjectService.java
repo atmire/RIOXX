@@ -5,6 +5,8 @@ import org.dspace.authority.indexer.AuthorityIndexingService;
 import org.dspace.core.Context;
 import org.dspace.utils.DSpace;
 
+import java.sql.SQLException;
+
 /**
  * Created by Philip Vissenaekens (philip at atmire dot com)
  * Date: 03/09/15
@@ -52,5 +54,22 @@ public class ProjectService {
         }
 
         return projectAuthorityValue;
+    }
+
+    /**
+     *
+     * @param projectAuthorityId
+     * @return
+     */
+    public static String getFunderAuthorityByProjectAuthority(final String projectAuthorityId) throws SQLException {
+        ProjectService projectService = new ProjectService();
+        Context context = new Context();
+
+        ProjectAuthorityValue project = projectService.getProjectByAuthorityId(context, projectAuthorityId);
+        FunderAuthorityValue funder = project == null ? null : project.getFunderAuthorityValue();
+
+        context.complete();
+
+        return funder == null ? "" : funder.getFunderID();
     }
 }

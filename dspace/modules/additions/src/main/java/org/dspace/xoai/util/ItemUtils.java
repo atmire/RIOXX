@@ -153,6 +153,8 @@ public class ItemUtils {
 					else if (authorityValue instanceof ProjectAuthorityValue){
 						String funderAuthorityId = ((ProjectAuthorityValue) authorityValue).getFunderAuthorityValue().getId();
 						valueElem.getField().add(createValue("funderAuthorityID", funderAuthorityId));
+					}
+				}
 				}
 				}
 
@@ -189,7 +191,7 @@ public class ItemUtils {
                     // Bitstream = primary bitstream in bundle -> true
                     // No primary bitstream found in bundle-> only the first one gets flagged as "primary"
                     if (b.getName().equals("ORIGINAL") && (b.getPrimaryBitstreamID() == bts.getID() || b.getPrimaryBitstreamID() == -1 && bts.getID() == bits[0].getID()))
-						primary=true;
+                        primary = true;
 					Bitstream  bit=bts;
 
 					if (bit != null) {

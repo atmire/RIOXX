@@ -2524,5 +2524,9 @@
 	<message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>
 	<message key="xmlui.Submission.submit.ProjectStep.lookup_project_error">Unable to find the project..</message>
 
+	<message key="xmlui.Submission.submit.ProjectStep.default_project_warning">Caution: Without manually selecting a project or funder, this submission will receive project ID "{0}" and funder "{1}".</message>
+	<message key="xmlui.Submission.submit.ProjectStep.funders_without_authority_head">Sponsorship and Other Sources of Funding</message>
+	<message key="xmlui.Submission.submit.ProjectStep.funders_without_authority_hint">Add sponsorships or other sources of funding that did not provide a formal project or grant ID. This field can also be used to acknowledge funders who do not appear in the FundRef registry, such as corporations or startup companies.</message>
+
 
 </catalogue>

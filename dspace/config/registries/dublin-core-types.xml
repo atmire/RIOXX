@@ -277,6 +277,21 @@
     <scope_note>Uniform Resource Identifier</scope_note>
   </dc-type>
 
+  <dc-type>
+    <schema>dc</schema>
+    <element>identifier</element>
+    <qualifier>eissn</qualifier>
+    <scope_note>electronic International Standard Serial Number</scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>dc</schema>
+    <element>identifier</element>
+    <qualifier>doi</qualifier>
+    <scope_note>Digital Object Identifier</scope_note>
+  </dc-type>
+
+
   <!-- Used by system: do not remove -->
   <dc-type>
 	<schema>dc</schema>
@@ -584,8 +599,29 @@
     <scope_note>Nature or genre of content.</scope_note>
   </dc-type>
 
+  <dc-type>
+    <schema>dc</schema>
+    <element>type</element>
+    <qualifier>qualificationlevel</qualifier>
+    <scope_note></scope_note>
+  </dc-type>
 
-    <dc-type>
+  <dc-type>
+    <schema>dc</schema>
+    <element>type</element>
+    <qualifier>qualificationname</qualifier>
+    <scope_note></scope_note>
+  </dc-type>
+
+  <dc-type>
+    <schema>dc</schema>
+    <element>type</element>
+    <qualifier>version</qualifier>
+    <scope_note></scope_note>
+  </dc-type>
+
+
+  <dc-type>
         <schema>dc</schema>
         <element>provenance</element>
         <!-- unqualified -->
@@ -597,6 +633,13 @@
         <element>rights</element>
         <qualifier>license</qualifier>
         <scope_note></scope_note>
+    </dc-type>
+
+    <dc-type>
+        <schema>dc</schema>
+        <element>requestform</element>
+        <qualifier>enabled</qualifier>
+        <scope_note>If the requestform should be enabled for a specific bitstream.</scope_note>
     </dc-type>
 
 </dspace-dc-types>
