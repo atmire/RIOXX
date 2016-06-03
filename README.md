@@ -47,7 +47,7 @@ It is important to realize that your existing item metadata and item display pag
 
 Because the vast majority of institutions makes at least small tweaks to the submission forms, there is no opportunity to apply a patch to a standardized file. A template submission form file where the new RIOXX fields are highlighted can be found on Github:
 
-[https://github.com/atmire/RIOXX/compare/rc1...master](https://github.com/atmire/RIOXX/compare/rc1...master)
+[https://github.com/atmire/RIOXX/compare/latest...withinputforms](https://github.com/atmire/RIOXX/compare/latest...withinputforms)
 
 # Metadata mapping <a name="Metadata-mapping"></a>
 
@@ -78,8 +78,9 @@ Existing fields from the dc and dcterms namespace were used where possible. A nu
 | dc.title| dc:title| Title:Subtitle|`<dc:title>`<br>`Title:Subtitle`<br>`</dc:title>` |
 | dcterms.dateAccepted| dcterms:dateAccepted| 2015-02-10|`<dcterms:dateAccepted>`<br>`2015-02-10`<br>`</dcterms:dateAccepted>`|
 | rioxxterms.apc| rioxxterms:apc| paid|`<rioxxterms:apc>`<br>`paid`<br>`</rioxxterms:apc>`|
-| dc.contributor.author (first)| rioxxterms:author|Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="true">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
-| dc.contributor.author| rioxxterms:contributor|Lawson, Gerry|`<rioxxterms:contributor id="http://orcid.org/0000-0002-1395-3092">`<br>`Lawson, Gerry`<br>`</rioxxterms:contributor>`|
+| dc.contributor.author (first)| rioxxterms:author (+ attribute "first-named-author=true")|Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="true">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
+| dc.contributor.author (others)| rioxxterms:author| Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="false">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
+| dc.contributor.* (non authors)| rioxxterms:contributor| Lawson, Gerry|`<rioxxterms:contributor id="http://orcid.org/0000-0002-1395-3092">`<br>`Lawson, Gerry`<br>`</rioxxterms:contributor>`|
 | rioxxterms.identifier.project| rioxxterms:project| 0123456789|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
 | rioxxterms.funder| rioxxterms:project| Engineering and Physical Sciences Research Council|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
 | dc.date.issued| rioxxterms:publication_date| 2015-02-15 |`<rioxxterms:publication_date>`<br>`2015-02-15`<br>` </rioxxterms:publication_date>`|
@@ -162,9 +163,13 @@ To be able to install the patch, you will need the following prerequisites:
 
 @mire's modifications to a standard DSPace for RIOXX compliance are tracked on Github. The newest patch can therefore be generated from git.
 
-DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX/compare/unmodified...latest.patch)  
-DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX52/compare/unmodified...latest.patch)  
-DSPACE 5.3 [https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX53/compare/unmodified...latest.patch)
+DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX/compare/unmodified...latest.diff)  
+DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX52/compare/unmodified...latest.diff)  
+DSPACE 5.3,5.4 [https://github.com/atmire/RIOXX53/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX53/compare/unmodified...latest.diff)
+
+DSPACE 4.x [https://github.com/atmire/RIOXX4x/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX4x/compare/unmodified...latest.diff)
+  
+DSPACE 3.x [https://github.com/atmire/RIOXX3x/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX3x/compare/unmodified...latest.patch)
 
 
 

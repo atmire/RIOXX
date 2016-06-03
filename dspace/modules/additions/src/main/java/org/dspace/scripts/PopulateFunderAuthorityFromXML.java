@@ -5,6 +5,8 @@ import org.dspace.authority.AuthorityValue;
 import org.dspace.authority.AuthorityValueFinder;
 import org.dspace.authority.FunderAuthorityValue;
 import org.dspace.authority.indexer.AuthorityIndexingService;
+import org.dspace.authority.DefaultAuthorityCreator;
+import org.dspace.utils.DSpace;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,5 +59,9 @@ public class PopulateFunderAuthorityFromXML extends PopulateAuthorityFromXML<Fun
             }
         }
 
+        FunderAuthorityValue defaultFunder = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultFunder();
+        if (defaultFunder != null) {
+            validAuthorityValues.add(defaultFunder);
+        }
     }
 }
