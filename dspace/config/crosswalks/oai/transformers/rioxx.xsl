@@ -87,6 +87,14 @@
     </xsl:template>
 
     <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][descendant-or-self::doc:element[@name='bitstream']/doc:field[@name='primary']='true']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']"></xsl:template>
+
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream'][descendant::doc:field[@name='primary']='true']">
         <xsl:copy-of select="." />
     </xsl:template>
 
