@@ -7,6 +7,7 @@
     http://www.dspace.org/license/
 
 -->
+
 <!--
     Rendering of the authority control related pages.
 
@@ -33,23 +34,7 @@
 
     <xsl:template name="addLookupButtonAuthor">
         <xsl:param name="isName" select="'missing value'"/>
-        <input type="button" name="{concat('lookup_',@n)}" class="ds-button-field ds-add-button" >
-            <xsl:attribute name="value">
-                <xsl:choose>
-                    <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_funder'">
-                        <i18n:text>Lookup Funder</i18n:text>
-                    </xsl:when>
-                    <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project'">
-                        <i18n:text>Lookup Project</i18n:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>Lookup</xsl:text>
-                        <xsl:if test="contains(dri:params/@operations,'add')">
-                            <xsl:text> &amp; Add</xsl:text>
-                        </xsl:if>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
+        <button type="button" name="{concat('lookup_',@n)}" class="ds-button-field ds-add-button btn btn-default ">
             <xsl:attribute name="onClick">
                 <xsl:text>javascript:AuthorLookup('</xsl:text>
                 <!-- URL -->
@@ -76,7 +61,19 @@
                 </xsl:choose>
                 <xsl:text>);</xsl:text>
             </xsl:attribute>
-        </input>
+
+            <xsl:choose>
+                <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_funder'">
+                    <i18n:text>xmlui.ChoiceLookupTransformer.lookup_funder</i18n:text>
+                </xsl:when>
+                <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project'">
+                    <i18n:text>xmlui.ChoiceLookupTransformer.lookup_project</i18n:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <i18n:text>xmlui.ChoiceLookupTransformer.lookup</i18n:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </button>
     </xsl:template>
 
 </xsl:stylesheet>

@@ -20,6 +20,7 @@ import org.dspace.content.authority.ChoiceAuthorityManager;
 import org.dspace.content.authority.MetadataAuthorityManager;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.project.ProjectService;
+import org.dspace.authority.DefaultAuthorityCreator;
 import org.dspace.utils.DSpace;
 import org.xml.sax.SAXException;
 
@@ -44,14 +45,23 @@ public class ProjectStep extends AbstractSubmissionStep {
     protected static final Message T_remove = message("xmlui.Submission.submit.ProjectStep.remove");
     protected static final Message T_create_project_error = message("xmlui.Submission.submit.ProjectStep.create_project_error");
     protected static final Message T_lookup_project_error = message("xmlui.Submission.submit.ProjectStep.lookup_project_error");
+    protected static final Message T_default_project_warning = message("xmlui.Submission.submit.ProjectStep.default_project_warning");
+    protected static final Message T_funders_without_authority_head = message("xmlui.Submission.submit.ProjectStep.funders_without_authority_head");
+    protected static final Message T_funders_without_authority_hint = message("xmlui.Submission.submit.ProjectStep.funders_without_authority_hint");
 
     private ProjectAuthorityValue newProject;
+    private String defaultProject = "No Default Project Set";
+    private String defaultFunder = "No Default Funder Set";
 
     @Override
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, parameters);
         Request request = ObjectModelHelper.getRequest(objectModel);
         newProject = (ProjectAuthorityValue) request.getSession().getAttribute("newProject");
+
+        ProjectAuthorityValue project = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultProject(context);
+        defaultFunder = project.getFunderAuthorityValue().getValue();
+        defaultProject = project.getValue();
     }
 
     public void addPageMeta(PageMeta pageMeta) throws SAXException, WingException,
@@ -87,7 +97,7 @@ public class ProjectStep extends AbstractSubmissionStep {
         form.setHead(T_head);
 
         String fieldName = "rioxxterms_identifier_project";
-        renderOneboxField(form, fieldName, false, true, T_project_label, null);
+        renderOneboxField(form, fieldName, false, false, T_project_label, null);
 
         fieldName = "rioxxterms_funder";
         renderOneboxField(form, fieldName, true, false, T_funder_label, null);
@@ -100,7 +110,39 @@ public class ProjectStep extends AbstractSubmissionStep {
 
         renderResults(div, dcValues);
 
+        addFundersWithoutAuthorityField(div, item);
+
         addControlButtons(div.addList("submit-project-part2", List.TYPE_FORM));
+    }
+
+    private void addFundersWithoutAuthorityField(final Division div, final Item item) throws WingException {
+        Metadatum[] dcValues = item.getMetadata("dc", "description", "sponsorship", Item.ANY);
+        String fieldName = MetadataAuthorityManager.makeFieldKey("dc", "description", "sponsorship");
+
+        List fundersWithoutAuthorityList = div.addList("funders-without-authority", List.TYPE_FORM);
+
+        fundersWithoutAuthorityList.setHead(T_funders_without_authority_head);
+
+        Text text = fundersWithoutAuthorityList.addItem().addText(fieldName, "submit-text");
+
+        // Setup the select field
+        text.setHelp(T_funders_without_authority_hint);
+        text.enableAddOperation();
+
+        if (isFieldInError(fieldName)) {
+            text.addError(T_required_field);
+        }
+        if (dcValues.length > 1) {
+        }
+
+        // Setup the field's values
+        if (dcValues.length >= 1) {
+            text.enableDeleteOperation();
+            for (Metadatum dcValue : dcValues) {
+                Instance ti = text.addInstance();
+                ti.setValue(dcValue.value);
+            }
+        }
     }
 
     private void renderResults(Division div, Metadatum[] dcValues) throws WingException {
@@ -134,6 +176,9 @@ public class ProjectStep extends AbstractSubmissionStep {
 
                 count++;
             }
+        } else {
+            Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
+            warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
         }
     }
 
@@ -209,6 +254,13 @@ public class ProjectStep extends AbstractSubmissionStep {
                 log.error(e.getMessage(),e);
             }
         }
+
+        dcValues = submission.getItem().getMetadata("dc", "description", "sponsorship", Item.ANY);
+        for (Metadatum dcValue : dcValues) {
+            org.dspace.app.xmlui.wing.element.Item funder = projectSection.addItem();
+            funder.addContent(dcValue.value);
+        }
+
         return projectSection;
     }
 }

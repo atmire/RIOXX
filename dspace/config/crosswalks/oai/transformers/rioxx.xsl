@@ -37,6 +37,18 @@
         </xsl:call-template>
     </xsl:template>
 
+    <!-- Formatting dx.doi.org -->
+    <xsl:template match="/doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='versionofrecord']/doc:element/doc:field/text()">
+        <xsl:choose>
+            <xsl:when test="starts-with(.,'http')">
+                <xsl:value-of select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat('http://dx.doi.org/',.)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
 
     <xsl:template name="formatdate">
         <xsl:param name="datestr" />
@@ -82,12 +94,22 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']">
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']"/>
 
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][descendant-or-self::doc:element[@name='bitstream']/doc:field[@name='primary']='true' or child::doc:field[@name='name']/text()='LICENSE']">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+        </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][descendant-or-self::doc:element[@name='bitstream']/doc:field[@name='primary']='true']">
-        <xsl:copy-of select="." />
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']"/>
+
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream'][descendant::doc:field[@name='primary']='true']">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle'][child::doc:field[@name='name']/text()='LICENSE']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']">
+        <xsl:copy-of select="."/>
     </xsl:template>
 
     <!--RIOXX types without DSpace equivalent-->
