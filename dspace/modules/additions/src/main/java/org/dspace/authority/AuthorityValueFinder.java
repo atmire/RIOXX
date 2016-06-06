@@ -45,7 +45,7 @@ public class AuthorityValueFinder {
     }
 
     public List<AuthorityValue> findByExactValue(Context context, String field, String value) {
-        String queryString = "value:\"" + value + "\" AND field:\"" + field + "\"";
+        String queryString = "value_keyword:\"" + value + "\" AND field:\"" + field + "\"";
         return find(context, queryString);
     }
 

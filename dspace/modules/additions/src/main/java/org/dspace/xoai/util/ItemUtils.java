@@ -12,10 +12,10 @@ import com.lyncode.xoai.dataprovider.xml.xoai.Metadata;
 import com.lyncode.xoai.util.Base64Utils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.dspace.authority.AuthorityTypes;
 import org.dspace.authority.AuthorityValue;
 import org.dspace.authority.AuthorityValueFinder;
 import org.dspace.authority.FunderAuthorityValue;
+import org.dspace.authority.ProjectAuthorityValue;
 import org.dspace.authority.orcid.OrcidAuthorityValue;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.AuthorizeManager;
@@ -30,7 +30,6 @@ import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.core.Utils;
 import org.dspace.eperson.Group;
-import org.dspace.utils.DSpace;
 import org.dspace.xoai.data.DSpaceItem;
 
 import java.io.ByteArrayOutputStream;
@@ -153,8 +152,11 @@ public class ItemUtils {
 						String id = ((OrcidAuthorityValue) authorityValue).getOrcid_id();
 						valueElem.getField().add(createValue("authorityID", "http://orcid.org/"+id));
 					}
+					else if (authorityValue instanceof ProjectAuthorityValue){
+						String funderAuthorityId = ((ProjectAuthorityValue) authorityValue).getFunderAuthorityValue().getId();
+						valueElem.getField().add(createValue("funderAuthorityID", funderAuthorityId));
+					}
 				}
-
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -184,8 +186,11 @@ public class ItemUtils {
 
 				for (Bitstream bts : bits) {
 					boolean primary=false;
-					if(b.getName().equals("ORIGINAL")&&(b.getPrimaryBitstreamID() != -1||bts.getID()==bits[0].getID()))
-						primary=true;
+                    // Check if current bitstream is in original bundle + 1 of the 2 following
+                    // Bitstream = primary bitstream in bundle -> true
+                    // No primary bitstream found in bundle-> only the first one gets flagged as "primary"
+                    if (b.getName().equals("ORIGINAL") && (b.getPrimaryBitstreamID() == bts.getID() || b.getPrimaryBitstreamID() == -1 && bts.getID() == bits[0].getID()))
+                        primary = true;
 					Bitstream  bit=bts;
 
 					if (bit != null) {

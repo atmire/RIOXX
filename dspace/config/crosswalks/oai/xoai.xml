@@ -16,7 +16,7 @@
     <Contexts>
         <Context baseurl="request" name="Default Context">
             <!-- Restrict access to hidden items by default -->
-            <Filter red="defaultFilter" />
+            <Filter ref="defaultFilter" />
 
             <Format ref="oaidc"/>
             <Format ref="mets"/>
@@ -47,7 +47,7 @@
             <!-- Date format, field prefixes, etc are ensured by the transformer -->
             <Transformer ref="driverTransformer"/>
             <!-- The driver filter -->
-            <Filter red="driverFilter"/>
+            <Filter ref="driverFilter"/>
             <!-- Just an alias, in fact it returns all items within the driver context -->
             <Set ref="driverSet"/>
             <!-- Metadata Formats -->
@@ -72,7 +72,7 @@
             <!-- Date format, field prefixes, etc are ensured by the transformer -->
             <Transformer ref="openaireTransformer"/>
             <!-- OpenAIRE filter -->
-            <Filter red="openAireFilter"/>
+            <Filter ref="openAireFilter"/>
             <!-- Just an alias, in fact it returns all items within the driver context -->
             <Set ref="openaireSet"/>
             <!-- Metadata Formats -->
@@ -92,7 +92,9 @@
         <Context baseurl="rioxx" name="Rioxx Context">
             <!-- Date format, field prefixes, etc are ensured by the transformer -->
             <Transformer ref="rioxxTransformer"/>
+            <Filter ref="rioxxFilter"/>
             <!-- Metadata Formats -->
+	        <Format ref="oaidc"/>
             <Format ref="rioxx"/>
             <Format ref="xoai"/>
             <Description>
@@ -185,20 +187,12 @@
             <Namespace>http://irdb.nii.ac.jp/oai</Namespace>
             <SchemaLocation>http://irdb.nii.ac.jp/oai/junii2-3-1.xsd</SchemaLocation>
         </Format>
-        <Format id="rioxx">
-            <Prefix>rioxx</Prefix>
-            <XSLT>metadataFormats/rioxx.xsl</XSLT>
-            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
-            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
-            <Filter ref="rioxxFilter"/>
-        </Format>
 
         <Format id="rioxx">
             <Prefix>rioxx</Prefix>
             <XSLT>metadataFormats/rioxx.xsl</XSLT>
             <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
             <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
-            <Filter ref="rioxxFilter"/>
         </Format>
     </Formats>
 
@@ -319,15 +313,73 @@
             <Definition>
                 <And>
                     <LeftCondition>
-                        <Custom ref="rioxxTypeExistsCondition"/>
+                        <And>
+                            <LeftCondition>
+                                <Custom ref="titleExistsCondition"/>
+                            </LeftCondition>
+                            <RightCondition>
+                                <And>
+                                    <LeftCondition>
+                                        <Custom ref="authorExistsCondition"/>
+                                    </LeftCondition>
+                                    <RightCondition>
+                                        <And>
+                                            <LeftCondition>
+                                                <Custom ref="rioxxProjectExistsCondition"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="rioxxFunderExistsCondition"/>
+                                            </RightCondition>
+                                        </And>
+                                    </RightCondition>
+                                </And>
+                            </RightCondition>
+                        </And>
                     </LeftCondition>
                     <RightCondition>
-                        <Custom ref="itemsWithBitstreamsFilter"/>
+                        <And>
+                            <LeftCondition>
+                                <And>
+                                    <LeftCondition>
+                                        <Custom ref="rioxxTypeExistsCondition"/>
+                                    </LeftCondition>
+                                    <RightCondition>
+                                        <Custom ref="rioxxLicenseExistsCondition"/>
+                                    </RightCondition>
+                                </And>
+                            </LeftCondition>
+                            <RightCondition>
+                                <And>
+                                    <LeftCondition>
+                                        <And>
+                                            <LeftCondition>
+                                                <Custom ref="rioxxDctermsdateacceptedExistsCondition"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="rioxxtermsversionCondition"/>
+                                            </RightCondition>
+                                        </And>
+                                    </LeftCondition>
+                                    <RightCondition>
+                                        <And>
+                                            <LeftCondition>
+                                                <Custom ref="itemsWithBitstreamsFilter"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="rioxxLangExistsCondition"/>
+                                            </RightCondition>
+                                        </And>
+                                    </RightCondition>
+                                </And>
+                            </RightCondition>
+                        </And>
                     </RightCondition>
                 </And>
             </Definition>
 
         </Filter>
+
+
 
         <!-- UKETD Filter for records returned by OAI-PMH.
              By default, return an Item record:
@@ -342,7 +394,7 @@
             </Definition>
         </Filter>
 
-        <!-- Default filter for records returned by OAI-PMH. 
+        <!-- Default filter for records returned by OAI-PMH.
              By default, return an Item record:
                 * If it is publicly accessible
                 * OR it has been withdrawn (in order to display a tombstone record).
@@ -361,6 +413,19 @@
             </Definition>
         </Filter>
 
+	    <Filter id="ethosFilter">
+		    <Definition>
+			    <And>
+				    <LeftCondition>
+					    <Custom ref="qualificationExistsCondition"/>
+				    </LeftCondition>
+				    <RightCondition>
+					    <Custom ref="thesisCondition"/>
+				    </RightCondition>
+			    </And>
+		    </Definition>
+	    </Filter>
+
         <!-- This condition determines if an Item has a "dc.type" field
              which contains "Thesis". -->
         <CustomCondition id="thesisDocumentTypeCondition">
@@ -369,6 +434,20 @@
                 <string name="field">dc.type</string>
                 <string name="operator">contains</string>
                 <string name="value">Thesis</string>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="authorExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">dc.contributor.author</string>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="titleExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">dc.title</string>
             </Configuration>
         </CustomCondition>
 
@@ -381,11 +460,65 @@
                 </list>
             </Configuration>
         </CustomCondition>
+
+        <CustomCondition id="rioxxProjectExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">rioxxterms.identifier.project</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+        <CustomCondition id="rioxxFunderExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">rioxxterms.funder</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="rioxxLicenseExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">rioxxterms.licenseref.uri</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+       <CustomCondition id="rioxxLangExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">dc.language.iso</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+        <CustomCondition id="rioxxDctermsdateacceptedExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <list name="fields">
+                    <string name="field">dcterms.dateAccepted</string>
+                </list>
+            </Configuration>
+        </CustomCondition>
+
+
         <!-- This condition determines if an Item has a "dc.contributor.author" -->
         <CustomCondition id="authorExistsCondition">
             <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
             <Configuration>
                 <string name="field">dc.contributor.author</string>
+            </Configuration>
+        </CustomCondition>
+
+        <!-- This condition determines if an Item has a "dc.contributor.author" -->
+        <CustomCondition id="rioxxtermsversionCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">rioxxterms.version</string>
             </Configuration>
         </CustomCondition>
 
@@ -460,7 +593,7 @@
             <Configuration>
                 <string name="field">dc.relation</string>
                 <string name="operator">starts_with</string>
-                <string name="value">info:eu-repo/grantAgreement/EC/FP</string>
+                <string name="value">repo/grantAgreement/EC/FP</string>
             </Configuration>
         </CustomCondition>
 
