@@ -32,7 +32,7 @@
             <Format ref="uketd_dc"/>
             <!--<Format ref="junii2" />-->
             <Description>
-                This is the default context of the DSpace data provider.
+                This is the default context of the DSpace OAI-PMH data provider.
             </Description>
         </Context>
 
@@ -62,7 +62,7 @@
         <!--
             OpenAIRE Guidelines 1.1:
 
-            - http://www.openaire.eu/en/component/attachments/download/79%E2%8C%A9=en
+            - https://guidelines.openaire.eu/en/latest/
 
             There is a limitation over the embargoedEndDate parameter:
 
@@ -92,7 +92,7 @@
         <Context baseurl="rioxx" name="Rioxx Context">
             <!-- Date format, field prefixes, etc are ensured by the transformer -->
             <Transformer ref="rioxxTransformer"/>
-            <Filter red="rioxxFilter"/>
+            <Filter ref="rioxxFilter"/>
             <!-- Metadata Formats -->
 	        <Format ref="oaidc"/>
             <Format ref="rioxx"/>
@@ -192,6 +192,21 @@
             <XSLT>metadataFormats/rioxx.xsl</XSLT>
             <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
             <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+            <Filter ref="rioxxFilter"/>
+        </Format>
+
+        <Format id="rioxx">
+            <Prefix>rioxx</Prefix>
+            <XSLT>metadataFormats/rioxx.xsl</XSLT>
+            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
+            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+
+        </Format>
+        <Format id="rioxx">
+            <Prefix>rioxx</Prefix>
+            <XSLT>metadataFormats/rioxx.xsl</XSLT>
+            <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
+            <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
         </Format>
     </Formats>
 
@@ -210,6 +225,14 @@
 
 
     <Filters>
+        <!-- DRIVER filter for records returned by OAI-PMH.
+             By default, return an Item record:
+               * If a Title & Author field both exist
+               * AND a valid DRIVER Document Type exists
+               * AND Item is either publicly accessible OR Withdrawn (for tombstones)
+               * AND Driver "open access" condition is specified
+             This filter is only used in the DRIVER context ([oai]/driver)
+        -->
         <Filter id="driverFilter">
             <Definition>
                 <And>
@@ -231,7 +254,14 @@
                             <RightCondition>
                                 <And>
                                     <LeftCondition>
-                                        <Custom ref="bitstreamAccessCondition"/>
+                                        <Or>
+                                            <LeftCondition>
+                                                <Custom ref="itemAccessCondition"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="itemWithdrawnCondition"/>
+                                            </RightCondition>
+                                        </Or>
                                     </LeftCondition>
                                     <RightCondition>
                                         <Custom ref="driverAccessCondition"/>
@@ -244,6 +274,14 @@
             </Definition>
         </Filter>
 
+        <!-- OpenAIRE filter for records returned by OAI-PMH.
+             By default, return an Item record:
+               * If a Title & Author field both exist
+               * AND a valid DRIVER Document Type exists
+               * AND Item is either publicly accessible OR Withdrawn (for tombstones)
+               * AND the OpenAIRE "dc.relation" is specified
+             This filter is only used in the OpenAIRE context ([oai]/openaire).
+        -->
         <Filter id="openAireFilter">
             <Definition>
                 <And>
@@ -263,7 +301,21 @@
                                 <Custom ref="driverDocumentTypeCondition"/>
                             </LeftCondition>
                             <RightCondition>
-                                <Custom ref="openaireRelationCondition"/>
+                                <And>
+                                    <LeftCondition>
+                                        <Or>
+                                            <LeftCondition>
+                                                <Custom ref="itemAccessCondition"/>
+                                            </LeftCondition>
+                                            <RightCondition>
+                                                <Custom ref="itemWithdrawnCondition"/>
+                                            </RightCondition>
+                                        </Or>
+                                    </LeftCondition>
+                                    <RightCondition>
+                                        <Custom ref="openaireRelationCondition"/>
+                                    </RightCondition>
+                                </And>
                             </RightCondition>
                         </And>
                     </RightCondition>
@@ -303,9 +355,9 @@
                             <LeftCondition>
                                 <And>
                                     <LeftCondition>
-                        <Custom ref="rioxxTypeExistsCondition"/>
-                    </LeftCondition>
-                    <RightCondition>
+                                        <Custom ref="rioxxTypeExistsCondition"/>
+                                    </LeftCondition>
+                                    <RightCondition>
                                         <Custom ref="rioxxLicenseExistsCondition"/>
                                     </RightCondition>
                                 </And>
@@ -325,7 +377,7 @@
                                     <RightCondition>
                                         <And>
                                             <LeftCondition>
-                        <Custom ref="itemsWithBitstreamsFilter"/>
+                                                <Custom ref="itemsWithBitstreamsFilter"/>
                                             </LeftCondition>
                                             <RightCondition>
                                                 <Custom ref="rioxxLangExistsCondition"/>
@@ -342,18 +394,54 @@
         </Filter>
 
 
+
+        <!-- UKETD Filter for records returned by OAI-PMH.
+             By default, return an Item record:
+                * If it is a "thesis"
+
+             This filter is appended to any existing filter
+             when "metadataPrefix=uketd_dc" is specified.
+        -->
         <Filter id="uketdDcFilter">
             <Definition>
                 <Custom ref="thesisDocumentTypeCondition"/>
             </Definition>
         </Filter>
 
+        <!-- Default filter for records returned by OAI-PMH.
+             By default, return an Item record:
+                * If it is publicly accessible
+                * OR it has been withdrawn (in order to display a tombstone record).
+             This filter is used by the default context ([oai]/request).
+        -->
         <Filter id="defaultFilter">
             <Definition>
-                <Custom ref="bitstreamAccessCondition"/>
+                <Or>
+                    <LeftCondition>
+                        <Custom ref="itemAccessCondition"/>
+                    </LeftCondition>
+                    <RightCondition>
+                        <Custom ref="itemWithdrawnCondition"/>
+                    </RightCondition>
+                </Or>
             </Definition>
         </Filter>
 
+	    <Filter id="ethosFilter">
+		    <Definition>
+			    <And>
+				    <LeftCondition>
+					    <Custom ref="qualificationExistsCondition"/>
+				    </LeftCondition>
+				    <RightCondition>
+					    <Custom ref="thesisCondition"/>
+				    </RightCondition>
+			    </And>
+		    </Definition>
+	    </Filter>
+
+        <!-- This condition determines if an Item has a "dc.type" field
+             which contains "Thesis". -->
         <CustomCondition id="thesisDocumentTypeCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>
@@ -431,6 +519,16 @@
             </Configuration>
         </CustomCondition>
 
+
+        <!-- This condition determines if an Item has a "dc.contributor.author" -->
+        <CustomCondition id="authorExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">dc.contributor.author</string>
+            </Configuration>
+        </CustomCondition>
+
+        <!-- This condition determines if an Item has a "dc.contributor.author" -->
         <CustomCondition id="rioxxtermsversionCondition">
             <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
             <Configuration>
@@ -438,6 +536,16 @@
             </Configuration>
         </CustomCondition>
 
+        <!-- This condition determines if an Item has a "dc.title" -->
+        <CustomCondition id="titleExistsCondition">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">dc.title</string>
+            </Configuration>
+        </CustomCondition>
+
+        <!-- This condition determines if an Item has a "dc.type" field
+             specifying one of the valid DRIVER document types. -->
         <CustomCondition id="driverDocumentTypeCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>
@@ -464,6 +572,9 @@
             </Configuration>
         </CustomCondition>
 
+        <!-- This condition determines if an Item has a "dc.rights" field
+             specifying "open access", which is required for DRIVER
+             OR "openAccess", which is required by OpenAIRE. -->
         <CustomCondition id="driverAccessCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>
@@ -476,16 +587,27 @@
             </Configuration>
         </CustomCondition>
 
-        <CustomCondition id="bitstreamAccessCondition">
+        <!-- This condition determines if an Item is publicly accessible. -->
+        <CustomCondition id="itemAccessCondition">
             <Class>org.dspace.xoai.filter.DSpaceAuthorizationFilter</Class>
         </CustomCondition>
 
+        <!-- This condition determines if an Item is withdrawn. This condition
+             ensures a basic "tombstone" record is shown for withdrawn items,
+             as recommended by OAI-PMH spec. This "tombstone" doesn't display
+             any metadata or content files.  -->
+        <CustomCondition id="itemWithdrawnCondition">
+            <Class>org.dspace.xoai.filter.DSpaceWithdrawnFilter</Class>
+        </CustomCondition>
+
+        <!-- This condition determines if an Item has a "dc.relation" field
+             which specifies the openAIRE project ID. -->
         <CustomCondition id="openaireRelationCondition">
             <Class>org.dspace.xoai.filter.DSpaceAtLeastOneMetadataFilter</Class>
             <Configuration>
                 <string name="field">dc.relation</string>
                 <string name="operator">starts_with</string>
-                <string name="value">info:eu-repo/grantAgreement/EC/FP</string>
+                <string name="value">repo/grantAgreement/EC/FP</string>
             </Configuration>
         </CustomCondition>
 

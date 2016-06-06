@@ -67,6 +67,7 @@ public class SolrAuthority implements ChoiceAuthority {
             if (!localSearchField.equals("")) {
                 query += " or (" + toQuery(localSearchField, text) + ")";
             }
+            query+=" or (" + toQuery("name_variant", text) + ") ";
             queryArgs.setQuery(query);
         }
 

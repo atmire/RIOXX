@@ -71,4 +71,6 @@
 
     <bean name="ProjectService" class="org.dspace.project.ProjectService"/>
 
+    <bean name="defaultAuthorityCreator" class="org.dspace.authority.DefaultAuthorityCreator"/>
+
 </beans>
