@@ -1,16 +1,7 @@
 package org.dspace.scripts;
 
-import org.dspace.authority.FunderXmlFileParser;
-import org.dspace.authority.AuthorityValue;
-import org.dspace.authority.AuthorityValueFinder;
-import org.dspace.authority.FunderAuthorityValue;
-import org.dspace.authority.indexer.AuthorityIndexingService;
-import org.dspace.authority.DefaultAuthorityCreator;
-import org.dspace.utils.DSpace;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import org.dspace.authority.*;
 
 /**
  * Created by: Antoine Snyers (antoine at atmire dot com)
@@ -24,44 +15,31 @@ public class PopulateFunderAuthorityFromXML extends PopulateAuthorityFromXML<Fun
     }
 
     @Override
-    protected FunderAuthorityValue valueToIndex(AuthorityIndexingService indexingService, FunderAuthorityValue value) {
-        FunderAuthorityValue valueToIndex = value;
+    protected AuthorityValue findCachedRecord(FunderAuthorityValue value)
+    {
         AuthorityValueFinder authorityValueFinder = new AuthorityValueFinder();
         AuthorityValue cachedRecord = authorityValueFinder.findByFunderID(null, value.getFunderID());
+        return cachedRecord;
+    }
 
-        if (cachedRecord instanceof FunderAuthorityValue) {
-            if (cachedRecord.hasTheSameInformationAs(value)) {
-                unchangedAuhtorityValues.add(value);
-                valueToIndex = null;
-            } else {
+    @Override
+    protected FunderAuthorityValue updateValues(AuthorityValue cachedRecord, FunderAuthorityValue value)
+    {
                 FunderAuthorityValue record = (FunderAuthorityValue) cachedRecord;
                 record.setValues(value);
-                valueToIndex = record;
-                updatedAuhtorityValues.add(record);
-            }
-        } else {
-            newAuthorityValues.add(value);
-        }
-        return valueToIndex;
+        return record;
     }
 
+    @Override
     public void parseXML(File file) {
-        validAuthorityValues = new ArrayList<>();
-        invalidAuthorityValues = new ArrayList<>();
-        FunderXmlFileParser funderXmlFileParser = new FunderXmlFileParser();
+        FunderXmlFileParser funderXmlFileParser = new FunderXmlFileParser(this);
         funderXmlFileParser.setProgressWriter(print);
-        List<FunderAuthorityValue> funderAuthorities = funderXmlFileParser.getFunderAuthorities(file);
-        for (FunderAuthorityValue funderAuthority : funderAuthorities) {
-            if (funderAuthority.isValid()) {
-                validAuthorityValues.add(funderAuthority);
-            } else {
-                invalidAuthorityValues.add(funderAuthority);
-            }
+        funderXmlFileParser.getFunderAuthorities(file);
         }
 
-        FunderAuthorityValue defaultFunder = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultFunder();
-        if (defaultFunder != null) {
-            validAuthorityValues.add(defaultFunder);
+    @Override
+    protected boolean isValid(FunderAuthorityValue value)
+    {
+        return value != null && value.isValid();
         }
     }
-}
