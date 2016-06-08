@@ -8,6 +8,7 @@
 	- [dc:type fallback for rioxxterms:type](#dctype-fallback)
 	- [fundref id for funders and orcid id for authors](#fundref-id)
 	- [multiple funders and project](#multiple-funders)
+		- [configuration](#multiple-funders-configuration)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
 	- [Obtaining a recent patch file](#Obtaining-recent-patch)
@@ -141,6 +142,31 @@ if a project was not entered before, the submitter can create a new project. The
 
 It is not possible to create a new funder during the submission, only existing funders can be selected. Refer to section [7. XMLUI only: Load Fundref authority data](#XMLUI-only) in the Patch Installation procedures to learn how to load funder data into DSpace.
 
+### configuration <a name="multiple-funders-configuration"></a> ###
+
+The behaviour of this new submission step can be configured in *dspace/config/modules/rioxx.cfg*. 
+
+Property submission.funder.required is used to configure if at least one project funder pair should be filled in before continuing to the next submission step.
+ 
+```
+submission.funder.required = true
+```
+ 
+Property submission.funder.enableDcSponsorship is used to enable the addition of sponsorships or other sources of funding that do not provide a formal project or grant ID. 
+If this property is enabled a free text field will be available in the project step. This free text field is not authority controlled.
+ 
+It is also possible to configure a default project funder pair to be used when the submitter did not select any project funder pairs before finishing the projects step.
+Properties authority.default.funder, authority.default.funderID and authority.default.project must all three be filled in for the default project funder pair to be added automatically.  
+
+```
+authority.default.funder = Default funder
+authority.default.funderID = 10.99999/999999999
+authority.default.project = Default project
+```
+
+authority.default.funder is the name of the default funder.
+authority.default.funderID is the ID of the default funder.
+authority.default.project is the name of the default project.
 
 # Patch Installation Procedures <a name="Patch-installation-procedures"></a>#
 
