@@ -19,14 +19,14 @@ public class DefaultAuthorityCreator {
     private static final Logger log =  Logger.getLogger(DefaultAuthorityCreator.class);
 
     public FunderAuthorityValue retrieveDefaultFunder(Context context) {
-        String defaultFunder = ConfigurationManager.getProperty("authority.default.funder");
+        String defaultFunder = ConfigurationManager.getProperty("rioxx", "authority.default.funder");
         if (StringUtils.isBlank(defaultFunder)) {
-            defaultFunder = "Default funder";
+            return null;
         }
 
-        String defaultFunderID = ConfigurationManager.getProperty("authority.default.funderID");
+        String defaultFunderID = ConfigurationManager.getProperty("rioxx", "authority.default.funderID");
         if (StringUtils.isBlank(defaultFunderID)) {
-            defaultFunderID = "10.99999/999999999";
+            return null;
         }
         AuthorityValue defaultFunderValue = new AuthorityValueFinder().findByFunderID(context, defaultFunderID);
         if (defaultFunderValue ==null) {
@@ -62,10 +62,12 @@ public class DefaultAuthorityCreator {
     }
 
     public ProjectAuthorityValue retrieveDefaultProject(Context context) {
-        String defaultProject = ConfigurationManager.getProperty("authority.default.project");
-        if(StringUtils.isBlank(defaultProject)){
-            defaultProject="Default project";
+        if(!hasValidDefaultAuthorityConfiguration()){
+            return null;
         }
+
+        String defaultProject = ConfigurationManager.getProperty("rioxx","authority.default.project");
+
         List<AuthorityValue> defaultProjectValue = new AuthorityValueFinder().findByValue(context, "rioxxterms_identifier_project",defaultProject );
         if (defaultProjectValue.size() == 0) {
             ProjectAuthorityValue projectAuthorityValue = ProjectAuthorityValue.create();
@@ -78,5 +80,11 @@ public class DefaultAuthorityCreator {
         }else{
             return (ProjectAuthorityValue) defaultProjectValue.get(0);
         }
+    }
+
+    public boolean hasValidDefaultAuthorityConfiguration() {
+        return StringUtils.isNotBlank(ConfigurationManager.getProperty("rioxx", "authority.default.funder"))
+                && StringUtils.isNotBlank(ConfigurationManager.getProperty("rioxx", "authority.default.funderID"))
+                && StringUtils.isNotBlank(ConfigurationManager.getProperty("rioxx", "authority.default.project"));
     }
 }
