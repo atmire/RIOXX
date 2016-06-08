@@ -1,14 +1,11 @@
 package org.dspace.authority;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.dspace.authority.indexer.AuthorityIndexingService;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.core.Context;
-import org.dspace.utils.DSpace;
-
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.*;
+import org.apache.commons.lang.*;
+import org.apache.log4j.*;
+import org.dspace.authority.indexer.*;
+import org.dspace.core.*;
+import org.dspace.utils.*;
 
 /**
  * Created by jonas - jonas@atmire.com on 09/03/16.
@@ -67,18 +64,19 @@ public class DefaultAuthorityCreator {
         }
 
         String defaultProject = ConfigurationManager.getProperty("rioxx","authority.default.project");
+        FunderAuthorityValue funderAuthorityValue = retrieveDefaultFunder(context);;
 
-        List<AuthorityValue> defaultProjectValue = new AuthorityValueFinder().findByValue(context, "rioxxterms_identifier_project",defaultProject );
-        if (defaultProjectValue.size() == 0) {
+        ProjectAuthorityValue defaultProjectValue = (ProjectAuthorityValue) new AuthorityValueFinder().findByProjectIDAndFunderId(context,defaultProject, funderAuthorityValue.getId());
+        if (defaultProjectValue==null) {
             ProjectAuthorityValue projectAuthorityValue = ProjectAuthorityValue.create();
             projectAuthorityValue.setValue(defaultProject);
-            projectAuthorityValue.setFunderAuthorityValue(retrieveDefaultFunder(context));
+            projectAuthorityValue.setFunderAuthorityValue(funderAuthorityValue);
             AuthoritySolrServiceImpl solrService = (AuthoritySolrServiceImpl) new DSpace().getServiceManager().getServiceByName(AuthorityIndexingService.class.getName(), AuthorityIndexingService.class);
             solrService.indexContent(projectAuthorityValue, true);
             solrService.commit();
             return projectAuthorityValue;
         }else{
-            return (ProjectAuthorityValue) defaultProjectValue.get(0);
+            return defaultProjectValue;
         }
     }
 
