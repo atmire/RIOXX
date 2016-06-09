@@ -1466,3 +1466,12 @@ table.discovery-filters th.new-filter-header
 #impact-plumx {
     float:right;
 }
+
+.upload-rioxx-version-warning {
+    color: #31708f;
+    background-color: #d9edf7;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #bce8f1;
+    border-radius: 4px;
+}

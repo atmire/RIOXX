@@ -205,9 +205,10 @@ public class UploadWithEmbargoStep extends UploadStep
     	{
     		// Only add the upload capabilities for new item submissions
 	    	upload = div.addList("submit-upload-new", List.TYPE_FORM);
-	        upload.setHead(T_head);    
-	        
-	        File file = upload.addItem().addFile("file");
+	        upload.setHead(T_head);
+            addRioxxVersionSection(upload,item);
+
+            File file = upload.addItem().addFile("file");
 	        file.setLabel(T_file);
 	        file.setHelp(T_file_help);
 	        file.setRequired();

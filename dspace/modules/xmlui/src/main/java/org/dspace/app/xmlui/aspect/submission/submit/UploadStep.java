@@ -14,6 +14,8 @@ import org.apache.avalon.framework.parameters.*;
 import org.apache.cocoon.*;
 import org.apache.cocoon.environment.*;
 import org.apache.commons.collections.*;
+import org.apache.commons.lang3.*;
+import org.apache.log4j.*;
 import org.dspace.app.sherpa.*;
 import org.dspace.app.sherpa.submit.*;
 import org.dspace.app.util.*;
@@ -48,6 +50,8 @@ import org.xml.sax.*;
  */
 public class UploadStep extends AbstractSubmissionStep
 {
+    private static Logger log = Logger.getLogger(UploadStep.class);
+
     /** Language Strings for Uploading **/
     protected static final Message T_head =
             message("xmlui.Submission.submit.UploadStep.head");
@@ -103,7 +107,8 @@ public class UploadStep extends AbstractSubmissionStep
             message("xmlui.Submission.submit.UploadStep.checksum");
     protected static final Message T_submit_remove =
             message("xmlui.Submission.submit.UploadStep.submit_remove");
-
+    protected static final Message T_rioxx_version =
+            message("xmlui.Submission.submit.UploadStep.rioxx_version");
 
     protected static final Message T_sherpa_consult =
         message("xmlui.aspect.sherpa.submission.consult");
@@ -196,6 +201,7 @@ public class UploadStep extends AbstractSubmissionStep
             // Only add the upload capabilities for new item submissions
             upload = div.addList("submit-upload-new", List.TYPE_FORM);
             upload.setHead(T_head);
+            addRioxxVersionSection(upload,item);
 
             File file = upload.addItem().addFile("file");
             file.setLabel(T_file);
@@ -498,6 +504,22 @@ public class UploadStep extends AbstractSubmissionStep
         }
         result.append("?sequence=").append(String.valueOf(bitstream.getSequenceID()));
         return result.toString();
+    }
+
+    public void addRioxxVersionSection(List upload,Item item) throws WingException {
+        String version = item.getMetadata("rioxxterms.version");
+
+        if(StringUtils.isNotBlank(version) && !"NA".equals(version)) {
+            try {
+                DCInputsReader a = new DCInputsReader();
+                java.util.List<String> pairs = a.getPairs("rioxxterms_version");
+                int humanReadable = pairs.indexOf(version) - 1;
+                version = pairs.get(humanReadable);
+            } catch (DCInputsReaderException e) {
+                log.error(e.getMessage(), e);
+            }
+            upload.addItem("upload-rioxx-version-warning","upload-rioxx-version-warning").addContent(T_rioxx_version.parameterize(version));
+        }
     }
 }
         
