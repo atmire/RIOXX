@@ -2528,5 +2528,10 @@
 	<message key="xmlui.Submission.submit.ProjectStep.funders_without_authority_head">Sponsorship and Other Sources of Funding</message>
 	<message key="xmlui.Submission.submit.ProjectStep.funders_without_authority_hint">Add sponsorships or other sources of funding that did not provide a formal project or grant ID. This field can also be used to acknowledge funders who do not appear in the FundRef registry, such as corporations or startup companies.</message>
 
+	<message key="xmlui.Submission.submit.UploadStep.rioxx_version">
+		<p>Earlier in the submission, you indicated that you wanted to upload following version of the publication:</p>
+		<h3>{0}</h3>
+		<p>If you are uploading multiple files as part of this submission, please ensure this file is marked as "Primary".</p>
+	</message>
 
 </catalogue>
