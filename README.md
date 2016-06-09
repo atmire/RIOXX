@@ -9,6 +9,7 @@
 	- [fundref id for funders and orcid id for authors](#fundref-id)
 	- [multiple funders and project](#multiple-funders)
 		- [configuration](#multiple-funders-configuration)
+	- [license reference ali:license_ref](#license_ref)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
 	- [Obtaining a recent patch file](#Obtaining-recent-patch)
@@ -167,6 +168,16 @@ authority.default.project = Default project
 authority.default.funder is the name of the default funder.
 authority.default.funderID is the ID of the default funder.
 authority.default.project is the name of the default project.
+
+## license reference ali:license_ref<a name="license_ref"></a> ##
+
+The input forms customisations provide an input field to specify the license reference that is exposed by RIOXX. This input field uses metadata field rioxxterms.licenseref.uri to store the license reference. 
+
+The Creative Commons license submission step has been enabled to provide a fallback for the custom rioxxterms.licenseref.uri field. The license selected in this step is stored in metadata field dc.rights.uri.
+
+If a DSpace item does not have a rioxxterms.licenseref.uri value, the dc.rights.uri value is used as fallback.
+
+A DSpace item will not be available in RIOXX if both metadata fields rioxxterms.licenseref.uri and dc.rights.uri are empty. 
 
 # Patch Installation Procedures <a name="Patch-installation-procedures"></a>#
 
