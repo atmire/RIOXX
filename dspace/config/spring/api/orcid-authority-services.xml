@@ -27,6 +27,10 @@
     <alias name="org.dspace.authority.AuthoritySearchService" alias="org.dspace.authority.indexer.AuthorityIndexingService"/>
 
     <bean id="dspace.DSpaceAuthorityIndexer" class="org.dspace.authority.indexer.DSpaceAuthorityIndexer"/>
+    <bean id="FunderAuthorityIndexerInterface" class="org.dspace.authority.indexer.FunderAuthorityIndexerInterface"/>
+    <bean id="DefaultProjectAuthorityIndexerInterface" class="org.dspace.authority.indexer.DefaultProjectAuthorityIndexerInterface">
+        <property name="defaultAuthorityCreator" ref="defaultAuthorityCreator"/>
+            </bean>
 
     <bean name="AuthorityTypes" class="org.dspace.authority.AuthorityTypes">
         <property name="types">
