@@ -33,19 +33,24 @@
             </ali:free_to_read>
 
             <ali:license_ref>
+                <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
+                    <xsl:choose>
+                        <xsl:when test="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']">
+                            <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']" />
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+
                 <xsl:choose>
                     <xsl:when
-                            test="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
-                        <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']" />
-                        </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+                            test="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
+                        <xls:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
-                        </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+                        <xls:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </ali:license_ref>
