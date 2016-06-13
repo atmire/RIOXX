@@ -8,6 +8,7 @@
 	- [dc:type fallback for rioxxterms:type](#dctype-fallback)
 	- [fundref id for funders and orcid id for authors](#fundref-id)
 	- [multiple funders and project](#multiple-funders)
+	- [date completion](#date-completion)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
 	- [Obtaining a recent patch file](#Obtaining-recent-patch)
@@ -141,6 +142,14 @@ if a project was not entered before, the submitter can create a new project. The
 
 It is not possible to create a new funder during the submission, only existing funders can be selected. Refer to section [7. XMLUI only: Load Fundref authority data](#XMLUI-only) in the Patch Installation procedures to learn how to load funder data into DSpace.
 
+## date completion <a name="date-completion"></a> ##
+
+The RIOXX specification requires dates to be in format YYYY-MM-DD. When a DSpace metadata field contains a shorter date in format YYYY-MM or YYYY, the RIOXX crosswalks will complete the date into the full format required by RIOXX.
+
+Examples:
+
+- dc.date.issued "2015" in DSpace becomes "2015-01-01" when it is exposed in RIOXX as ali:license_ref:start_date.
+- dcterms.dateAccepted "2014-05" in DSpace becomes "2014-05-01" when it exposed in RIOXX as dcterms:dateAccepted 
 
 # Patch Installation Procedures <a name="Patch-installation-procedures"></a>#
 
