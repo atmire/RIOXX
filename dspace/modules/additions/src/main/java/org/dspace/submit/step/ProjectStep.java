@@ -30,7 +30,9 @@ public class ProjectStep extends AbstractProcessingStep {
     public static final int LOOKUP_PROJECT_ERROR = 3;
     public static final int REMOVE_PROJECT_SUCCESS = 4;
     public static final int No_PROJECTS_ADDED = 5;
+
     private ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
+    private DefaultAuthorityCreator defaultAuthorityCreator = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class);
 
     @Override
     public int doProcessing(Context context, HttpServletRequest request, HttpServletResponse response, SubmissionInfo subInfo) throws ServletException, IOException, SQLException, AuthorizeException {
@@ -115,7 +117,7 @@ public class ProjectStep extends AbstractProcessingStep {
         String av = request.getParameter(metadataField + "_authority");
         String cv = request.getParameter(metadataField + "_confidence");
         if (StringUtils.isBlank(value) && noProjectAndFunderAttached(item)) {
-            ProjectAuthorityValue project = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultProject(context);
+            ProjectAuthorityValue project = defaultAuthorityCreator.retrieveDefaultProject(context);
 
             if(project!=null) {
                 value = project.getValue();
@@ -142,7 +144,7 @@ public class ProjectStep extends AbstractProcessingStep {
                 String funderAuthority = request.getParameter(MetadataField.formKey("rioxxterms", "funder", null) + "_authority");
                 try {
                     if (StringUtils.isBlank(funderAuthority)) {
-                        FunderAuthorityValue defaultAuthority = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultFunder(context);
+                        FunderAuthorityValue defaultAuthority = defaultAuthorityCreator.retrieveDefaultFunder(context);
 
                         if(defaultAuthority!=null) {
                             funderAuthority = defaultAuthority.getId();
