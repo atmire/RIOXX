@@ -186,7 +186,7 @@ public class ProjectStep extends AbstractSubmissionStep {
             Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
 
             // don't show the default project warning if there is no default project configured
-            if(defaultProject==null || defaultFunder==null) {
+            if(defaultProject==null && defaultFunder==null) {
                 warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
             }
         }
