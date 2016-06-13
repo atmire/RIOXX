@@ -240,7 +240,7 @@
                 <xsl:value-of select="concat($date,'-01')"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($date,'-01')"/>
+                <xsl:value-of select="$date"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
