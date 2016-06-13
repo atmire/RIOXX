@@ -49,7 +49,7 @@ public class FunderAuthorityIndexerInterface implements AuthorityIndexerInterfac
 
     private void loadFunders(Context context){
         AuthorityValueFinder authorityValueFinder = new AuthorityValueFinder();
-        List<AuthorityValue> funders = authorityValueFinder.findAllFunders(context);
+        List<AuthorityValue> funders = authorityValueFinder.findByAuthorityType(context, new FunderAuthorityValue().getAuthorityType());
         funderIterator = funders.iterator();
     }
 }

@@ -28,7 +28,7 @@
 
     <bean id="dspace.DSpaceAuthorityIndexer" class="org.dspace.authority.indexer.DSpaceAuthorityIndexer"/>
     <bean id="FunderAuthorityIndexerInterface" class="org.dspace.authority.indexer.FunderAuthorityIndexerInterface"/>
-    <bean id="DefaultProjectAuthorityIndexerInterface" class="org.dspace.authority.indexer.DefaultProjectAuthorityIndexerInterface">
+    <bean id="DefaultProjectAuthorityIndexerInterface" class="org.dspace.authority.indexer.DefaultProjectAuthorityIndexerInterface" scope="prototype">
         <property name="defaultAuthorityCreator" ref="defaultAuthorityCreator"/>
             </bean>
 

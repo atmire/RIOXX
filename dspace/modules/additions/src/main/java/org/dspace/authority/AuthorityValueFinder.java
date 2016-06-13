@@ -99,8 +99,8 @@ public class AuthorityValueFinder {
         return find(context, queryString);
     }
 
-    public List<AuthorityValue> findAllFunders(Context context) {
-        String queryString = "authority_type:funder";
+    public List<AuthorityValue> findByAuthorityType(Context context, String type) {
+        String queryString = "authority_type:\"" + type + "\"";
         return find(context, queryString);
     }
 
