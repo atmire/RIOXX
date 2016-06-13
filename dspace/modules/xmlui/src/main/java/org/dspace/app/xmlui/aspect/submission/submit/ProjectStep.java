@@ -48,17 +48,24 @@ public class ProjectStep extends AbstractSubmissionStep {
     private String defaultProject = "No Default Project Set";
     private String defaultFunder = "No Default Funder Set";
 
+    private DefaultAuthorityCreator defaultAuthorityCreator = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class);
+    private ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
+
     @Override
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, parameters);
         Request request = ObjectModelHelper.getRequest(objectModel);
         newProject = (ProjectAuthorityValue) request.getSession().getAttribute("newProject");
 
-        ProjectAuthorityValue project = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultProject(context);
+        ProjectAuthorityValue project = defaultAuthorityCreator.retrieveDefaultProject(context);
 
         if(project!=null) {
             defaultFunder = project.getFunderAuthorityValue().getValue();
             defaultProject = project.getValue();
+        }
+        else {
+            defaultFunder = null;
+            defaultProject = null;
         }
     }
 
@@ -156,8 +163,6 @@ public class ProjectStep extends AbstractSubmissionStep {
             header.addCell().addContent(T_funder_label);
             header.addCell().addContent("");
 
-            ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
-
             int count = 0;
 
             for (Metadatum dcValue : dcValues) {
@@ -181,7 +186,7 @@ public class ProjectStep extends AbstractSubmissionStep {
             Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
 
             // don't show the default project warning if there is no default project configured
-            if(new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).hasValidDefaultAuthorityConfiguration()) {
+            if(defaultProject==null || defaultFunder==null) {
                 warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
             }
         }
