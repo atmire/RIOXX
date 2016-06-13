@@ -7,7 +7,7 @@ import org.dspace.core.*;
 /**
  * @author philip at atmire.com
  */
-public class DefaultProjectAuthorityIndexerInterface implements AuthorityIndexerInterface {
+public class DefaultProjectAuthorityIndexer implements AuthorityIndexerInterface {
 
     private ProjectAuthorityValue defaultProject;
     private boolean indexed;

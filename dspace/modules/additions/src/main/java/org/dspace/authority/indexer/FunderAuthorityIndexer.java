@@ -8,7 +8,7 @@ import org.dspace.core.*;
 /**
  * @author philip at atmire.com
  */
-public class FunderAuthorityIndexerInterface implements AuthorityIndexerInterface {
+public class FunderAuthorityIndexer implements AuthorityIndexerInterface {
 
     private Iterator<AuthorityValue> funderIterator;
 
