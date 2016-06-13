@@ -240,6 +240,9 @@
             <xsl:when test="not(contains(substring-after($date,'-'),'-'))">
                 <xsl:value-of select="concat($date,'-01')"/>
             </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat($date,'-01')"/>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
