@@ -1,15 +1,12 @@
 package org.dspace.app.xmlui.objectmanager;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.dspace.authority.ProjectAuthorityValue;
-import org.dspace.content.Metadatum;
-import org.dspace.core.Context;
-import org.dspace.project.ProjectService;
-import org.dspace.utils.DSpace;
-
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import org.apache.commons.collections.*;
+import org.apache.commons.lang3.*;
+import org.dspace.authority.*;
+import org.dspace.content.*;
+import org.dspace.core.*;
+import org.dspace.project.*;
 
 /**
  * Metadata enricher that will add the Rioxx Project - Funder relation to the metadata
@@ -21,16 +18,7 @@ public class RioxxProjectFunderEnricher implements MetaDatumEnricher {
     private static final String PROJECT_QUALIFIER = "project";
     private static final String FUNDER_ELEMENT = "funder";
 
-
-    private ProjectService projectService = null;
-
-    private ProjectService getProjectService() {
-        if(projectService == null) {
-            projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
-        }
-
-        return projectService;
-    }
+    private ProjectService projectService;
 
     public void enrichMetadata(final Context context, final List<Metadatum> metadataList) {
         if(CollectionUtils.isNotEmpty(metadataList)) {
@@ -42,7 +30,7 @@ public class RioxxProjectFunderEnricher implements MetaDatumEnricher {
                         && StringUtils.equals(PROJECT_QUALIFIER, metadatum.qualifier)) {
 
                     //Check if we can find the corresponding Funder Authority
-                    ProjectAuthorityValue authorityValue = getProjectService().getProjectByAuthorityId(context, metadatum.authority);
+                    ProjectAuthorityValue authorityValue = projectService.getProjectByAuthorityId(context, metadatum.authority);
                     if(authorityValue != null && authorityValue.getFunderAuthorityValue() != null) {
                         String language = metadatum.language;
                         int confidence = metadatum.confidence;
@@ -73,4 +61,7 @@ public class RioxxProjectFunderEnricher implements MetaDatumEnricher {
         return newMetadatum;
     }
 
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 }
