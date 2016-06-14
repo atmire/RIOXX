@@ -55,8 +55,8 @@ public class AuthorityValueFinder {
         return findings.size() > 0 ? findings.get(0) : null;
     }
 
-    public AuthorityValue findByProjectID(Context context, String projectID) {
-        String queryString = "value:\"" + projectID + "\"";
+    public AuthorityValue findByProjectIDAndFunderId(Context context, String projectId, String funderID) {
+        String queryString = "value_keyword:\"" + projectId + "\" AND label_funder_authority_ID:\"" + funderID +"\"";
         List<AuthorityValue> findings = find(context, queryString);
         return findings.size() > 0 ? findings.get(0) : null;
     }
@@ -96,6 +96,11 @@ public class AuthorityValueFinder {
 
     public List<AuthorityValue> findAll(Context context) {
         String queryString = "*:*";
+        return find(context, queryString);
+    }
+
+    public List<AuthorityValue> findByAuthorityType(Context context, String type) {
+        String queryString = "authority_type:\"" + type + "\"";
         return find(context, queryString);
     }
 

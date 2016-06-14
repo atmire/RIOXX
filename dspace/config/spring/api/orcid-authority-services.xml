@@ -20,13 +20,20 @@
 
        default-autowire-candidates="*Service,*DAO,javax.sql.DataSource">
 
-    <context:annotation-config /> <!-- allows us to use spring annotations in beans -->
+    <context:annotation-config/> <!-- allows us to use spring annotations in beans -->
 
     <!-- Authority control -->
     <bean class="org.dspace.authority.AuthoritySolrServiceImpl" id="org.dspace.authority.AuthoritySearchService"/>
-    <alias name="org.dspace.authority.AuthoritySearchService" alias="org.dspace.authority.indexer.AuthorityIndexingService"/>
+    <alias name="org.dspace.authority.AuthoritySearchService"
+           alias="org.dspace.authority.indexer.AuthorityIndexingService"/>
 
-    <bean id="dspace.DSpaceAuthorityIndexer" class="org.dspace.authority.indexer.DSpaceAuthorityIndexer"/>
+    <bean id="dspace.DSpaceAuthorityIndexer" class="org.dspace.authority.indexer.DSpaceAuthorityIndexer" scope="prototype"/>
+    <bean id="workspaceAuthorityIndexer" class="org.dspace.authority.indexer.WorkspaceAuthorityIndexer" scope="prototype"/>
+    <bean id="funderAuthorityIndexer" class="org.dspace.authority.indexer.FunderAuthorityIndexer" scope="prototype"/>
+    <bean id="defaultProjectAuthorityIndexer"
+          class="org.dspace.authority.indexer.DefaultProjectAuthorityIndexer" scope="prototype">
+        <property name="defaultAuthorityCreator" ref="defaultAuthorityCreator"/>
+    </bean>
 
     <bean name="AuthorityTypes" class="org.dspace.authority.AuthorityTypes">
         <property name="types">
@@ -52,10 +59,10 @@
         </property>
     </bean>
 
-  <!--  <alias name="OrcidSource" alias="AuthoritySource"/>
-    <bean name="OrcidSource" class="org.dspace.authority.orcid.Orcid">
-        <constructor-arg value="http://pub.orcid.org"/>
-    </bean>-->
+    <!--  <alias name="OrcidSource" alias="AuthoritySource"/>
+      <bean name="OrcidSource" class="org.dspace.authority.orcid.Orcid">
+          <constructor-arg value="http://pub.orcid.org"/>
+      </bean>-->
 
     <alias name="restSources" alias="AuthoritySource"/>
 
@@ -65,7 +72,7 @@
 
     <util:map id="restSources" map-class="java.util.HashMap" value-type="org.dspace.authority.rest.RestSource">
         <entry key="dc_contributor_author">
-              <ref bean="OrcidSource" />
+            <ref bean="OrcidSource"/>
         </entry>
     </util:map>
 
