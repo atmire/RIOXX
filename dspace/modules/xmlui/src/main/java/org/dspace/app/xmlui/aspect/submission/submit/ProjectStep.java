@@ -1,32 +1,27 @@
 package org.dspace.app.xmlui.aspect.submission.submit;
 
-import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
-import org.apache.log4j.Logger;
-import org.dspace.app.xmlui.aspect.submission.AbstractSubmissionStep;
-import org.dspace.app.xmlui.utils.UIException;
-import org.dspace.app.xmlui.wing.Message;
-import org.dspace.app.xmlui.wing.WingException;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import org.apache.avalon.framework.parameters.*;
+import org.apache.cocoon.*;
+import org.apache.cocoon.environment.*;
+import org.apache.log4j.*;
+import org.dspace.app.xmlui.aspect.submission.*;
+import org.dspace.app.xmlui.utils.*;
+import org.dspace.app.xmlui.wing.*;
 import org.dspace.app.xmlui.wing.element.*;
-import org.dspace.authority.ProjectAuthorityValue;
-import org.dspace.authorize.AuthorizeException;
+import org.dspace.app.xmlui.wing.element.List;
+import org.dspace.authority.*;
+import org.dspace.authorize.*;
 import org.dspace.content.Collection;
 import org.dspace.content.Item;
-import org.dspace.content.Metadatum;
-import org.dspace.content.authority.ChoiceAuthorityManager;
-import org.dspace.content.authority.MetadataAuthorityManager;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.project.ProjectService;
-import org.dspace.authority.DefaultAuthorityCreator;
-import org.dspace.utils.DSpace;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Map;
+import org.dspace.content.*;
+import org.dspace.content.authority.*;
+import org.dspace.core.*;
+import org.dspace.project.*;
+import org.dspace.utils.*;
+import org.xml.sax.*;
 
 /**
  * Created by Philip Vissenaekens (philip at atmire dot com)
@@ -53,15 +48,25 @@ public class ProjectStep extends AbstractSubmissionStep {
     private String defaultProject = "No Default Project Set";
     private String defaultFunder = "No Default Funder Set";
 
+    private DefaultAuthorityCreator defaultAuthorityCreator = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class);
+    private ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
+
     @Override
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, parameters);
         Request request = ObjectModelHelper.getRequest(objectModel);
         newProject = (ProjectAuthorityValue) request.getSession().getAttribute("newProject");
 
-        ProjectAuthorityValue project = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultProject(context);
-        defaultFunder = project.getFunderAuthorityValue().getValue();
-        defaultProject = project.getValue();
+        ProjectAuthorityValue project = defaultAuthorityCreator.retrieveDefaultProject(context);
+
+        if(project!=null) {
+            defaultFunder = project.getFunderAuthorityValue().getValue();
+            defaultProject = project.getValue();
+        }
+        else {
+            defaultFunder = null;
+            defaultProject = null;
+        }
     }
 
     public void addPageMeta(PageMeta pageMeta) throws SAXException, WingException,
@@ -110,7 +115,10 @@ public class ProjectStep extends AbstractSubmissionStep {
 
         renderResults(div, dcValues);
 
-        addFundersWithoutAuthorityField(div, item);
+        boolean enableDcSponsorship = ConfigurationManager.getBooleanProperty("rioxx", "submission.funder.enableDcSponsorship");
+        if(enableDcSponsorship) {
+            addFundersWithoutAuthorityField(div, item);
+        }
 
         addControlButtons(div.addList("submit-project-part2", List.TYPE_FORM));
     }
@@ -155,8 +163,6 @@ public class ProjectStep extends AbstractSubmissionStep {
             header.addCell().addContent(T_funder_label);
             header.addCell().addContent("");
 
-            ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
-
             int count = 0;
 
             for (Metadatum dcValue : dcValues) {
@@ -178,7 +184,11 @@ public class ProjectStep extends AbstractSubmissionStep {
             }
         } else {
             Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
-            warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
+
+            // don't show the default project warning if there is no default project configured
+            if(defaultProject!=null && defaultFunder!=null) {
+                warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
+            }
         }
     }
 
@@ -255,10 +265,13 @@ public class ProjectStep extends AbstractSubmissionStep {
             }
         }
 
-        dcValues = submission.getItem().getMetadata("dc", "description", "sponsorship", Item.ANY);
-        for (Metadatum dcValue : dcValues) {
-            org.dspace.app.xmlui.wing.element.Item funder = projectSection.addItem();
-            funder.addContent(dcValue.value);
+        boolean enableDcSponsorship = ConfigurationManager.getBooleanProperty("rioxx", "submission.funder.enableDcSponsorship");
+        if(enableDcSponsorship) {
+            dcValues = submission.getItem().getMetadata("dc", "description", "sponsorship", Item.ANY);
+            for (Metadatum dcValue : dcValues) {
+                org.dspace.app.xmlui.wing.element.Item funder = projectSection.addItem();
+                funder.addContent(dcValue.value);
+            }
         }
 
         return projectSection;
