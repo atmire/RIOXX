@@ -21,7 +21,7 @@ public class DefaultAuthorityCreator {
         if(!hasValidDefaultAuthorityConfiguration()){
             return null;
         }
-        
+
         String defaultFunderID = ConfigurationManager.getProperty("rioxx", "authority.default.funderID");
 
         AuthorityValue defaultFunderValue = new AuthorityValueFinder().findByFunderID(context, defaultFunderID);

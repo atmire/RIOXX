@@ -8,6 +8,6 @@
 
     <bean id="rioxxProjectFunderEnricher" class="org.dspace.app.xmlui.objectmanager.RioxxProjectFunderEnricher">
         <property name="projectService" ref="ProjectService"/>
-            </bean>
+    </bean>
 
 </beans>
