@@ -1,1 +1,1 @@
-You can find the master README file [https://github.com/atmire/RIOXX/blob/master/README.md](here).
+You can find the master README file [here](https://github.com/atmire/RIOXX/blob/master/README.md).
