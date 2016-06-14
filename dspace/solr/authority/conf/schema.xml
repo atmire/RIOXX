@@ -270,7 +270,17 @@
             </analyzer>
       </fieldType>
 
- </types>
+    <fieldType name="keywordFilter" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+      <analyzer>
+        <!--Treats the entire field as a single token, regardless of its content-->
+        <tokenizer class="solr.KeywordTokenizerFactory"/>
+
+        <!--<filter class="solr.LowerCaseFilterFactory" />-->
+        <filter class="solr.TrimFilterFactory" />
+      </analyzer>
+    </fieldType>
+
+  </types>
 
 
  <fields>
@@ -301,7 +311,10 @@
      <field name="institution" type="string" multiValued="false" indexed="true" stored="true" required="false"/>
      <field name="value" type="text" multiValued="false" indexed="true" stored="true" required="false"/>
 
-     <field name="orcid_id" type="string" multiValued="false" indexed="true" stored="true" required="false"/>
+   <field name="value_keyword" type="keywordFilter" multiValued="true" indexed="true" stored="true" required="false"/>
+   <copyField source="value" dest="value_keyword"/>
+
+   <field name="orcid_id" type="string" multiValued="false" indexed="true" stored="true" required="false"/>
      <field name="first_name" type="text" multiValued="false" indexed="true" stored="true" required="false"/>
      <field name="last_name" type="text" multiValued="false" indexed="true" stored="true" required="false"/>
      <field name="name_variant" type="text" multiValued="true" indexed="true" stored="true" required="false"/>

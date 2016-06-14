@@ -55,8 +55,8 @@ public class AuthorityValueFinder {
         return findings.size() > 0 ? findings.get(0) : null;
     }
 
-    public AuthorityValue findByProjectID(Context context, String projectID) {
-        String queryString = "value:\"" + projectID + "\"";
+    public AuthorityValue findByProjectIDAndFunderId(Context context, String projectId, String funderID) {
+        String queryString = "value_keyword:\"" + projectId + "\" AND label_funder_authority_ID:\"" + funderID +"\"";
         List<AuthorityValue> findings = find(context, queryString);
         return findings.size() > 0 ? findings.get(0) : null;
     }
