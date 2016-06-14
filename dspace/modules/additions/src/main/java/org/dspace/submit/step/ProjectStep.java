@@ -1,31 +1,21 @@
 package org.dspace.submit.step;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.dspace.app.util.SubmissionInfo;
-import org.dspace.app.util.Util;
-import org.dspace.authority.ProjectAuthorityValue;
-import org.dspace.authorize.AuthorizeException;
-import org.dspace.content.Collection;
-import org.dspace.content.Item;
-import org.dspace.content.MetadataField;
-import org.dspace.content.Metadatum;
-import org.dspace.content.authority.Choices;
-import org.dspace.content.authority.MetadataAuthorityManager;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.core.Context;
-import org.dspace.project.ProjectService;
-import org.dspace.submit.AbstractProcessingStep;
-import org.dspace.authority.DefaultAuthorityCreator;
-import org.dspace.utils.DSpace;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import org.apache.commons.lang.*;
+import org.apache.log4j.*;
+import org.dspace.app.util.*;
+import org.dspace.authority.*;
+import org.dspace.authorize.*;
+import org.dspace.content.*;
+import org.dspace.content.authority.*;
+import org.dspace.core.*;
+import org.dspace.project.*;
+import org.dspace.submit.*;
+import org.dspace.utils.*;
 
 /**
  * Created by Philip Vissenaekens (philip at atmire dot com)
@@ -40,12 +30,13 @@ public class ProjectStep extends AbstractProcessingStep {
     public static final int LOOKUP_PROJECT_ERROR = 3;
     public static final int REMOVE_PROJECT_SUCCESS = 4;
     public static final int No_PROJECTS_ADDED = 5;
+
     private ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
+    private DefaultAuthorityCreator defaultAuthorityCreator = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class);
 
     @Override
     public int doProcessing(Context context, HttpServletRequest request, HttpServletResponse response, SubmissionInfo subInfo) throws ServletException, IOException, SQLException, AuthorizeException {
         Item item = subInfo.getSubmissionItem().getItem();
-        Collection c = subInfo.getSubmissionItem().getCollection();
 
         clearErrorFields(request);
 
@@ -97,8 +88,10 @@ public class ProjectStep extends AbstractProcessingStep {
                 Metadatum[] dcValues = item.getMetadata("rioxxterms", "identifier", "project", Item.ANY);
 
                 if (dcValues.length == 0) {
-                    addErrorField(request, MetadataField.formKey("rioxxterms", "identifier", "project"));
-                    return No_PROJECTS_ADDED;
+                    if(ConfigurationManager.getBooleanProperty("rioxx", "submission.funder.required")){
+                        addErrorField(request, MetadataField.formKey("rioxxterms", "identifier", "project"));
+                        success = No_PROJECTS_ADDED;
+                    }
                 }
             }
             return success;
@@ -124,9 +117,12 @@ public class ProjectStep extends AbstractProcessingStep {
         String av = request.getParameter(metadataField + "_authority");
         String cv = request.getParameter(metadataField + "_confidence");
         if (StringUtils.isBlank(value) && noProjectAndFunderAttached(item)) {
-            ProjectAuthorityValue project = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultProject(context);
-            value = project.getValue();
-            av = project.getId();
+            ProjectAuthorityValue project = defaultAuthorityCreator.retrieveDefaultProject(context);
+
+            if(project!=null) {
+                value = project.getValue();
+                av = project.getId();
+            }
         }
         if (StringUtils.isNotBlank(value)) {
             if (StringUtils.isNotBlank(av)) {
@@ -148,7 +144,11 @@ public class ProjectStep extends AbstractProcessingStep {
                 String funderAuthority = request.getParameter(MetadataField.formKey("rioxxterms", "funder", null) + "_authority");
                 try {
                     if (StringUtils.isBlank(funderAuthority)) {
-                        funderAuthority = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class).retrieveDefaultFunder(context).getId();
+                        FunderAuthorityValue defaultAuthority = defaultAuthorityCreator.retrieveDefaultFunder(context);
+
+                        if(defaultAuthority!=null) {
+                            funderAuthority = defaultAuthority.getId();
+                        }
                     }
                     ProjectAuthorityValue project = projectService.createProject(context, value, funderAuthority);
                     item.addMetadata("rioxxterms", "identifier", "project", getDefaultLanguageQualifier(), value, project.getId(), Choices.CF_ACCEPTED);
@@ -308,4 +308,5 @@ public class ProjectStep extends AbstractProcessingStep {
 
         return vals;
     }
+
 }

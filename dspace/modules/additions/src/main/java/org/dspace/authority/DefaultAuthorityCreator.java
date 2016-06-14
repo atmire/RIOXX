@@ -8,7 +8,6 @@ import org.dspace.core.Context;
 import org.dspace.utils.DSpace;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by jonas - jonas@atmire.com on 09/03/16.
@@ -19,23 +18,23 @@ public class DefaultAuthorityCreator {
     private static final Logger log =  Logger.getLogger(DefaultAuthorityCreator.class);
 
     public FunderAuthorityValue retrieveDefaultFunder(Context context) {
-        String defaultFunder = ConfigurationManager.getProperty("authority.default.funder");
-        if (StringUtils.isBlank(defaultFunder)) {
-            defaultFunder = "Default funder";
+        if(!hasValidDefaultAuthorityConfiguration()){
+            return null;
         }
 
-        String defaultFunderID = ConfigurationManager.getProperty("authority.default.funderID");
-        if (StringUtils.isBlank(defaultFunderID)) {
-            defaultFunderID = "10.99999/999999999";
-        }
+        String defaultFunderID = ConfigurationManager.getProperty("rioxx", "authority.default.funderID");
+
         AuthorityValue defaultFunderValue = new AuthorityValueFinder().findByFunderID(context, defaultFunderID);
         if (defaultFunderValue ==null) {
+            String defaultFunder = ConfigurationManager.getProperty("rioxx", "authority.default.funder");
+
             FunderAuthorityValue funderAuthorityValue = FunderAuthorityValue.create();
             funderAuthorityValue.setValue(defaultFunder);
             funderAuthorityValue.setFunderID(defaultFunderID);
             AuthoritySolrServiceImpl solrService = (AuthoritySolrServiceImpl) new DSpace().getServiceManager().getServiceByName(AuthorityIndexingService.class.getName(), AuthorityIndexingService.class);
             solrService.indexContent(funderAuthorityValue, true);
             solrService.commit();
+
             return funderAuthorityValue;
         } else {
             return (FunderAuthorityValue) defaultFunderValue;
@@ -58,25 +57,34 @@ public class DefaultAuthorityCreator {
         }
 
         return  null;
-
     }
 
     public ProjectAuthorityValue retrieveDefaultProject(Context context) {
-        String defaultProject = ConfigurationManager.getProperty("authority.default.project");
-        if(StringUtils.isBlank(defaultProject)){
-            defaultProject="Default project";
+        if(!hasValidDefaultAuthorityConfiguration()){
+            return null;
         }
-        List<AuthorityValue> defaultProjectValue = new AuthorityValueFinder().findByValue(context, "rioxxterms_identifier_project",defaultProject );
-        if (defaultProjectValue.size() == 0) {
+
+        FunderAuthorityValue funderAuthorityValue = retrieveDefaultFunder(context);
+
+        String defaultProject = ConfigurationManager.getProperty("rioxx","authority.default.project");
+        ProjectAuthorityValue defaultProjectValue = (ProjectAuthorityValue) new AuthorityValueFinder().findByProjectIDAndFunderId(context,defaultProject, funderAuthorityValue.getId());
+
+        if (defaultProjectValue==null) {
             ProjectAuthorityValue projectAuthorityValue = ProjectAuthorityValue.create();
             projectAuthorityValue.setValue(defaultProject);
-            projectAuthorityValue.setFunderAuthorityValue(retrieveDefaultFunder(context));
+            projectAuthorityValue.setFunderAuthorityValue(funderAuthorityValue);
             AuthoritySolrServiceImpl solrService = (AuthoritySolrServiceImpl) new DSpace().getServiceManager().getServiceByName(AuthorityIndexingService.class.getName(), AuthorityIndexingService.class);
             solrService.indexContent(projectAuthorityValue, true);
             solrService.commit();
             return projectAuthorityValue;
         }else{
-            return (ProjectAuthorityValue) defaultProjectValue.get(0);
+            return defaultProjectValue;
         }
+    }
+
+    public boolean hasValidDefaultAuthorityConfiguration() {
+        return StringUtils.isNotBlank(ConfigurationManager.getProperty("rioxx", "authority.default.funder"))
+                && StringUtils.isNotBlank(ConfigurationManager.getProperty("rioxx", "authority.default.funderID"))
+                && StringUtils.isNotBlank(ConfigurationManager.getProperty("rioxx", "authority.default.project"));
     }
 }

@@ -17,7 +17,7 @@ public class ProjectService {
     public ProjectAuthorityValue createProject(Context context, String projectId, String funderAuthorityId) {
         AuthorityValueFinder finder = new AuthorityValueFinder();
 
-        AuthorityValue project = finder.findByProjectID(context, projectId);
+        AuthorityValue project = finder.findByProjectIDAndFunderId(context, projectId, funderAuthorityId);
 
         if(project!=null){
             throw new IllegalArgumentException("project with id " + projectId + " already exists");

@@ -7,32 +7,21 @@
  */
 package org.dspace.app.xmlui.objectmanager;
 
-import org.dspace.app.util.MetadataExposure;
-import org.dspace.app.util.Util;
-import org.dspace.app.xmlui.wing.AttributeMap;
-import org.dspace.app.xmlui.wing.WingException;
-import org.dspace.authorize.AuthorizeException;
-import org.dspace.authorize.AuthorizeManager;
-import org.dspace.content.*;
-import org.dspace.content.authority.Choices;
-import org.dspace.content.crosswalk.CrosswalkException;
-import org.dspace.content.crosswalk.DisseminationCrosswalk;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.core.Constants;
-import org.dspace.core.Context;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.output.SAXOutputter;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 import java.util.*;
+import org.dspace.app.util.*;
+import org.dspace.app.xmlui.wing.*;
+import org.dspace.authorize.*;
+import org.dspace.content.*;
+import org.dspace.content.authority.*;
+import org.dspace.content.crosswalk.*;
+import org.dspace.core.*;
+import org.dspace.utils.*;
+import org.jdom.*;
+import org.jdom.output.*;
+import org.xml.sax.*;
+import org.xml.sax.helpers.*;
 
 
 /**
@@ -83,7 +72,7 @@ public class ItemAdapter extends AbstractAdapter
     // DSpace DB context
     private Context context;
 
-    private List<MetaDatumEnricher> metaDatumEnrichers;
+    private List<MetaDatumEnricher> metaDatumEnrichers = new DSpace().getServiceManager().getServicesByType(MetaDatumEnricher.class);
 
     /**
      * Construct a new ItemAdapter
@@ -98,12 +87,6 @@ public class ItemAdapter extends AbstractAdapter
         super(contextPath);
         this.item = item;
         this.context = context;
-        initializeMetaDatumEnrichers();
-    }
-
-    private void initializeMetaDatumEnrichers() {
-        metaDatumEnrichers = new LinkedList<>();
-        metaDatumEnrichers.add(new RioxxProjectFunderEnricher());
     }
 
     /** Return the item */

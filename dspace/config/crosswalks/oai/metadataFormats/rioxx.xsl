@@ -27,25 +27,43 @@
             <ali:free_to_read>
                 <xsl:if test="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']">
                     <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
-                        <xsl:value-of select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']" />
+                        <xsl:call-template name="render-full-date">
+                            <xsl:with-param name="date">
+                                <xsl:value-of select="doc:metadata/doc:element[@name='bundles']/doc:element[@name='bundle']/doc:element[@name='bitstreams']/doc:element[@name='bitstream']/doc:field[@name='embargo']" />
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:attribute>
                 </xsl:if>
             </ali:free_to_read>
 
             <ali:license_ref>
+                <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
+                    <xsl:call-template name="render-full-date">
+                        <xsl:with-param name="date">
+                            <xsl:choose>
+                                <xsl:when
+                                        test="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']">
+                                    <xsl:value-of
+                                            select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of
+                                            select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:attribute>
+
                 <xsl:choose>
                     <xsl:when
-                            test="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
-                        <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']" />
-                        </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+                            test="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
+                        <xls:value-of
+                                select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:attribute name="start_date" namespace="http://ali.niso.org/2014/ali/1.0">
-                            <xsl:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='startdate']/doc:element/doc:field[@name='value']" />
-                        </xsl:attribute>
-                        <xls:value-of select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='licenseref']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
+                        <xls:value-of
+                                select="doc:metadata/doc:element[@name='dc']/doc:element[@name='rights']/doc:element[@name='uri']/doc:element/doc:field[@name='value']"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </ali:license_ref>
@@ -118,7 +136,11 @@
 
             <xsl:for-each select="doc:metadata/doc:element[@name='dcterms']/doc:element[@name='dateAccepted']/doc:element/doc:field[@name='value']">
                 <dcterms:dateAccepted>
-                    <xls:value-of select="."/>
+                    <xsl:call-template name="render-full-date">
+                        <xsl:with-param name="date">
+                            <xls:value-of select="."/>
+                        </xsl:with-param>
+                    </xsl:call-template>
                 </dcterms:dateAccepted>
             </xsl:for-each>
 
@@ -159,7 +181,11 @@
 
             <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='date']/doc:element[@name='issued']/doc:element/doc:field[@name='value']">
                 <rioxxterms:publication_date>
-                    <xls:value-of select="."/>
+                    <xsl:call-template name="render-full-date">
+                        <xsl:with-param name="date">
+                            <xls:value-of select="."/>
+                        </xsl:with-param>
+                    </xsl:call-template>
                 </rioxxterms:publication_date>
             </xsl:for-each>
 
@@ -207,5 +233,21 @@
                 </rioxxterms:project>
             </xsl:for-each>
         </rioxx:rioxx>
+    </xsl:template>
+
+    <xsl:template name="render-full-date">
+        <xsl:param name="date"/>
+
+        <xsl:choose>
+            <xsl:when test="not(contains($date,'-'))">
+                <xsl:value-of select="concat($date,'-01-01')"/>
+            </xsl:when>
+            <xsl:when test="not(contains(substring-after($date,'-'),'-'))">
+                <xsl:value-of select="concat($date,'-01')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$date"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

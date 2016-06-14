@@ -193,6 +193,7 @@
             <XSLT>metadataFormats/rioxx.xsl</XSLT>
             <Namespace>http://www.rioxx.net/schema/v2.0/rioxx/</Namespace>
             <SchemaLocation>http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd</SchemaLocation>
+            <Filter ref="rioxxFilter"/>
         </Format>
     </Formats>
 
@@ -483,6 +484,7 @@
             <Configuration>
                 <list name="fields">
                     <string name="field">rioxxterms.licenseref.uri</string>
+                    <string name="field">dc.rights.uri</string>
                 </list>
             </Configuration>
         </CustomCondition>
