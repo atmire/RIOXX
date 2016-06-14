@@ -1,5 +1,9 @@
 package org.dspace.authority;
 
+import org.apache.poi.hssf.record.formula.functions.T;
+import org.dspace.authority.indexer.AuthorityIndexingService;
+import org.dspace.kernel.ServiceManager;
+import org.dspace.scripts.PopulateAuthorityFromXML;
 import org.dspace.util.XMLUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -11,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,8 +31,13 @@ public class FunderXmlFileParser {
     private static Logger log = Logger.getLogger(FunderXmlFileParser.class);
     private PrintWriter progressWriter;
 
-    public List<FunderAuthorityValue> getFunderAuthorities(File file) {
-        List<FunderAuthorityValue> authorityValues = new ArrayList<>();
+    private PopulateAuthorityFromXML<FunderAuthorityValue> populateAuthorityFromXML;
+
+    public FunderXmlFileParser(PopulateAuthorityFromXML<FunderAuthorityValue> populateAuthorityFromXML) {
+        this.populateAuthorityFromXML = populateAuthorityFromXML;
+    }
+
+    public void getFunderAuthorities(File file) {
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             Document document = XMLUtils.convertStreamToXML(fileInputStream);
@@ -38,11 +48,16 @@ public class FunderXmlFileParser {
                 FunderAuthorityValue funderAuthorityValue = FunderAuthorityValue.create();
                 Node node = iterator.next();
                 setProperties(funderAuthorityValue, node);
-                authorityValues.add(funderAuthorityValue);
+
+                populateAuthorityFromXML.processValue(funderAuthorityValue);
+
                 numberParsed++;
-                if (progressWriter != null && numberParsed % 100 == 0) {
+                if(numberParsed % 100 == 0) {
+                    populateAuthorityFromXML.commitIndexingService();
+                    if (progressWriter != null) {
                     progressWriter.println("Number of funders parsed: " + numberParsed);
                 }
+            }
             }
             if (progressWriter != null) {
                 progressWriter.println("Number of funders parsed: " + numberParsed);
@@ -51,7 +66,6 @@ public class FunderXmlFileParser {
         } catch (FileNotFoundException | XPathExpressionException e) {
             log.error("Error", e);
         }
-        return authorityValues;
     }
 
     private void setProperties(final FunderAuthorityValue funderAuthorityValue, Node node) throws XPathExpressionException {

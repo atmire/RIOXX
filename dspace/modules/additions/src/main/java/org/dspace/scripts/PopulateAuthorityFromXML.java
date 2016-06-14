@@ -1,17 +1,11 @@
 package org.dspace.scripts;
 
-import org.dspace.authority.IndexingUtils;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.log4j.Logger;
-import org.dspace.authority.AuthorityValue;
-import org.dspace.authority.indexer.AuthorityIndexingService;
-import org.dspace.kernel.ServiceManager;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import org.apache.commons.cli.*;
+import org.apache.log4j.*;
+import org.dspace.authority.*;
+import org.dspace.authority.indexer.*;
+import org.dspace.kernel.*;
 
 /**
  * Created by: Antoine Snyers (antoine at atmire dot com)
@@ -25,12 +19,16 @@ public abstract class PopulateAuthorityFromXML<T extends AuthorityValue> extends
     private static Logger log = Logger.getLogger(PopulateAuthorityFromXML.class);
 
     protected File file;
-    protected List<T> validAuthorityValues;
-    protected List<T> invalidAuthorityValues;
-    protected List<T> newAuthorityValues;
-    protected List<T> updatedAuhtorityValues;
-    protected List<T> unchangedAuhtorityValues;
-    protected boolean test = false;
+
+    private int numberOfInvalidAuthorityValues;
+    private int numberOfNewAuthorityValues;
+    private int numberOfUpdatedAuhtorityValues;
+    private int numberOfUnchangedAuhtorityValues;
+
+    private ServiceManager serviceManager;
+    private AuthorityIndexingService indexingService;
+
+    private boolean test = false;
 
 
     @Override
@@ -76,22 +74,11 @@ public abstract class PopulateAuthorityFromXML<T extends AuthorityValue> extends
     @Override
     public void run() throws Exception {
         if (fileOK(file)) {
-            validAuthorityValues = null;
             try {
+                serviceManager = IndexingUtils.getServiceManager();
+                indexingService = IndexingUtils.getIndexingService(serviceManager);
                 parseXML(file);
-                ServiceManager serviceManager = IndexingUtils.getServiceManager();
-                AuthorityIndexingService indexingService = IndexingUtils.getIndexingService(serviceManager);
 
-                newAuthorityValues = new ArrayList<T>();
-                updatedAuhtorityValues = new ArrayList<T>();
-                unchangedAuhtorityValues = new ArrayList<T>();
-
-                for (T value : validAuthorityValues) {
-                    T toIndex = valueToIndex(indexingService, value);
-                    if (!isTest() && toIndex != null) {
-                        indexingService.indexContent(toIndex, true);
-                    }
-                }
             if (!isTest()) {
                 indexingService.commit();
             }
@@ -103,7 +90,33 @@ public abstract class PopulateAuthorityFromXML<T extends AuthorityValue> extends
         }
     }
 
-    protected abstract T valueToIndex(AuthorityIndexingService indexingService, T value);
+    protected T valueToIndex(T value) {
+        T valueToIndex = value;
+        AuthorityValue cachedRecord = findCachedRecord(value);
+
+        if(cachedRecord != null && value.getClass().equals(cachedRecord.getClass())) {
+            if(cachedRecord.hasTheSameInformationAs(value)) {
+                numberOfUnchangedAuhtorityValues++;
+                valueToIndex = null;
+            } else {
+                if (cachedRecord.hasTheSameInformationAs(value)) {
+                    numberOfUnchangedAuhtorityValues++;
+                    valueToIndex = null;
+                } else {
+                    valueToIndex = updateValues(cachedRecord, value);
+                    numberOfUpdatedAuhtorityValues++;
+                }
+            }
+        } else {
+            numberOfNewAuthorityValues++;
+        }
+
+        return valueToIndex;
+    }
+
+    protected abstract AuthorityValue findCachedRecord(T value);
+
+    protected abstract T updateValues(AuthorityValue cachedRecord, T value);
 
     protected abstract void parseXML(File file);
 
@@ -122,10 +135,10 @@ public abstract class PopulateAuthorityFromXML<T extends AuthorityValue> extends
             notImported = "Number of invalid authorities (would not be imported):";
         }
 
-        imported += newAuthorityValues.size();
-        updated += updatedAuhtorityValues.size();
-        unchanged += unchangedAuhtorityValues.size();
-        notImported += invalidAuthorityValues.size();
+        imported += numberOfNewAuthorityValues;
+        updated += numberOfUpdatedAuhtorityValues;
+        unchanged += numberOfUnchangedAuhtorityValues;
+        notImported += numberOfInvalidAuthorityValues;
 
         print(firstLine);
         print(imported);
@@ -161,5 +174,22 @@ public abstract class PopulateAuthorityFromXML<T extends AuthorityValue> extends
 
     public void setTest(boolean test) {
         this.test = test;
+    }
+
+    public void processValue(T value) {
+        if(isValid(value)) {
+            T toIndex = valueToIndex(value);
+            if (!isTest() && toIndex != null) {
+                indexingService.indexContent(toIndex, true);
+            }
+        } else {
+            numberOfInvalidAuthorityValues++;
+        }
+}
+
+    protected abstract boolean isValid(T value);
+
+    public void commitIndexingService() {
+        indexingService.commit();
     }
 }
