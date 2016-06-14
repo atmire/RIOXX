@@ -1,9 +1,13 @@
 package org.dspace.authority.indexer;
 
-import java.util.*;
-import org.dspace.authority.*;
-import org.dspace.content.*;
-import org.dspace.core.*;
+import org.dspace.authority.AuthorityValue;
+import org.dspace.authority.AuthorityValueFinder;
+import org.dspace.authority.FunderAuthorityValue;
+import org.dspace.content.Item;
+import org.dspace.core.Context;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author philip at atmire.com
@@ -14,7 +18,7 @@ public class FunderAuthorityIndexer implements AuthorityIndexerInterface {
 
     @Override
     public void init(Context context, Item item) {
-        loadFunders(context);
+        //This indexer should do nothing when called from the AuthorityConsumer
     }
 
     @Override

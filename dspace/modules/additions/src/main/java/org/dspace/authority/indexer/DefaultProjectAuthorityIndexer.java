@@ -15,7 +15,7 @@ public class DefaultProjectAuthorityIndexer implements AuthorityIndexerInterface
 
     @Override
     public void init(Context context, Item item) {
-        loadDefaultProject(context);
+        //This indexer should do nothing when called from the AuthorityConsumer
     }
 
     @Override

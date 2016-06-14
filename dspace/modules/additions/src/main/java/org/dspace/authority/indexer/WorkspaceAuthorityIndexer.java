@@ -10,7 +10,6 @@ import org.dspace.content.Metadatum;
 import org.dspace.content.WorkspaceItem;
 import org.dspace.core.Context;
 import org.dspace.services.ConfigurationService;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ import java.util.*;
  * Authority indexer that will (re)index all authorities used in items that are still
  * in the workspace.
  */
-public class WorkspaceAuthorityIndexer implements AuthorityIndexerInterface, InitializingBean {
+public class WorkspaceAuthorityIndexer implements AuthorityIndexerInterface {
 
     private static final Logger log = Logger.getLogger(WorkspaceAuthorityIndexer.class);
 
@@ -42,29 +41,14 @@ public class WorkspaceAuthorityIndexer implements AuthorityIndexerInterface, Ini
     @Autowired(required = true)
     protected ConfigurationService configurationService;
 
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        int counter = 1;
-        String field;
-        metadataFields = new HashSet<String>();
-        while ((field = configurationService.getProperty("authority.author.indexer.field." + counter)) != null) {
-            metadataFields.add(field);
-            counter++;
-        }
-
-        authorityValueFinder = new AuthorityValueFinder();
-        cache = new HashMap<String, AuthorityValue>();
-    }
-
     @Override
     public void init(Context context, Item item) {
-        loadWorkspaceItems(context);
-        this.context = context;
+        //This indexer should do nothing when called from the AuthorityConsumer
     }
 
     @Override
     public void init(Context context, boolean useCache) {
+        loadConfiguration();
         loadWorkspaceItems(context);
         this.useCache = useCache;
         this.context = context;
@@ -72,6 +56,7 @@ public class WorkspaceAuthorityIndexer implements AuthorityIndexerInterface, Ini
 
     @Override
     public void init(Context context) {
+        loadConfiguration();
         loadWorkspaceItems(context);
         this.context = context;
     }
@@ -121,6 +106,19 @@ public class WorkspaceAuthorityIndexer implements AuthorityIndexerInterface, Ini
     @Override
     public boolean isConfiguredProperly() {
         return true;
+    }
+
+    private void loadConfiguration() {
+        int counter = 1;
+        String field;
+        metadataFields = new HashSet<String>();
+        while ((field = configurationService.getProperty("authority.author.indexer.field." + counter)) != null) {
+            metadataFields.add(field);
+            counter++;
+        }
+
+        authorityValueFinder = new AuthorityValueFinder();
+        cache = new HashMap<String, AuthorityValue>();
     }
 
     private void loadWorkspaceItems(Context context) {
