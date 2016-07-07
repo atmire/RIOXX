@@ -1,27 +1,32 @@
 package org.dspace.app.xmlui.aspect.submission.submit;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import org.apache.avalon.framework.parameters.*;
-import org.apache.cocoon.*;
-import org.apache.cocoon.environment.*;
-import org.apache.log4j.*;
-import org.dspace.app.xmlui.aspect.submission.*;
-import org.dspace.app.xmlui.utils.*;
-import org.dspace.app.xmlui.wing.*;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.SourceResolver;
+import org.apache.log4j.Logger;
+import org.dspace.app.xmlui.aspect.submission.AbstractSubmissionStep;
+import org.dspace.app.xmlui.utils.UIException;
+import org.dspace.app.xmlui.wing.Message;
+import org.dspace.app.xmlui.wing.WingException;
 import org.dspace.app.xmlui.wing.element.*;
-import org.dspace.app.xmlui.wing.element.List;
-import org.dspace.authority.*;
-import org.dspace.authorize.*;
+import org.dspace.authority.DefaultAuthorityCreator;
+import org.dspace.authority.ProjectAuthorityValue;
+import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
 import org.dspace.content.Item;
-import org.dspace.content.*;
-import org.dspace.content.authority.*;
-import org.dspace.core.*;
-import org.dspace.project.*;
-import org.dspace.utils.*;
-import org.xml.sax.*;
+import org.dspace.content.Metadatum;
+import org.dspace.content.authority.ChoiceAuthorityManager;
+import org.dspace.content.authority.MetadataAuthorityManager;
+import org.dspace.core.ConfigurationManager;
+import org.dspace.project.ProjectService;
+import org.dspace.utils.DSpace;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * Created by Philip Vissenaekens (philip at atmire dot com)
@@ -183,10 +188,9 @@ public class ProjectStep extends AbstractSubmissionStep {
                 count++;
             }
         } else {
-            Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
-
             // don't show the default project warning if there is no default project configured
             if(defaultProject!=null && defaultFunder!=null) {
+                Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
                 warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
             }
         }
