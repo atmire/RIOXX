@@ -100,7 +100,9 @@ public class WorkspaceAuthorityIndexer implements AuthorityIndexerInterface {
         itemIterator = null;
         currentItem = null;
         nextValue = null;
-        cache.clear();
+        if(cache != null) {
+            cache.clear();
+        }
     }
 
     @Override
