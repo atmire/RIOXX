@@ -9,6 +9,7 @@
 	- [fundref id for funders and orcid id for authors](#fundref-id)
 	- [multiple funders and project](#multiple-funders)
 	    - [configuration](#multiple-funders-configuration)
+	    - [warning messages during submission](#multiple-funders-warning-messages)
 	- [license reference ali:license_ref](#license_ref)
 	- [date completion](#date-completion)
 - [Patch Installation Procedures](#Patch-installation-procedures)
@@ -169,6 +170,19 @@ authority.default.project = Default project
 authority.default.funder is the name of the default funder.
 authority.default.funderID is the ID of the default funder.
 authority.default.project is the name of the default project.
+
+### warning messages during submission <a name="multiple-funders-warning-messages"></a>###
+
+As described in the [multiple funders and projects configuration ](#configuration-) there are different combinations that state if a funder is required, and what values to use as a default.
+Depending on what combination is configured, a specified warning message will be shown.
+
+There following rules are currently in place to set these warning messages:
+
+|Combination|Warning message|
+|----|----|
+|Project and funder combination is required, and a default funder/project is configured|Caution: Without manually selecting a project or funder, this submission will receive project ID "{0}" and funder "{1}".  **NOTE:{0} and {1} are the project and funder configured in dspace/config/modules/rioxx.cfg**
+|Project and funder combination is required, No defaults configured|Caution: Without manually selecting a project or funder, this submission will not receive the required  project ID and funder. Please make sure to complete these fields using the provided lookup.
+|Project and funder combination not required, No defaults configured|Caution: Without manually selecting a project or funder, this submission will not receive a project ID or funder. If this submission is desired to be RIOXX compliant, please make sure to complete these fields using the provided lookup.
 
 ## license reference ali:license_ref<a name="license_ref"></a> ##
 
