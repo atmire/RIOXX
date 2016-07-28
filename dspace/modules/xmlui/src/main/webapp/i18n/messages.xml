@@ -2521,6 +2521,7 @@
 	<p>If you have established that the project was not entered before in this repository, you can create a new project. To associate this submission with a new project, please enter the project’s identifier, as provided by the associated funder. After filling out this identifier, click “Lookup Funder” to associate the correct funder. It is not possible to provide a free text entry for the associated funder. If your funder does not appear in the list, please contact {0}.</p>
 	</message>
 	<message key="xmlui.Submission.submit.ProjectStep.remove">Remove</message>
+    <message key="xmlui.Submission.submit.ProjectStep.add">Add</message>
 	<message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>
 	<message key="xmlui.Submission.submit.ProjectStep.lookup_project_error">Unable to find the project..</message>
 
