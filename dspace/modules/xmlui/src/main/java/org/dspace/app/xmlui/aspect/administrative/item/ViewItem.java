@@ -51,6 +51,8 @@ public class ViewItem extends AbstractDSpaceTransformer {
 
     private static final Message T_option_curate = message("xmlui.administrative.item.general.option_curate");
 
+    private static final Message T_option_funding = message("xmlui.administrative.item.general.option_funding");
+
     private static final Message T_title = message("xmlui.administrative.item.ViewItem.title");
 
     private static final Message T_trail = message("xmlui.administrative.item.ViewItem.trail");
@@ -84,7 +86,7 @@ public class ViewItem extends AbstractDSpaceTransformer {
         String baseURL = contextPath + "/admin/item?administrative-continue="
                 + knot.getId() ;
 
-        String link = baseURL + "&view_item" + (showFullItem?"":"&show=full");
+        String link;
         String tabLink = baseURL + "&view_item" + (!showFullItem?"":"&show=full");
         // DIVISION: main
         Division main = body.addInteractiveDivision("edit-item-status",
@@ -100,6 +102,7 @@ public class ViewItem extends AbstractDSpaceTransformer {
                 T_option_bitstreams);
         options.addItem().addXref(baseURL + "&submit_metadata",
                 T_option_metadata);
+        options.addItem().addXref(baseURL + "&submit_funding", T_option_funding);
         options.addItem().addHighlight("bold").addXref(tabLink, T_option_view);
         options.addItem().addXref(baseURL + "&submit_curate", T_option_curate);
 

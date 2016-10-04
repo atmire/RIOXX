@@ -1437,6 +1437,10 @@ function doEditItem(itemID)
         {
             doCurateItem(itemID, cocoon.request.get("curate_task"));
         }
+        else if (cocoon.request.get("submit_funding"))
+        {
+            doEditItemFunding(itemID);
+        }
         else
         {
             // This case should never happen but to prevent an infinite loop
@@ -1474,7 +1478,7 @@ function doEditItemStatus(itemID)
         assertEditItem(itemID);
         result = null;
 
-        if (cocoon.request.get("submit_return")  || cocoon.request.get("submit_bitstreams") || cocoon.request.get("submit_metadata") || cocoon.request.get("view_item") || cocoon.request.get("submit_curate") )
+        if (cocoon.request.get("submit_return")  || cocoon.request.get("submit_bitstreams") || cocoon.request.get("submit_metadata") || cocoon.request.get("view_item") || cocoon.request.get("submit_curate") || cocoon.request.get("submit_funding") )
         {
             // go back to wherever we came from.
             return null;
@@ -1542,7 +1546,7 @@ function doEditItemBitstreams(itemID)
         result = null;
 
         var submitButton = Util.getSubmitButton(cocoon.request, "submit_return");
-        if (cocoon.request.get("submit_return") || cocoon.request.get("submit_status") || cocoon.request.get("submit_bitstreams") || cocoon.request.get("submit_metadata") || cocoon.request.get("view_item") || cocoon.request.get("submit_curate"))
+        if (cocoon.request.get("submit_return") || cocoon.request.get("submit_status") || cocoon.request.get("submit_bitstreams") || cocoon.request.get("submit_metadata") || cocoon.request.get("view_item") || cocoon.request.get("submit_curate") || cocoon.request.get("submit_funding"))
         {
             // go back to wherever we came from.
             return null;
@@ -1590,7 +1594,7 @@ function doEditItemMetadata(itemID, templateCollectionID)
 
         if (cocoon.request.get("submit_return") || cocoon.request.get("submit_status") ||
             cocoon.request.get("submit_bitstreams") || cocoon.request.get("submit_metadata") ||
-            cocoon.request.get("view_item") || cocoon.request.get("submit_curate"))
+            cocoon.request.get("view_item") || cocoon.request.get("submit_curate") || cocoon.request.get("submit_funding"))
         {
             // go back to wherever we came from.
             return null;
@@ -1605,6 +1609,33 @@ function doEditItemMetadata(itemID, templateCollectionID)
             // Update the item
             result = FlowItemUtils.processEditItem(getDSContext(),itemID,cocoon.request);
         }
+    } while (true)
+}
+
+function doEditItemFunding(itemID)
+{
+    assertEditItem(itemID);
+
+    var result;
+
+    do {
+        sendPageAndWait("admin/item/funding",{"itemID":itemID}, result);
+        assertEditItem(itemID);
+        result = null;
+        if (cocoon.request.get("submit_return") || cocoon.request.get("submit_status") ||
+            cocoon.request.get("submit_bitstreams") || cocoon.request.get("submit_metadata") ||
+            cocoon.request.get("view_item") || cocoon.request.get("submit_curate") || cocoon.request.get("submit_funding"))
+        {
+            // go back to wherever we came from.
+            return null;
+        }
+        else if (cocoon.request.get("submit_add"))
+        {
+            result = FlowItemUtils.processAddFunding(getDSContext(),itemID,cocoon.request);
+        } else if (cocoon.request.get("submit_remove_project")){
+            result = FlowItemUtils.processRemoveFunding(getDSContext(),itemID,cocoon.request);
+        }
+
     } while (true)
 }
 

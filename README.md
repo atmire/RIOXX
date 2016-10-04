@@ -9,6 +9,7 @@
 	- [fundref id for funders and orcid id for authors](#fundref-id)
 	- [multiple funders and project](#multiple-funders)
 	    - [configuration](#multiple-funders-configuration)
+	    - [Edit funder page](#edit-funders-page)
 	- [license reference ali:license_ref](#license_ref)
 	- [date completion](#date-completion)
 - [Patch Installation Procedures](#Patch-installation-procedures)
@@ -25,7 +26,7 @@
 	- [Configure Submission forms or other metadata ingest mechanisms](#Configure-submission)
 - [Verification](#Verification)
 	- [RIOXX Metadata Registry](#RIOXX-metadata-registry)
-	- [Submission forms based on @mire template](#Submission-forms-template)
+	- [Submission forms based on Atmire template](#Submission-forms-template)
 	- [OAI-PMH endpoint](#OAI-PMH-endpoint)
 - [Troubleshooting](#Troubleshooting)
 	- [Errors during the Patch Installation process](#Errors-patch-installation)
@@ -170,6 +171,17 @@ authority.default.funder is the name of the default funder.
 authority.default.funderID is the ID of the default funder.
 authority.default.project is the name of the default project.
 
+### Edit funders page <a name="edit-funders-page"></a> ###
+
+An additional functionality to edit the funding of an already archived item has been added. This enables users with the proper rights to add or remove project and funder pairs from the item.
+
+This can be accessed on the "Edit item" page present in the user's context. This contains a new "Item Funding" tab that encompasses the addition and removal of project/funder.
+This does not however contain the assumption that a default funder and project should be used when no project/funder pair is given. It is the end-users responsibility to ensure the integrity of the item's metadata.
+
+The rest of this new page is used in the same way as the normal "ProjectStep" during submission.
+A user can select a project using the provided lookup button, which will also autocomplete the appropriate funder.
+If a user wants to enter a new project, he/she can enter one manually and add a funder using the lookup. (Empty values are prohibited during this addition as the default project/funder is disabled)
+
 ## license reference ali:license_ref<a name="license_ref"></a> ##
 
 The input forms customisations provide an input field to specify the license reference that is exposed by RIOXX. This input field uses metadata field rioxxterms.licenseref.uri to store the license reference. 
@@ -208,7 +220,7 @@ To be able to install the patch, you will need the following prerequisites:
 
 ## Obtaining a recent patch file <a name="Obtaining-recent-patch"></a>##
 
-@mire's modifications to a standard DSPace for RIOXX compliance are tracked on Github. The newest patch can therefore be generated from git.
+Atmire's modifications to a standard DSPace for RIOXX compliance are tracked on Github. The newest patch can therefore be generated from git.
 
 DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX/compare/unmodified...latest.diff)  
 DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX52/compare/unmodified...latest.diff)  
@@ -331,9 +343,9 @@ Note that simply adding the new RIOXX fields to the existing DSpace fields may c
 As an administrator, navigate to the standard DSpace administrator page "Registries >> Metadata".  
 On this page, you should be able to see the new RIOXX metadata schema. When clicking on the link, you should see the different fields in the metadata schema. This new registry shouldn't be empty.
 
-## Submission forms based on @mire template <a name="Submission-forms-template"></a>##
+## Submission forms based on Atmire template <a name="Submission-forms-template"></a>##
 
-This verification assumes that you have modified your input-forms.xml based on @mire's template on Github:
+This verification assumes that you have modified your input-forms.xml based on Atmire's template on Github:
 
 [https://github.com/atmire/RIOXX/compare/rc1...master](https://github.com/atmire/RIOXX/compare/rc1...master)
 

@@ -7,39 +7,33 @@
  */
 package org.dspace.app.xmlui.aspect.administrative;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dspace.app.util.Util;
 import org.dspace.app.xmlui.utils.UIException;
 import org.dspace.app.xmlui.wing.Message;
+import org.dspace.authority.ProjectAuthorityValue;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.AuthorizeManager;
-import org.dspace.content.Bitstream;
-import org.dspace.content.BitstreamFormat;
-import org.dspace.content.Bundle;
-import org.dspace.content.Collection;
-import org.dspace.content.DSpaceObject;
-import org.dspace.content.FormatIdentifier;
-import org.dspace.content.Item;
-import org.dspace.content.MetadataField;
-import org.dspace.content.MetadataSchema;
+import org.dspace.content.*;
 import org.dspace.content.authority.Choices;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.curate.Curator;
 import org.dspace.handle.HandleManager;
-import org.dspace.submit.step.AccessStep;
+import org.dspace.project.ProjectService;
+import org.dspace.utils.DSpace;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
 
 /**
  * Utility methods to processes actions on Groups. These methods are used
@@ -65,6 +59,10 @@ public class FlowItemUtils
     private static final Message T_bitstream_updated = new Message("default","The bitstream has been updated.");
     private static final Message T_bitstream_delete = new Message("default","The selected bitstreams have been deleted.");
     private static final Message T_bitstream_order = new Message("default","The bitstream order has been successfully altered.");
+    private static final Message T_funding_added = new Message("default","The new project and funder have been successfully added.");
+    private static final Message T_funding_removed = new Message("default","The project and funder have been successfully removed.");
+    private static final Message T_project_not_found_or_empty = new Message("default","Please make sure to fill in the project or select on using the lookup.");
+    private static final Message T_funder_not_found_or_empty = new Message("default","Please make sure to select a funder using the lookup.");
 
 
     /**
@@ -232,6 +230,95 @@ public class FlowItemUtils
         result.setMessage(T_metadata_updated);
 
         return result;
+    }
+
+    public static FlowResult processAddFunding(Context context, int itemID, Request request) throws SQLException, AuthorizeException {
+        Item item = Item.find(context, itemID);
+        ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
+
+        FlowResult result = new FlowResult();
+        String projectAuthority = request.getParameter("rioxxterms_identifier_project_authority");
+        String projectName = request.getParameter("rioxxterms_identifier_project");
+        String funderAuthority = request.getParameter("rioxxterms_funder_authority");
+
+        if(StringUtils.isBlank(projectAuthority) && StringUtils.isBlank(projectName)){
+            result.setOutcome(false);
+            result.setContinue(false);
+            result.setMessage(T_project_not_found_or_empty);
+            return result;
+        }
+        ProjectAuthorityValue project;
+        if (StringUtils.isNotBlank(projectAuthority) && StringUtils.equals(projectService.getProjectByAuthorityId(context, projectAuthority).getValue(), projectName) ) {
+            project = projectService.getProjectByAuthorityId(context, projectAuthority);
+        }else{
+            if(StringUtils.isBlank(funderAuthority)){
+                result.setOutcome(false);
+                result.setContinue(false);
+                result.setMessage(T_funder_not_found_or_empty);
+                return result;
+            }
+            project = projectService.createProject(context,request.getParameter("rioxxterms_identifier_project"),funderAuthority);
+        }
+        if (project != null) {
+            item.addMetadata("rioxxterms", "identifier", "project", null, project.getValue(), project.getId(), Choices.CF_ACCEPTED);
+            String id = project.getFunderAuthorityValue().getId();
+            if (StringUtils.isNotBlank(funderAuthority)) {
+                id = funderAuthority;
+            }
+            item.addMetadata("rioxxterms", "funder", null, null, project.getFunderAuthorityValue().getValue(),
+                    id, (Choices.CF_ACCEPTED));
+        }
+
+
+        item.update();
+        context.commit();
+
+        result.setContinue(true);
+
+        result.setOutcome(true);
+        result.setMessage(T_funding_added);
+        return result;
+
+    }
+
+    public static FlowResult processRemoveFunding(Context context, int itemID, Request request) throws SQLException, AuthorizeException {
+        Item item = Item.find(context, itemID);
+        ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
+
+        String projectID = request.getParameter("project_id");
+        ProjectAuthorityValue project = projectService.getProjectByAuthorityId(context, projectID);
+        String funderID = project.getFunderAuthorityValue().getId();
+
+        FlowResult result = new FlowResult();
+        removeProjectAndFunderFromItem(item, projectID, funderID);
+
+        item.update();
+        context.commit();
+
+        result.setContinue(true);
+
+        result.setOutcome(true);
+        result.setMessage(T_funding_removed);
+        return result;
+
+    }
+
+    private static void removeProjectAndFunderFromItem(Item item, String projectID, String funderID) {
+        Metadatum[] dcValues = item.getMetadata("rioxxterms", "identifier", "project", Item.ANY);
+        item.clearMetadata("rioxxterms", "identifier", "project", Item.ANY);
+        for(Metadatum metadatum : dcValues){
+            if(!StringUtils.equals(metadatum.authority, projectID)){
+                item.addMetadata("rioxxterms", "identifier", "project", metadatum.language, metadatum.value, metadatum.authority, metadatum.confidence);
+            }
+        }
+
+        Metadatum[] funderValues = item.getMetadata("rioxxterms", "funder",null, Item.ANY);
+        item.clearMetadata("rioxxterms", "funder", null, Item.ANY);
+        for(Metadatum metadatum : funderValues){
+            if(!StringUtils.equals(metadatum.authority,funderID)){
+                item.addMetadata("rioxxterms", "funder", null , metadatum.language, metadatum.value, metadatum.authority, metadatum.confidence);
+            }
+        }
     }
 
     /**
