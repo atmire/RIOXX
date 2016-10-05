@@ -92,6 +92,12 @@
                 </dc:identifier>
             </xsl:for-each>
 
+            <xsl:for-each select="doc:metadata/doc:element[@name='rioxxterms']/doc:element[@name='openaccess']/doc:element[@name='uri']/doc:element/doc:field[@name='value']">
+                <dc:identifier>
+                    <xls:value-of select="."/>
+                </dc:identifier>
+            </xsl:for-each>
+
             <xsl:for-each select="doc:metadata/doc:element[@name='dc']/doc:element[@name='language']/doc:element[@name='iso']/doc:element/doc:field[@name='value']">
                 <dc:language>
                     <xls:value-of select="."/>

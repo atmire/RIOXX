@@ -2534,4 +2534,10 @@
 		<p>If you are uploading multiple files as part of this submission, please ensure this file is marked as "Primary".</p>
 	</message>
 
+    <message key="xmlui.submission.submit.input.rioxxterms.openaccess.uri">
+        <p>If you are not able to upload the full text of your submission but the full text is available elsewhere, you
+            can the URL to the full text on that location here.
+        </p>
+    </message>
+
 </catalogue>

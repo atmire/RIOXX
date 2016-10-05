@@ -72,6 +72,7 @@ Existing fields from the dc and dcterms namespace were used where possible. A nu
 | dc.description.abstract| dc:description| example item | ` <dc:description> `<br> `example item`<br>`</dc:description>`|
 | Bitstream metadata| dc:format| See separate table with bitstream derived metadata below. | See separate table with bitstream derived metadata below. |
 | Bitstream metadata| dc:identifier| See separate table with bitstream derived metadata below. | See separate table with bitstream derived metadata below. |
+| rioxxterms.openaccess.uri| dc:identifier| See separate table with bitstream derived metadata below. | See separate table with bitstream derived metadata below. |
 | dc.language.iso| dc:language | en-GB|`<dc:language> ` <br> ` en-GB ` <br> `  </dc:language>` |
 | dc.publisher| dc:publisher | PLOS ONE|` <dc:publisher> `<br> `PLOS ONE`<br>`</dc:publisher>`|
 | dc.relation.uri| dc:relation |[http://datadryad.org/resource/doi:10.5061/dryad.tg469](http://datadryad.org/resource/doi:10.5061/dryad.tg469) |`<dc:relation>`<br>`http://datadryad.org/resource/doi:10.5061/dryad.tg469`<br>`</dc:relation>`|
@@ -411,7 +412,7 @@ error: dspace/pom.xml: patch does not apply
 The RIOXX OAI-PMH endpoint has been developed in such a way that it only exposes items that are RIOXX compliant. An item will not appear there as long as not all of the following mandatory fields are present in the item:
 
 * ali:license_ref
-* dc:identifier that directly links to the attached bitstream
+* dc:identifier that directly links to the attached bitstream (This can be both the bitstream as provided to DSpace or a URI to the full text publication hosted elsewhere)
 * dc:language
 * dc:title
 * dcterms:dateAccepted
@@ -421,4 +422,4 @@ The RIOXX OAI-PMH endpoint has been developed in such a way that it only exposes
 * rioxxterms:version
 
 According to the specification, dc.source is mandatory where applicable (ISSN or ISBN). Currently, DSpace is not enforcing this in the OAI-PMH endpoint and will just expose ISSN or ISBN when they are present in the metadata.   
-Again, aside from these metadatafields, make sure that the item contains a bitstream (file). Metadata records without bitstreams will not be exposed through the RIOXX OAI-PMH endpoint.
+Again, aside from these metadatafields, make sure that the item contains a bitstream (file), or a value in the rioxxterms.openaccess.uri that links to the full text publication hosted elsewhere. Metadata records without bitstreams/openacces URI will not be exposed through the RIOXX OAI-PMH endpoint.

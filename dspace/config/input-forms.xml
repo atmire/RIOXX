@@ -210,6 +210,17 @@ it, please enter the types and the actual numbers or codes.</hint>
 
        <field>
          <dc-schema>rioxxterms</dc-schema>
+         <dc-element>openaccess</dc-element>
+         <dc-qualifier>uri</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Open access location URI</label>
+         <input-type>onebox</input-type>
+         <hint>xmlui.submission.submit.input.rioxxterms.openaccess.uri</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>rioxxterms</dc-schema>
          <dc-element>versionofrecord </dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
