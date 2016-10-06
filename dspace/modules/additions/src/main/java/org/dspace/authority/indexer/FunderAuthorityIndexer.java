@@ -6,6 +6,7 @@ import org.dspace.authority.FunderAuthorityValue;
 import org.dspace.content.Item;
 import org.dspace.core.Context;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
