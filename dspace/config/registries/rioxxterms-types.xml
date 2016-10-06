@@ -66,6 +66,12 @@
         <scope_note></scope_note>
     </dc-type>
 
+    <dc-type>
+        <schema>rioxxterms</schema>
+        <element>openaccess</element>
+        <qualifier>uri</qualifier>
+        <scope_note>URL to the full text publication</scope_note>
+    </dc-type>
 
 
 </dspace-dc-types>

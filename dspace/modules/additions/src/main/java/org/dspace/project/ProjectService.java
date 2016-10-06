@@ -35,7 +35,7 @@ public class ProjectService {
 
         AuthoritySolrServiceImpl solrService = (AuthoritySolrServiceImpl) new DSpace().getServiceManager().getServiceByName(AuthorityIndexingService.class.getName(), AuthorityIndexingService.class);
         solrService.indexContent(newProject, true);
-
+        solrService.commit();
         return newProject;
     }
 

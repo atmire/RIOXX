@@ -32,18 +32,19 @@
 
     <xsl:output indent="yes"/>
 
-    <xsl:template match="dri:list[@id='aspect.submission.StepTransformer.list.submit-project']">
+    <xsl:template match="dri:list[@id='aspect.submission.StepTransformer.list.submit-project' or @id='aspect.administrative.item.EditItemFundingForm.list.submit-project']">
         <fieldset id="aspect_submission_StepTransformer_list_submit-project" class="col ds-form-list">
             <xsl:apply-templates select="dri:head"/>
-            <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project']"/>
+            <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project'
+                or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_funder' or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_identifier_project']"/>
 
             <br/>
 
-            <xsl:apply-templates select="dri:item[@id='aspect.submission.StepTransformer.item.project_funder_help']"/>
+            <xsl:apply-templates select="dri:item[@id='aspect.submission.StepTransformer.item.project_funder_help' or @id='aspect.administrative.item.EditItemFundingForm.item.project_funder_help']"/>
 
             <br/>
 
-            <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.submit_add']"/>
+            <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.submit_add' or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.submit_add']"/>
         </fieldset>
     </xsl:template>
 

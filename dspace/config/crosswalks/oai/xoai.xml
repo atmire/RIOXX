@@ -350,7 +350,14 @@
                                     <RightCondition>
                                         <And>
                                             <LeftCondition>
-                                                <Custom ref="itemsWithBitstreamsFilter"/>
+                                                <Or>
+                                                    <LeftCondition>
+                                                        <Custom ref="itemsWithBitstreamsFilter"/>
+                                                    </LeftCondition>
+                                                    <RightCondition>
+                                                        <Custom ref="openAccessUriAvailable"/>
+                                                    </RightCondition>
+                                                </Or>
                                             </LeftCondition>
                                             <RightCondition>
                                                 <Custom ref="rioxxLangExistsCondition"/>
@@ -572,6 +579,13 @@
 
         <CustomCondition id="itemsWithBitstreamsFilter">
             <Class>org.dspace.xoai.filter.ItemsWithBitstreamFilter</Class>
+        </CustomCondition>
+
+        <CustomCondition id="openAccessUriAvailable">
+            <Class>org.dspace.xoai.filter.DSpaceMetadataExistsFilter</Class>
+            <Configuration>
+                <string name="field">rioxxterms.openaccess.uri</string>
+            </Configuration>
         </CustomCondition>
 
     </Filters>
