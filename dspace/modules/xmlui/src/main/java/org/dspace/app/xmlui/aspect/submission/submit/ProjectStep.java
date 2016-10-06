@@ -46,6 +46,8 @@ public class ProjectStep extends AbstractSubmissionStep {
     protected static final Message T_create_project_error = message("xmlui.Submission.submit.ProjectStep.create_project_error");
     protected static final Message T_lookup_project_error = message("xmlui.Submission.submit.ProjectStep.lookup_project_error");
     protected static final Message T_default_project_warning = message("xmlui.Submission.submit.ProjectStep.default_project_warning");
+    protected static final Message T_no_default_project_warning = message("xmlui.Submission.submit.ProjectStep.no_default_project_warning");
+    protected static final Message T_no_default_project_compliance_warning = message("xmlui.Submission.submit.ProjectStep.no_default_project_compliance_warning");
     protected static final Message T_funders_without_authority_head = message("xmlui.Submission.submit.ProjectStep.funders_without_authority_head");
     protected static final Message T_funders_without_authority_hint = message("xmlui.Submission.submit.ProjectStep.funders_without_authority_hint");
 
@@ -188,11 +190,20 @@ public class ProjectStep extends AbstractSubmissionStep {
                 count++;
             }
         } else {
-            // don't show the default project warning if there is no default project configured
-            if(defaultProject!=null && defaultFunder!=null) {
-                Division warningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
-                warningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
+            if(ConfigurationManager.getBooleanProperty("rioxx","submission.funder.required")){
+                Division requiredWarningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
+                if(defaultProject!=null && defaultFunder!=null) {
+                    requiredWarningDiv.addPara().addContent(T_default_project_warning.parameterize(defaultProject, defaultFunder));
+                }else{
+                    requiredWarningDiv.addPara().addContent(T_no_default_project_warning);
+                }
+            } else{
+                Division notRequiredWarningDiv = div.addDivision("default-project-warning", "alert alert-warning bold");
+                if(defaultProject==null || defaultFunder==null) {
+                    notRequiredWarningDiv.addPara().addContent(T_no_default_project_compliance_warning);
+                }
             }
+
         }
     }
 
