@@ -164,7 +164,11 @@ function AuthorLookup(url, authorityInput, collectionID) {
                 }
 
                 if (aData['insolr'] != "false") {
-                    var discoverLink = window.orcid.contextPath + "/discover?filtertype=author&filter_relational_operator=authority&filter=" + aData['insolr'];
+                    var filterType = "author";
+                    if(funderField){
+                        filterType = "funder";
+                    }
+                    var discoverLink = window.orcid.contextPath + "/discover?filtertype=" + filterType + "&filter_relational_operator=authority&filter=" + aData['insolr'];
                     vcard.find('.vcard-insolr span').empty().append('<a href="' + discoverLink + '" target="_new">view items</a>');
                 } else {
                     vcard.find('.vcard-insolr span').text("0");
