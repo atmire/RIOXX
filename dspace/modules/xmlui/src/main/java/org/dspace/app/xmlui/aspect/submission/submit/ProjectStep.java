@@ -43,6 +43,7 @@ public class ProjectStep extends AbstractSubmissionStep {
     protected static final Message T_funder_label = message("xmlui.Submission.submit.ProjectStep.funder.label");
     protected static final Message T_project_funder_hint = message("xmlui.Submission.submit.ProjectStep.project_funder.hint");
     protected static final Message T_remove = message("xmlui.Submission.submit.ProjectStep.remove");
+    protected static final Message T_add = message("xmlui.Submission.submit.ProjectStep.add");
     protected static final Message T_create_project_error = message("xmlui.Submission.submit.ProjectStep.create_project_error");
     protected static final Message T_lookup_project_error = message("xmlui.Submission.submit.ProjectStep.lookup_project_error");
     protected static final Message T_default_project_warning = message("xmlui.Submission.submit.ProjectStep.default_project_warning");
@@ -52,8 +53,8 @@ public class ProjectStep extends AbstractSubmissionStep {
     protected static final Message T_funders_without_authority_hint = message("xmlui.Submission.submit.ProjectStep.funders_without_authority_hint");
 
     private ProjectAuthorityValue newProject;
-    private String defaultProject = "No Default Project Set";
-    private String defaultFunder = "No Default Funder Set";
+    private String defaultProject;
+    private String defaultFunder;
 
     private DefaultAuthorityCreator defaultAuthorityCreator = new DSpace().getServiceManager().getServiceByName("defaultAuthorityCreator", DefaultAuthorityCreator.class);
     private ProjectService projectService = new DSpace().getServiceManager().getServiceByName("ProjectService", ProjectService.class);
@@ -118,7 +119,7 @@ public class ProjectStep extends AbstractSubmissionStep {
 
         Metadatum[] dcValues = item.getMetadata("rioxxterms", "identifier", "project", Item.ANY);
 
-        form.addItem().addButton("submit_add").setValue("Add");
+        form.addItem().addButton("submit_add").setValue(T_add);
 
         renderResults(div, dcValues);
 
