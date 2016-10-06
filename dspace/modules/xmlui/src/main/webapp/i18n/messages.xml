@@ -2538,4 +2538,10 @@
 	</message>
     <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.funder">Funder</message>
 
+    <message key="xmlui.submission.submit.input.rioxxterms.openaccess.uri">
+        <p>If you are not able to upload the full text of your submission but the full text is available elsewhere, you
+            can the URL to the full text on that location here.
+        </p>
+    </message>
+
 </catalogue>
