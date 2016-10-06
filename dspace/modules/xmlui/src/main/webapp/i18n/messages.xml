@@ -1503,8 +1503,9 @@
 	<message key="xmlui.administrative.item.general.option_bitstreams">Item Bitstreams</message>
 	<message key="xmlui.administrative.item.general.option_metadata">Item Metadata</message>
 	<message key="xmlui.administrative.item.general.option_view">View Item</message>
-        <message key="xmlui.administrative.item.general.option_curate">Curate</message>
-        <message key="xmlui.administrative.item.general.option_queue">Queue</message>
+    <message key="xmlui.administrative.item.general.option_curate">Curate</message>
+    <message key="xmlui.administrative.item.general.option_queue">Queue</message>
+    <message key="xmlui.administrative.item.general.option_funding">Item Funding</message>
 
 	<!-- org.dspace.app.xmlui.administrative.item.AddBitstreamForm -->
 	<message key="xmlui.administrative.item.AddBitstreamForm.title">Upload Bitstream</message>
@@ -1660,6 +1661,10 @@
 	<message key="xmlui.administrative.item.FindItemForm.identifier_label">Internal Item ID/Item Handle</message>
 	<message key="xmlui.administrative.item.FindItemForm.identifier_error">Unable to resolve identifier.</message>
 	<message key="xmlui.administrative.item.FindItemForm.find">Find</message>
+
+    <!--org.dspace.app.xmlui.aspect.administrative.item.EditItemFundingForm -->
+    <message key="xmlui.administrative.item.EditItemFundingForm.title">Edit funding</message>
+	<message key="xmlui.administrative.item.EditItemFundingForm.trail">Edit funding</message>
 
         <!-- org.dspace.app.xmlui.administrative.metadataimport -->
         <message key="xmlui.administrative.metadataimport.general.title">Import Metadata</message>
@@ -2521,10 +2526,13 @@
 	<p>If you have established that the project was not entered before in this repository, you can create a new project. To associate this submission with a new project, please enter the project’s identifier, as provided by the associated funder. After filling out this identifier, click “Lookup Funder” to associate the correct funder. It is not possible to provide a free text entry for the associated funder. If your funder does not appear in the list, please contact {0}.</p>
 	</message>
 	<message key="xmlui.Submission.submit.ProjectStep.remove">Remove</message>
+    <message key="xmlui.Submission.submit.ProjectStep.add">Add</message>
 	<message key="xmlui.Submission.submit.ProjectStep.create_project_error">Unable to create the project. Make sure a project with the same name does not yet exist. Don't forget to select a funder for new projects.</message>
 	<message key="xmlui.Submission.submit.ProjectStep.lookup_project_error">Unable to find the project..</message>
 
 	<message key="xmlui.Submission.submit.ProjectStep.default_project_warning">Caution: Without manually selecting a project or funder, this submission will receive project ID "{0}" and funder "{1}".</message>
+	<message key="xmlui.Submission.submit.ProjectStep.no_default_project_warning">Caution: Without manually selecting a project or funder, this submission will not receive the required  project ID and funder. Please make sure to complete these fields using the provided lookup.</message>
+	<message key="xmlui.Submission.submit.ProjectStep.no_default_project_compliance_warning">Caution: Without manually selecting a project or funder, this submission will not receive a project ID or funder. If this submission is desired to be RIOXX compliant, please make sure to complete these fields using the provided lookup.</message>
 	<message key="xmlui.Submission.submit.ProjectStep.funders_without_authority_head">Sponsorship and Other Sources of Funding</message>
 	<message key="xmlui.Submission.submit.ProjectStep.funders_without_authority_hint">Add sponsorships or other sources of funding that did not provide a formal project or grant ID. This field can also be used to acknowledge funders who do not appear in the FundRef registry, such as corporations or startup companies.</message>
 
@@ -2533,5 +2541,12 @@
 		<h3>{0}</h3>
 		<p>If you are uploading multiple files as part of this submission, please ensure this file is marked as "Primary".</p>
 	</message>
+    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.funder">Funder</message>
+
+    <message key="xmlui.submission.submit.input.rioxxterms.openaccess.uri">
+        <p>If you are not able to upload the full text of your submission but the full text is available elsewhere, you
+            can the URL to the full text on that location here.
+        </p>
+    </message>
 
 </catalogue>

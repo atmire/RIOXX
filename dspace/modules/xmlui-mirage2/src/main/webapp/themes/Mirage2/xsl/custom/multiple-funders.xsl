@@ -32,25 +32,27 @@
 
     <xsl:output indent="yes"/>
 
-    <xsl:template match="dri:list[@id='aspect.submission.StepTransformer.list.submit-project']">
+    <xsl:template match="dri:list[@id='aspect.submission.StepTransformer.list.submit-project' or @id='aspect.administrative.item.EditItemFundingForm.list.submit-project']">
         <fieldset id="aspect_submission_StepTransformer_list_submit-project" class="col ds-form-list">
             <xsl:apply-templates select="dri:head"/>
             <div class="row">
-                <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project']"/>
+                <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project'
+                or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_funder' or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_identifier_project']"/>
             </div>
 
-            <xsl:apply-templates select="dri:item[@id='aspect.submission.StepTransformer.item.project_funder_help']"/>
+            <xsl:apply-templates select="dri:item[@id='aspect.submission.StepTransformer.item.project_funder_help' or @id='aspect.administrative.item.EditItemFundingForm.item.project_funder_help']"/>
 
-            <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.submit_add']"/>
+            <xsl:apply-templates select="dri:item[dri:field/@id='aspect.submission.StepTransformer.field.submit_add' or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.submit_add']"/>
         </fieldset>
     </xsl:template>
 
-    <xsl:template match="dri:list[@type='form']//dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project']" priority="3">
+    <xsl:template match="dri:list[@type='form']//dri:item[dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or dri:field/@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project'
+    or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_funder' or dri:field/@id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_identifier_project']" priority="3">
         <div>
             <xsl:call-template name="standardAttributes">
                 <xsl:with-param name="class">
                     <xsl:text>ds-form-item col-xs-6</xsl:text>
-                    <xsl:if test="contains(@id, 'aspect.submission.StepTransformer')">
+                    <xsl:if test="contains(@id, 'aspect.submission.StepTransformer') or contains(@id,'aspect.administrative.item.EditItemFundingForm')">
                         <xsl:text>table </xsl:text>
                     </xsl:if>
                 </xsl:with-param>
@@ -105,10 +107,10 @@
             </xsl:attribute>
 
             <xsl:choose>
-                <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_funder'">
+                <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_funder' or @id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_funder'">
                     <i18n:text>xmlui.ChoiceLookupTransformer.lookup_funder</i18n:text>
                 </xsl:when>
-                <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project'">
+                <xsl:when test="@id='aspect.submission.StepTransformer.field.rioxxterms_identifier_project' or @id='aspect.administrative.item.EditItemFundingForm.field.rioxxterms_identifier_project'">
                     <i18n:text>xmlui.ChoiceLookupTransformer.lookup_project</i18n:text>
                 </xsl:when>
                 <xsl:otherwise>
@@ -117,7 +119,6 @@
             </xsl:choose>
         </button>
     </xsl:template>
-
 
 
 
