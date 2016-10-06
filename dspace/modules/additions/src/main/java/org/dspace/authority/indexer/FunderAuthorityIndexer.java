@@ -16,6 +16,8 @@ public class FunderAuthorityIndexer implements AuthorityIndexerInterface {
 
     private Iterator<AuthorityValue> funderIterator;
 
+    private static final int PAGE_SIZE = 1000;
+
     @Override
     public void init(Context context, Item item) {
         //This indexer should do nothing when called from the AuthorityConsumer
@@ -53,7 +55,17 @@ public class FunderAuthorityIndexer implements AuthorityIndexerInterface {
 
     private void loadFunders(Context context){
         AuthorityValueFinder authorityValueFinder = new AuthorityValueFinder();
-        List<AuthorityValue> funders = authorityValueFinder.findByAuthorityType(context, new FunderAuthorityValue().getAuthorityType());
+
+        List<AuthorityValue> funders = new ArrayList<>();
+        int page = 0;
+
+        do {
+            List<AuthorityValue> authorityValues = authorityValueFinder.findByAuthorityType(context, new FunderAuthorityValue().getAuthorityType(), page, PAGE_SIZE);
+            funders.addAll(authorityValues);
+            page++;
+        }
+        while (funders.size() == (page*PAGE_SIZE));
+
         funderIterator = funders.iterator();
     }
 }
