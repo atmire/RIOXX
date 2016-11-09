@@ -197,9 +197,9 @@
 		<xmlui-binding>org.dspace.app.xmlui.aspect.submission.submit.InitialQuestionsStep</xmlui-binding>
 	    <workflow-editable>true</workflow-editable>
 	  </step> -->
-
-
       
+
+
       <!--Step 1 will be to Describe the item.-->
       <step>
         <heading>submit.progressbar.describe</heading>

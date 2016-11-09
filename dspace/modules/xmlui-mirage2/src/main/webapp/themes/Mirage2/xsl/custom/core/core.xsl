@@ -9,7 +9,7 @@
 -->
 
 <!--
-    Templates to cover the forms and forms fields.
+    Rendering of the authority control related pages.
 
     Author: art.lowel at atmire.com
     Author: lieven.droogmans at atmire.com
@@ -32,11 +32,12 @@
 
     <xsl:output indent="yes"/>
 
+
     <xsl:template match="dri:help" mode="help">
         <!--Only create the <span> if there is content in the <dri:help> node-->
         <xsl:if test="./text() or ./node()">
             <p class="help-block">
-                <xsl:apply-templates />
+                <i18n:text><xsl:value-of select="./text()"/></i18n:text>
             </p>
         </xsl:if>
     </xsl:template>

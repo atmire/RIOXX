@@ -10,7 +10,6 @@ function AuthorLookup(url, authorityInput, collectionID) {
     var funderField = url.indexOf("rioxxterms_funder") != -1;
     var projectField = url.indexOf("rioxxterms_identifier_project") != -1;
 
-
 //    TODO i18n
     $(".authorlookup").remove();
     var content =   $(
