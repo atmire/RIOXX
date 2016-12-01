@@ -325,6 +325,7 @@
      <field name="last_modified_date" type="date" indexed="true" stored="true" required="true" />
      <field name="creation_date" type="date" indexed="true" stored="true" required="true" />
      <field name="authority_type" type="string" multiValued="false" indexed="true" stored="true" required="false"/>
+     <field name="item.hasbitstream" type="boolean" indexed="true" stored="true" multiValued="false" />
  </fields>
 
  <!-- Field to use to determine and enforce document uniqueness.
