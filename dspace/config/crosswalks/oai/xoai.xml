@@ -241,14 +241,7 @@
                             <RightCondition>
                                 <And>
                                     <LeftCondition>
-                                        <Or>
-                                            <LeftCondition>
-                                                <Custom ref="itemAccessCondition"/>
-                                            </LeftCondition>
-                                            <RightCondition>
-                                                <Custom ref="itemWithdrawnCondition"/>
-                                            </RightCondition>
-                                        </Or>
+                                        <Custom ref="bitstreamAccessCondition"/>
                                     </LeftCondition>
                                     <RightCondition>
                                         <Custom ref="driverAccessCondition"/>
@@ -290,14 +283,7 @@
                             <RightCondition>
                                 <And>
                                     <LeftCondition>
-                                        <Or>
-                                            <LeftCondition>
-                                                <Custom ref="itemAccessCondition"/>
-                                            </LeftCondition>
-                                            <RightCondition>
-                                                <Custom ref="itemWithdrawnCondition"/>
-                                            </RightCondition>
-                                        </Or>
+                                        <Custom ref="bitstreamAccessCondition"/>
                                     </LeftCondition>
                                     <RightCondition>
                                         <Custom ref="openaireRelationCondition"/>
@@ -410,29 +396,9 @@
         -->
         <Filter id="defaultFilter">
             <Definition>
-                <Or>
-                    <LeftCondition>
-                        <Custom ref="itemAccessCondition"/>
-                    </LeftCondition>
-                    <RightCondition>
-                        <Custom ref="itemWithdrawnCondition"/>
-                    </RightCondition>
-                </Or>
+                <Custom ref="bitstreamAccessCondition"/>
             </Definition>
         </Filter>
-
-	    <Filter id="ethosFilter">
-		    <Definition>
-			    <And>
-				    <LeftCondition>
-					    <Custom ref="qualificationExistsCondition"/>
-				    </LeftCondition>
-				    <RightCondition>
-					    <Custom ref="thesisCondition"/>
-				    </RightCondition>
-			    </And>
-		    </Definition>
-	    </Filter>
 
         <!-- This condition determines if an Item has a "dc.type" field
              which contains "Thesis". -->
@@ -583,16 +549,8 @@
         </CustomCondition>
 
         <!-- This condition determines if an Item is publicly accessible. -->
-        <CustomCondition id="itemAccessCondition">
+        <CustomCondition id="bitstreamAccessCondition">
             <Class>org.dspace.xoai.filter.DSpaceAuthorizationFilter</Class>
-        </CustomCondition>
-
-        <!-- This condition determines if an Item is withdrawn. This condition
-             ensures a basic "tombstone" record is shown for withdrawn items,
-             as recommended by OAI-PMH spec. This "tombstone" doesn't display
-             any metadata or content files.  -->
-        <CustomCondition id="itemWithdrawnCondition">
-            <Class>org.dspace.xoai.filter.DSpaceWithdrawnFilter</Class>
         </CustomCondition>
 
         <!-- This condition determines if an Item has a "dc.relation" field
