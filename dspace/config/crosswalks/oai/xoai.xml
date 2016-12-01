@@ -241,7 +241,7 @@
                             <RightCondition>
                                 <And>
                                     <LeftCondition>
-                                        <Custom ref="itemAccessCondition"/>
+                                        <Custom ref="bitstreamAccessCondition"/>
                                     </LeftCondition>
                                     <RightCondition>
                                         <Custom ref="driverAccessCondition"/>
@@ -283,7 +283,7 @@
                             <RightCondition>
                                 <And>
                                     <LeftCondition>
-                                        <Custom ref="itemAccessCondition"/>
+                                        <Custom ref="bitstreamAccessCondition"/>
                                     </LeftCondition>
                                     <RightCondition>
                                         <Custom ref="openaireRelationCondition"/>
@@ -396,22 +396,9 @@
         -->
         <Filter id="defaultFilter">
             <Definition>
-                <Custom ref="itemAccessCondition"/>
+                <Custom ref="bitstreamAccessCondition"/>
             </Definition>
         </Filter>
-
-	    <Filter id="ethosFilter">
-		    <Definition>
-			    <And>
-				    <LeftCondition>
-					    <Custom ref="qualificationExistsCondition"/>
-				    </LeftCondition>
-				    <RightCondition>
-					    <Custom ref="thesisCondition"/>
-				    </RightCondition>
-			    </And>
-		    </Definition>
-	    </Filter>
 
         <!-- This condition determines if an Item has a "dc.type" field
              which contains "Thesis". -->
@@ -562,7 +549,7 @@
         </CustomCondition>
 
         <!-- This condition determines if an Item is publicly accessible. -->
-        <CustomCondition id="itemAccessCondition">
+        <CustomCondition id="bitstreamAccessCondition">
             <Class>org.dspace.xoai.filter.DSpaceAuthorizationFilter</Class>
         </CustomCondition>
 
