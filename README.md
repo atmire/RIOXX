@@ -237,11 +237,11 @@ To be able to install the patch, you will need the following prerequisites:
 
 Atmire's modifications to a standard DSPace for RIOXX compliance are tracked on Github. The newest patch can therefore be generated from git.
 
-DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX/compare/unmodified...latest.diff)  
-DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX52/compare/unmodified...latest.diff)  
-DSPACE 5.3,5.4 [https://github.com/atmire/RIOXX53/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX53/compare/unmodified...latest.diff)
+DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified…stable_51.diff](https://github.com/atmire/RIOXX/compare/unmodified…stable_51.diff)  
+DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified…stable_52.diff](https://github.com/atmire/RIOXX52/compare/unmodified…stable_52.diff)  
+DSPACE 5.3,5.4 [https://github.com/atmire/RIOXX53/compare/unmodified…stable_53.diff](https://github.com/atmire/RIOXX53/compare/unmodified…stable_53.diff)
 
-DSPACE 4.x [https://github.com/atmire/RIOXX4x/compare/unmodified...latest.diff](https://github.com/atmire/RIOXX4x/compare/unmodified...latest.diff)
+DSPACE 4.x [https://github.com/atmire/RIOXX4x/compare/unmodified…stable_4x.diff](https://github.com/atmire/RIOXX4x/compare/unmodified…stable_4x.diff)
   
 DSPACE 3.x [https://github.com/atmire/RIOXX3x/compare/unmodified...latest.patch](https://github.com/atmire/RIOXX3x/compare/unmodified...latest.patch)
 

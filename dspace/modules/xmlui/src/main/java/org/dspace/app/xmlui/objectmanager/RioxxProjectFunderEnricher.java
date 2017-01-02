@@ -3,6 +3,7 @@ package org.dspace.app.xmlui.objectmanager;
 import java.util.*;
 import org.apache.commons.collections.*;
 import org.apache.commons.lang3.*;
+import org.apache.log4j.*;
 import org.dspace.authority.*;
 import org.dspace.content.*;
 import org.dspace.core.*;
@@ -12,6 +13,8 @@ import org.dspace.project.*;
  * Metadata enricher that will add the Rioxx Project - Funder relation to the metadata
  */
 public class RioxxProjectFunderEnricher implements MetaDatumEnricher {
+
+    private static Logger log = Logger.getLogger(RioxxProjectFunderEnricher.class);
 
     private static final String RIOXX_SHEMA = "rioxxterms";
     private static final String IDENTIFIER_ELEMENT = "identifier";
@@ -30,7 +33,15 @@ public class RioxxProjectFunderEnricher implements MetaDatumEnricher {
                         && StringUtils.equals(PROJECT_QUALIFIER, metadatum.qualifier)) {
 
                     //Check if we can find the corresponding Funder Authority
-                    ProjectAuthorityValue authorityValue = projectService.getProjectByAuthorityId(context, metadatum.authority);
+                    ProjectAuthorityValue authorityValue = null;
+
+                    try {
+                        authorityValue = projectService.getProjectByAuthorityId(context, metadatum.authority);
+                    }
+                    catch (IllegalArgumentException e) {
+                        log.error(e.getMessage(), e);
+                    }
+
                     if(authorityValue != null && authorityValue.getFunderAuthorityValue() != null) {
                         String language = metadatum.language;
                         int confidence = metadatum.confidence;
