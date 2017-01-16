@@ -7,59 +7,40 @@
  */
 package org.dspace.xoai.app;
 
-import com.lyncode.xoai.dataprovider.exceptions.ConfigurationException;
-import com.lyncode.xoai.dataprovider.exceptions.MetadataBindException;
-import com.lyncode.xoai.dataprovider.exceptions.WritingXmlException;
-import com.lyncode.xoai.dataprovider.xml.XmlOutputContext;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.PosixParser;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrQuery.ORDER;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.SolrInputDocument;
-import org.dspace.authorize.AuthorizeException;
-import org.dspace.authorize.AuthorizeManager;
-import org.dspace.content.*;
-import org.dspace.core.ConfigurationManager;
-import org.dspace.core.Constants;
-import org.dspace.core.Context;
-import org.dspace.storage.rdbms.DatabaseManager;
-import org.dspace.storage.rdbms.TableRowIterator;
-import org.dspace.xoai.exceptions.CompilingException;
-import org.dspace.xoai.services.api.cache.XOAICacheService;
-import org.dspace.xoai.services.api.cache.XOAIItemCacheService;
-import org.dspace.xoai.services.api.cache.XOAILastCompilationCacheService;
-import org.dspace.xoai.services.api.config.ConfigurationService;
-import org.dspace.xoai.services.api.config.XOAIManagerResolver;
-import org.dspace.xoai.services.api.context.ContextService;
-import org.dspace.xoai.services.api.database.CollectionsService;
-import org.dspace.xoai.services.api.solr.SolrServerResolver;
-import org.dspace.xoai.solr.DSpaceSolrSearch;
-import org.dspace.xoai.solr.exceptions.DSpaceSolrException;
-import org.dspace.xoai.solr.exceptions.DSpaceSolrIndexerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.ConnectException;
-import java.sql.SQLException;
+import static com.lyncode.xoai.dataprovider.core.Granularity.*;
+import com.lyncode.xoai.dataprovider.exceptions.*;
+import com.lyncode.xoai.dataprovider.xml.*;
+import java.io.*;
+import java.net.*;
+import java.sql.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-
-import static com.lyncode.xoai.dataprovider.core.Granularity.Second;
-import static org.dspace.content.Item.find;
-import static org.dspace.xoai.util.ItemUtils.retrieveMetadata;
+import javax.xml.stream.*;
+import org.apache.commons.cli.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.*;
+import org.apache.solr.client.solrj.*;
+import org.apache.solr.client.solrj.SolrQuery.*;
+import org.apache.solr.common.*;
+import org.dspace.authorize.*;
+import org.dspace.content.*;
+import org.dspace.content.Collection;
+import org.dspace.content.Item;
+import static org.dspace.content.Item.*;
+import org.dspace.core.*;
+import org.dspace.storage.rdbms.*;
+import org.dspace.xoai.exceptions.*;
+import org.dspace.xoai.services.api.cache.*;
+import org.dspace.xoai.services.api.config.*;
+import org.dspace.xoai.services.api.context.*;
+import org.dspace.xoai.services.api.database.*;
+import org.dspace.xoai.services.api.solr.*;
+import org.dspace.xoai.solr.*;
+import org.dspace.xoai.solr.exceptions.*;
+import static org.dspace.xoai.util.ItemUtils.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /**
  * @author Lyncode Development Team <dspace@lyncode.com>
@@ -296,19 +277,15 @@ public class XOAI {
     }
 
     private boolean isPublic(Item item) {
+        boolean pub = false;
         try {
-            AuthorizeManager.authorizeAction(context, item, Constants.READ);
-            for (Bundle b : item.getBundles())
-                AuthorizeManager.authorizeAction(context, b, Constants.READ);
-            return true;
-        } catch (AuthorizeException ex) {
-            log.debug(ex.getMessage());
+            //Check if READ access is allowed on this Item
+            pub = AuthorizeManager.authorizeActionBoolean(context, item, Constants.READ);
         } catch (SQLException ex) {
             log.error(ex.getMessage());
         }
-        return false;
+        return pub;
     }
-
 
     private static boolean getKnownExplanation(Throwable t) {
         if (t instanceof ConnectException) {
