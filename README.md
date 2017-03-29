@@ -52,7 +52,7 @@ It is important to realize that your existing item metadata and item display pag
 
 Because the vast majority of institutions makes at least small tweaks to the submission forms, there is no opportunity to apply a patch to a standardized file. A template submission form file where the new RIOXX fields are highlighted can be found on Github:
 
-[https://github.com/atmire/RIOXX/compare/latest...withinputforms](https://github.com/atmire/RIOXX/compare/latest...withinputforms)
+[https://github.com/atmire/RIOXX/commit/041eb35dbbbe63c1998f8a9b17922366ad857666](https://github.com/atmire/RIOXX/commit/041eb35dbbbe63c1998f8a9b17922366ad857666)
 
 # Metadata mapping <a name="Metadata-mapping"></a>
 
