@@ -33,12 +33,12 @@
 	- [Errors during the Patch Installation process](#Errors-patch-installation)
 	- [RIOXX test items are not visible in OAI-PMH endpoint](#RIOXX-test-OAI-PMH-endpoint)
 
-# Introduction <a name="Introduction"></a> #
+# Introduction <a name="Introduction"></a> 
 
 
 This documentation will help you deploy and configure the RIOXXv2 Application Profile for DSpace 3.X, 4.X and 5.X. The patch has been implemented in a generic way, using a configurable crosswalk. This means that changes to your existing DSpace installation are kept to the strict minimum. If you have customized your DSpace submission forms, metadata registries or OAI Crosswalks, it is possible that the default patches can't be applied to your codebase. 
 
-## Areas of DSpace affected by the RIOXX patch <a name="Areas-of-DSpace-affected"></a> ##
+## Areas of DSpace affected by the RIOXX patch <a name="Areas-of-DSpace-affected"></a> 
 
 Following areas of the DSpace codebase are affected by the RIOXX patch:  
   **Metadata Registries**: a new RIOXX metadata registry will be added with a number of new fields. This does not affect your existing metadata schema's or items  
@@ -46,7 +46,7 @@ Following areas of the DSpace codebase are affected by the RIOXX patch:
 
 It is important to realize that your existing item metadata and item display pages will **NOT** be modified as part of the RIOXX patch.
 
-## Areas of DSpace that have to be manually configured after applying the patch  <a name="Areas-of-DSpace-manually-configured"></a>##
+## Areas of DSpace that have to be manually configured after applying the patch  <a name="Areas-of-DSpace-manually-configured"></a>
 
 **Submission forms**: the configuration file that defines your submission forms, input-forms.xml needs to be be extended with a number of new entry options.
 
@@ -63,7 +63,7 @@ The DSpace metadata column indicates where the corresponding RIOXX elements are 
 
 Existing fields from the dc and dcterms namespace were used where possible. A number of new fields were added in a dedicated rioxxterms metadata registry.
 
-## General DSpace to RIOXXTERMS metadata mapping <a name="General-DSpace-RIOXXTERMS"></a> ##
+## General DSpace to RIOXXTERMS metadata mapping <a name="General-DSpace-RIOXXTERMS"></a> 
 
 |  DSpace metadata   |  RIOXX element    |   example DSpace value |  example RIOXX value    |    
 | ------------------ | ----------------- | ---------------------- | ----------------------- |
@@ -94,7 +94,7 @@ Existing fields from the dc and dcterms namespace were used where possible. A nu
 | rioxxterms.version| rioxxterms:version| AO|`<rioxxterms:version>`<br>`AO`<br> `</rioxxterms:version>`|
 | rioxxterms.versionofrecord| rioxxterms:version_of_record|[http://dx.doi.org/10.1006/jmbi.1995.0238](http://dx.doi.org/10.1006/jmbi.1995.0238)|` <rioxxterms:version_of_record>`<br>`http://dx.doi.org/10.1006/jmbi.1995.0238`<br>`</rioxxterms:version_of_record>`|
 
-## RIOXX metadata derived from DSpace Bitstream metadata <a name="RIOXX-metadata-derived"></a>##
+## RIOXX metadata derived from DSpace Bitstream metadata <a name="RIOXX-metadata-derived"></a>
 
 Because DSpace supports multiple files per attached metadata record, there is a split between information stored in the metadata record and information stored with the bitstreams.  
 For the following three fields, data is retrieved from the bitstream metadata for the bitstream indicated as "primary bitstream". 
@@ -108,14 +108,14 @@ For the following three fields, data is retrieved from the bitstream metadata fo
 The RIOXX patch relies on the activation of the standard DSpace embargo functionality, and will ready the date for ali:free_to_read from the Resource policy set on the bitstream.  
 Currently, there is no specific support provided for end_date, assuming that once access is open, there is no specific use case for closing it again.
 
-## dc:source mandatory where applicable <a name="dcsource-mandatory"></a>##
+## dc:source mandatory where applicable <a name="dcsource-mandatory"></a>
 
 The RIOXX specification states that dc.source is mandatory where applicable. The DSpace RIOXX patch does currently not enforce this: ISSN and ISBN are merely provided in the crosswalk when they are filled out.  
 In the standard DSpace submission form, ISBN and ISSN can be provided in a field for identifiers, that has a dropdown where the user first needs to select the identifier type.
 
 If you are primarily collecting materials for which an ISSN applies, it is recommended to use a separate, custom field for ISSN that fills dc.identifier.issn, and make that field mandatory.
 
-## dc:type fallback for rioxxterms:type <a name="dctype-fallback"></a>##
+## dc:type fallback for rioxxterms:type <a name="dctype-fallback"></a>
 
 There is a substantial overlap between the vocabulary for rioxxterms:type and the standard list for dc.type. To ensure all of the rioxxterms types are available to your submitters, it is recommended to put a specific rioxxterms.type field in place, that uses the specifc vocabulary.
 
@@ -130,14 +130,14 @@ However, in case rioxxterms.type is absent in your items, the OAI-PMH crosswalk 
 | Thesis| Thesis
 | Working Paper| Working paper
 
-## fundref id for funders and orcid id for authors <a name="fundref-id"></a> ##
+## fundref id for funders and orcid id for authors <a name="fundref-id"></a> 
 
 Fundref DOI's for funders and ORCID id's for authors are NOT stored in the actual metadata value for the fields above. The metadata values only contain the string representations of funders and authors.  
 The RIOXX OAI-PMH crosswalks retrieves the ORCIDs for authors and fundref ids for funders from the DSpace SOLR Authority cache. This feature was added in DSpace 5, but was backported to DSpace 3.x and 4.x as part of the RIOXX patch.
 
 Right now, this only affects institutions that use the XMLUI, since the JSPUI has no web UI yet for working with this authority cache. However, JSPUI institutions are still compliant with RIOXX as the string representations of funder and author are included in the RIOXX OAI-PMH crosswalk.
 
-## multiple funders and project <a name="multiple-funders"></a> ##
+## multiple funders and project <a name="multiple-funders"></a> 
 
 The item submission has been updated with a new step called projects. This step allows the submitter to associate his submission with one or more projects. Each of these projects is associated with a funder. 
 
@@ -147,7 +147,7 @@ if a project was not entered before, the submitter can create a new project. The
 
 It is not possible to create a new funder during the submission, only existing funders can be selected. Refer to section [7. XMLUI only: Load Fundref authority data](#XMLUI-only) in the Patch Installation procedures to learn how to load funder data into DSpace.
 
-### configuration <a name="multiple-funders-configuration"></a> ###
+### configuration <a name="multiple-funders-configuration"></a> 
 
 The behaviour of this new submission step can be configured in *dspace/config/modules/rioxx.cfg*. 
 
@@ -173,7 +173,7 @@ authority.default.funder is the name of the default funder.
 authority.default.funderID is the ID of the default funder.
 authority.default.project is the name of the default project.
 
-### warning messages during submission <a name="multiple-funders-warning-messages"></a>###
+### warning messages during submission <a name="multiple-funders-warning-messages"></a>
 
 As described in the [multiple funders and projects configuration ](#configuration-) there are different combinations that state if a funder is required, and what values to use as a default.
 Depending on what combination is configured, a specified warning message will be shown.
@@ -186,7 +186,7 @@ There following rules are currently in place to set these warning messages:
 |Project and funder combination is required, No defaults configured|Caution: Without manually selecting a project or funder, this submission will not receive the required  project ID and funder. Please make sure to complete these fields using the provided lookup.
 |Project and funder combination not required, No defaults configured|Caution: Without manually selecting a project or funder, this submission will not receive a project ID or funder. If this submission is desired to be RIOXX compliant, please make sure to complete these fields using the provided lookup.
 
-### Edit funders page <a name="edit-funders-page"></a> ###
+### Edit funders page <a name="edit-funders-page"></a> 
 
 An additional functionality to edit the funding of an already archived item has been added. This enables users with the proper rights to add or remove project and funder pairs from the item.
 
@@ -197,7 +197,7 @@ The rest of this new page is used in the same way as the normal "ProjectStep" du
 A user can select a project using the provided lookup button, which will also autocomplete the appropriate funder.
 If a user wants to enter a new project, he/she can enter one manually and add a funder using the lookup. (Empty values are prohibited during this addition as the default project/funder is disabled)
 
-## license reference ali:license_ref<a name="license_ref"></a> ##
+## license reference ali:license_ref<a name="license_ref"></a> 
 
 The input forms customisations provide an input field to specify the license reference that is exposed by RIOXX. This input field uses metadata field rioxxterms.licenseref.uri to store the license reference. 
 
@@ -207,7 +207,7 @@ If a DSpace item does not have a rioxxterms.licenseref.uri value, the dc.rights.
 
 A DSpace item will not be available in RIOXX if both metadata fields rioxxterms.licenseref.uri and dc.rights.uri are empty. 
 
-## date completion <a name="date-completion"></a> ##
+## date completion <a name="date-completion"></a> 
 
 The RIOXX specification requires dates to be in format YYYY-MM-DD. When a DSpace metadata field contains a shorter date in format YYYY-MM or YYYY, the RIOXX crosswalks will complete the date into the full format required by RIOXX.
 
@@ -216,9 +216,9 @@ Examples:
 - dc.date.issued "2015" in DSpace becomes "2015-01-01" when it is exposed in RIOXX as ali:license_ref:start_date.
 - dcterms.dateAccepted "2014-05" in DSpace becomes "2014-05-01" when it exposed in RIOXX as dcterms:dateAccepted 
 
-# Patch Installation Procedures <a name="Patch-installation-procedures"></a>#
+# Patch Installation Procedures <a name="Patch-installation-procedures"></a>
 
-## Prerequisites  <a name="Prerequisites"></a> ##
+## Prerequisites  <a name="Prerequisites"></a> 
 
 The RIOXX application profile has been released as a "patch" for DSpace as this allows for the easiest installation process of the incremental codebase. The code needed to install and deploy the RIOXX Application Profile can be found in the *rioxx_changes.patch* patch file, which needs to be applied to your DSpace source code.
 
@@ -233,7 +233,7 @@ To be able to install the patch, you will need the following prerequisites:
 * A running DSpace 3.x, 4.x or 5.x instance. 
 * Git should be installed on the machine. The patch will be applied using several git commands as indicated in the next section. 
 
-## Obtaining a recent patch file <a name="Obtaining-recent-patch"></a>##
+## Obtaining a recent patch file <a name="Obtaining-recent-patch"></a>
 
 Atmire's modifications to a standard DSPace for RIOXX compliance are tracked on Github. The newest patch can therefore be generated from git.
 
@@ -248,11 +248,11 @@ DSPACE 3.x [https://github.com/atmire/RIOXX3x/compare/unmodified...latest.patch]
 
 
 
-## Patch installation <a name="Patch-installation"></a>##
+## Patch installation <a name="Patch-installation"></a>
 
 To install the patch, the following steps will need to be performed. 
 
-### 1. Go to the DSpace Source directory. <a name="goto-DSpace-Source"></a>###
+### 1. Go to the DSpace Source directory. <a name="goto-DSpace-Source"></a>
 
 This folder should have a structure similar to:   
 dspace  
@@ -262,7 +262,7 @@ dspace
 pom.xml
 
 
-### 2. Run the Git command to check whether the patch can be correctly applied. <a name="Run-git-command"></a>###
+### 2. Run the Git command to check whether the patch can be correctly applied. <a name="Run-git-command"></a>
 
 Run the following command where <patch file> needs to be replaced with the name of the patch:
 
@@ -271,14 +271,17 @@ git apply --check <patch file>
 ```
 
 This command will return whether it is possible to apply the patch to your installation. This should pose no problems in case the DSpace is not customized or in case not much customizations are present.   
-In case, the check is successful, the patch can be installed as explained in the next steps. 
+In case, the check is successful, the patch can be installed without any problems. Otherwise, you will have to merge some changes manually.
 
 ### 3. Apply the patch <a name="Apply-patch"></a>###
 
 To apply the patch, the following command should be run where <patch file> is replaced with the name of the patch file. 
-git apply <patch file>
 
-There may be various warnings about whitespaces, but these will pose no problems when applying the patch and can be ignored. 
+``` 
+git apply --whitespace=nowarn --reject <patch file>
+```
+
+This command will tell git to apply the patch and ignore unharmful whitespace issues. The `--reject` flag instructs the command to continue when conflicts are encountered and saves the corresponding code hunks to a `.rej` file so you can review and apply them manually later on. Before continuing to the next step, you have to resolve all merge conflicts indicated by the `.rej` files. After solving the merge conflicts, remove all the `.rej` files.
 
 ### 4. Rebuild and redeploy your repository <a name="Rebuild-redeploy"></a>###
 
