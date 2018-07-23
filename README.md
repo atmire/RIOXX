@@ -13,6 +13,7 @@
 	    - [Edit funder page](#edit-funders-page)
 	- [license reference ali:license_ref](#license_ref)
 	- [date completion](#date-completion)
+	- [SWORD V2 configuration](#swordv2-configuration)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
 	- [Obtaining a recent patch file](#Obtaining-recent-patch)
@@ -42,7 +43,8 @@ This documentation will help you deploy and configure the RIOXXv2 Application Pr
 
 Following areas of the DSpace codebase are affected by the RIOXX patch:  
   **Metadata Registries**: a new RIOXX metadata registry will be added with a number of new fields. This does not affect your existing metadata schema's or items  
-**OAI Endpoint**: a new RIOXX endpoint will become available in your OAI-PMH interface, in order to allow external harvesters to harvest your repository metadata in RIOXX compliant format.
+**OAI Endpoint**: a new RIOXX endpoint will become available in your OAI-PMH interface, in order to allow external harvesters to harvest your repository metadata in RIOXX compliant format.  
+**SWORD V2 Endpoint (DSpace 5.7 RIOXX patch and later only)**: The SWORD V2 ingest will be improved to allow for RIOXX compliant SWORD V2 ingests into DSpace.
 
 It is important to realize that your existing item metadata and item display pages will **NOT** be modified as part of the RIOXX patch.
 
@@ -216,6 +218,33 @@ Examples:
 - dc.date.issued "2015" in DSpace becomes "2015-01-01" when it is exposed in RIOXX as ali:license_ref:start_date.
 - dcterms.dateAccepted "2014-05" in DSpace becomes "2014-05-01" when it exposed in RIOXX as dcterms:dateAccepted 
 
+## SWORD V2 configuration <a name="swordv2-configuration"></a> 
+
+The configuration for the RIOXX SWORD V2 mapping can be found in *dspace/config/modules/swordv2-server.cfg*. 
+
+The RIOXX metadata mapping configuration in this file can be recognized by the 'simplerioxx' prefix. This prefix is a reference to the Simple RIOXX ingester which is added to DSpace by the RIOXX patch to allow RIOXX compliant SWORD V2 ingests.
+
+SWORD V2 RIOXX Mapping overview:
+```
+simplerioxx.dcterms.description = dc.description
+simplerioxx.dcterms.publisher = dc.publisher
+simplerioxx.dcterms.title = dc.title
+simplerioxx.rioxxterms.type = rioxxterms.type
+simplerioxx.dcterms.language = dc.language.iso
+simplerioxx.dcterms.abstract = dc.description.abstract
+simplerioxx.rioxxterms.version_of_record = rioxxterms.versionofrecord, dc.identifier.doi
+simplerioxx.dcterms.subject = dc.subject
+simplerioxx.dcterms.dateAccepted = dcterms.dateAccepted
+simplerioxx.rioxxterms.publication_date = dc.date.issued
+simplerioxx.pubr.author = dc.contributor.author
+simplerioxx.pubr.contributor = dc.contributor
+simplerioxx.ali.license_ref = dc.rights.uri
+simplerioxx.dcterms.rights = dc.rights
+simplerioxx.pubr.embargo_date = dc.rights.embargodate
+simplerioxx.rioxxterms.project = workflow.funderprojectpair
+simplerioxx.rioxxterms.version = rioxxterms.version
+```
+
 # Patch Installation Procedures <a name="Patch-installation-procedures"></a>
 
 ## Prerequisites  <a name="Prerequisites"></a> 
@@ -239,7 +268,8 @@ Atmire's modifications to a standard DSPace for RIOXX compliance are tracked on 
 
 DSPACE 5.0,5.1 [https://github.com/atmire/RIOXX/compare/unmodified…stable_51.diff](https://github.com/atmire/RIOXX/compare/unmodified…stable_51.diff)  
 DSPACE 5.2 [https://github.com/atmire/RIOXX52/compare/unmodified…stable_52.diff](https://github.com/atmire/RIOXX52/compare/unmodified…stable_52.diff)  
-DSPACE 5.3,5.4 [https://github.com/atmire/RIOXX53/compare/unmodified…stable_53.diff](https://github.com/atmire/RIOXX53/compare/unmodified…stable_53.diff)
+DSPACE 5.3-5.6 [https://github.com/atmire/RIOXX53/compare/unmodified…stable_53.diff](https://github.com/atmire/RIOXX53/compare/unmodified…stable_53.diff)  
+DSPACE 5.7 [https://github.com/atmire/RIOXX57/compare/unmodified…stable_57.diff](https://github.com/atmire/RIOXX57/compare/unmodified…stable_57.diff)
 
 DSPACE 4.x [https://github.com/atmire/RIOXX4x/compare/unmodified…stable_4x.diff](https://github.com/atmire/RIOXX4x/compare/unmodified…stable_4x.diff)
   
