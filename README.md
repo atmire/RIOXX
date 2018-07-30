@@ -374,6 +374,9 @@ arguments:
 -f: The RDF XML file containing the funder authorities  
 -t: Test if the script works correctly. No changes will be applied.
 
+Note: Using the above PopulateFunderAuthorityFromXML script is the only way to create funders in DSpace.
+If an item is ingested into DSpace, for example by using SWORD V2, and this item contains a funder project pair with a funder that does not yet exists in DSpace, then DSpace will not attempt to create this funder but will instead store the project funder pair in metadata field workflow.newfunderprojectpair. 
+
 ## Configure Submission forms or other metadata ingest mechanisms <a name="Configure-submission"></a>
 
 Now that the new fields are present in your metadata schema's, you have to ensure that these fields can be filled. If your institution is relying on manual entry using the DSpace submission forms, you can go over the template input-forms.xml file on Github to see how the different new RIOXX fields can be included:
