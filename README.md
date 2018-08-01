@@ -14,6 +14,9 @@
 	- [license reference ali:license_ref](#license_ref)
 	- [date completion](#date-completion)
 	- [SWORD V2 configuration](#swordv2-configuration)
+	    - [SWORD V2 mapping](#swordv2-mapping)
+	    - [SWORD V2 Project/Funder ingestion](#swordv2-project-funder)
+	    - [SWORD V2 Example Ingestion with Curl](#swordv2-curl)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
 	- [Obtaining a recent patch file](#Obtaining-recent-patch)
@@ -220,11 +223,13 @@ Examples:
 
 ## SWORD V2 configuration <a name="swordv2-configuration"></a> 
 
+An example XML input file can be found on https://github.com/jisc-services/Public-Documentation/blob/dspace-rioxx/PublicationsRouter/sword-out/DSpace-RIOXX-XML.md.
+
 The configuration for the RIOXX SWORD V2 mapping can be found in *dspace/config/modules/swordv2-server.cfg*. 
 
 The RIOXX metadata mapping configuration in this file can be recognized by the 'simplerioxx' prefix. This prefix is a reference to the Simple RIOXX ingester which is added to DSpace by the RIOXX patch to allow RIOXX compliant SWORD V2 ingests.
 
-SWORD V2 RIOXX Mapping overview:
+### SWORD V2 RIOXX Mapping overview <a name="swordv2-mapping"></a>
 ```
 simplerioxx.dcterms.description = dc.description
 simplerioxx.dcterms.publisher = dc.publisher
@@ -241,9 +246,34 @@ simplerioxx.pubr.contributor = dc.contributor
 simplerioxx.ali.license_ref = dc.rights.uri
 simplerioxx.dcterms.rights = dc.rights
 simplerioxx.pubr.embargo_date = dc.rights.embargodate
-simplerioxx.rioxxterms.project = workflow.funderprojectpair
+simplerioxx.rioxxterms.project = workflow.newfunderprojectpair
 simplerioxx.rioxxterms.version = rioxxterms.version
+simplerioxx.pubr.sponsorship = dc.description.sponsorship
 ```
+Please note that if you are already using the simpledc mapping from the same configuration file for your SWORD deposit, they will still be considered unless they conflict with the simplerioxx mappings (if the same MD field is involved in both a simpledc mapping and a simplerioxx mapping, the simplerioxx mapping will have priority).
+
+### SWORD V2 Project/Funder ingestion <a name="swordv2-project-funder"></a>
+
+The RIOXX patch will try to match funders with the fundref-registry (see https://github.com/atmire/RIOXX#XMLUI-only) first on funder_id and, as a fallback, on funder_name. If a match is found, the metadata rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled consequently. If no match can be found, the metadata rioxxterms.newfunderprojectpair will be filled and should be curated manually by a repository manager/reviewer.
+
+### SWORD V2 Example Ingestion with Curl <a name="swordv2-curl"></a>
+
+
+<b>Step 1 : Ingest metadata</b>
+```
+curl -v -i <*your DSpace repository*>/swordv2/collection/<*collection in which the item should be ingested*> --data-binary "@<*your xml MD file*>" -H "Content-Type: application/atom+xml" -H "In-Progress: true" --user "<*e-mail address submitter*>"
+```
+
+<b>Step 2 : Ingest bitstreams</b>
+```
+curl -v -i <*your DSpace repository*>/edit-media/3 --data-binary "@<*zip file containing the bitstreams*>" -H "Content-Type: application/zip" -H "Packaging: http://purl.org/net/sword/package/SimpleZip" -H "Content-Disposition:filename=<*zip file containing the bitstreams*>"  --user "<*e-mail address submitter*>"
+```
+
+<b>Step 3 : Finish submission</b>
+```
+curl -X POST -v -i <*your DSpace repository*>/edit/3 -H "In-Progress: false" -H "content-length: 0" --user "<*e-mail address submitter*>"
+```
+
 
 # Patch Installation Procedures <a name="Patch-installation-procedures"></a>
 
