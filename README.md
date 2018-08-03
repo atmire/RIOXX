@@ -266,7 +266,8 @@ The XML schema allows for project/funder information to be supplied in two XML e
 ```
 
 The RIOXX patch will attempt to match the rioxxterms:project details against funders in the fundref-registry (see https://github.com/atmire/RIOXX#XMLUI-only) first on funder_id and, as a fallback, on funder_name. If a match is found, the DSpace metadata fields rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled with respectively the Project/grant-number, the Funder name, and the internal key registered in DSpace for this project. If no match can be found, the metadata field rioxxterms.newfunderprojectpair will be filled with the full details, with the intention that these are curated by a repository manager/reviewer and funder details manually added to the registry.
- 
+
+
 The contents of the pubr:sponsorship element are always added to the Dspace metadata field dc.description.sponsorship as a textual description of the funding (without modification by the ingester) and will never be exposed on the RIOXX OAI endpoint.
 
 ### SWORD V2 Author attributes <a name="swordv2-author-attrib"></a>
