@@ -94,8 +94,9 @@ Existing fields from the dc and dcterms namespace were used where possible. A nu
 | dc.contributor.author (first)| rioxxterms:author (+ attribute "first-named-author=true")|Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="true">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
 | dc.contributor.author (others)| rioxxterms:author| Lawson, Gerry|`<rioxxterms:author id="http://orcid.org/0000-0002-1395-3092" first-named-author="false">`<br>`Lawson, Gerry`<br>`</rioxxterms:author>`|
 | dc.contributor.* (non authors)| rioxxterms:contributor| Lawson, Gerry|`<rioxxterms:contributor id="http://orcid.org/0000-0002-1395-3092">`<br>`Lawson, Gerry`<br>`</rioxxterms:contributor>`|
-| rioxxterms.identifier.project| rioxxterms:project| 0123456789|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
+| rioxxterms.identifier.project| rioxxterms:project| EP/K023195/1|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
 | rioxxterms.funder| rioxxterms:project| Engineering and Physical Sciences Research Council|`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
+| rioxxterms.funder.project| rioxxterms:project| d90b33fb16bbac756120dd85cbad3940 (an internal key identifying the project) |`<rioxxterms:project rioxxterms:funder_name="Engineering and Physical Sciences Research Council" rioxxterms:funder_id="http://dx.doi.org/10.13039/501100000266">`<br>`EP/K023195/1`<br>` </rioxxterms:project>`|
 | dc.date.issued| rioxxterms:publication_date| 2015-02-15 |`<rioxxterms:publication_date>`<br>`2015-02-15`<br>` </rioxxterms:publication_date>`|
 | rioxxterms.type with dc.type fallback| rioxxterms:type| Book|`<rioxxterms:type>`<br>`Book`<br> `</rioxxterms:type>`|  
 | rioxxterms.version| rioxxterms:version| AO|`<rioxxterms:version>`<br>`AO`<br> `</rioxxterms:version>`|
@@ -266,7 +267,7 @@ The XML schema allows for project/funder information to be supplied in two XML e
 
 The RIOXX patch will attempt to match the rioxxterms:project details against funders in the fundref-registry (see https://github.com/atmire/RIOXX#XMLUI-only) first on funder_id and, as a fallback, on funder_name. If a match is found, the DSpace metadata fields rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled with respectively the Project/grant-number, the Funder name, and the internal key registered in DSpace for this project. If no match can be found, the metadata field rioxxterms.newfunderprojectpair will be filled with the full details, with the intention that these are curated by a repository manager/reviewer and funder details manually added to the registry.
  
-The contents of the pubr:sponsorship element are always added to the Dspace metadata field dc.description.sponsorship as a textual description of the funding (without modification by the ingester).
+The contents of the pubr:sponsorship element are always added to the Dspace metadata field dc.description.sponsorship as a textual description of the funding (without modification by the ingester) and will never be exposed on the RIOXX OAI endpoint.
 
 ### SWORD V2 Author attributes <a name="swordv2-author-attrib"></a>
 
