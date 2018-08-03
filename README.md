@@ -16,6 +16,7 @@
 	- [SWORD V2 configuration](#swordv2-configuration)
 	    - [SWORD V2 mapping](#swordv2-mapping)
 	    - [SWORD V2 Project/Funder ingestion](#swordv2-project-funder)
+	    - [SWORD V2 Author attributes (ORCID and email)](#swordv2-author-attrib)
 	    - [SWORD V2 Example Ingestion with Curl](#swordv2-curl)
 - [Patch Installation Procedures](#Patch-installation-procedures)
 	- [Prerequisites](#Prerequisites)
@@ -224,7 +225,9 @@ Examples:
 
 ## SWORD V2 configuration <a name="swordv2-configuration"></a> 
 
-An example XML input file can be found on https://github.com/jisc-services/Public-Documentation/blob/dspace-rioxx/PublicationsRouter/sword-out/DSpace-RIOXX-XML.md.
+The DSpace SWORD V2 interface is designed to work optimally with a specially designed XML schema allowing for unambiguous transmission of information such as licensing and funding.
+
+An example XML input file can be found on https://github.com/jisc-services/Public-Documentation/blob/master/PublicationsRouter/sword-out/DSpace-RIOXX-XML.md.
 
 The configuration for the RIOXX SWORD V2 mapping can be found in *dspace/config/modules/swordv2-server.cfg*. 
 
@@ -255,7 +258,26 @@ Please note that if you are already using the simpledc mapping from the same con
 
 ### SWORD V2 Project/Funder ingestion <a name="swordv2-project-funder"></a>
 
-The RIOXX patch will try to match funders with the fundref-registry (see https://github.com/atmire/RIOXX#XMLUI-only) first on funder_id and, as a fallback, on funder_name. If a match is found, the metadata rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled consequently. If no match can be found, the metadata rioxxterms.newfunderprojectpair will be filled and should be curated manually by a repository manager/reviewer.
+The XML schema allows for project/funder information to be supplied in two XML elements:
+```
+<rioxxterms:project funder_name="Some Funder Name" funder_id="Identifier-URL">Project/Grant-Number</rioxxterms:project>
+<pubr:sponsorship>Funder: Some Funder Name, Grant no: Project/Grant-Number, Funder ID:  Identifier-URL </pubr:sponsorship>
+```
+
+The RIOXX patch will attempt to match the rioxxterms:project details against funders in the fundref-registry (see https://github.com/atmire/RIOXX#XMLUI-only) first on funder_id and, as a fallback, on funder_name. If a match is found, the DSpace metadata fields rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled with respectively the Project/grant-number, the Funder name, and the internal key registered in DSpace for this project. If no match can be found, the metadata field rioxxterms.newfunderprojectpair will be filled with the full details, with the intention that these are curated by a repository manager/reviewer and funder details manually added to the registry.
+ 
+The contents of the pubr:sponsorship element are always added to the Dspace metadata field dc.description.sponsorship as a textual description of the funding (without modification by the ingester).
+
+### SWORD V2 Author attributes <a name="swordv2-author-attrib"></a>
+
+The XML schema allows for additional author attributes to be supplied in the XML <contributor> and <author> elements : 
+
+```
+<pubr:contributor id="http://orcid.org/0000-0002-8257-7777" email="johnsmith@yahoo.com">Smith, John </pubr:contributor>
+<pubr:author id="http://orcid.org/0000-0002-8257-4088" email="teva@yahoo.com">Vernoux, Teva </pubr:author>
+```
+	
+Please note that these attributes will not be stored as metadata in the ingested item itself but, if the corresponding dspace fields (see [SWORD V2 Rioxx mappings](#swordv2-mapping)) are defined in your repository in the authority core, they will be stored as attributes of the author record within the SOLR core (which means that these attributes are available when using the author lookup in a manual submission for example).
 
 ### SWORD V2 Example Ingestion with Curl <a name="swordv2-curl"></a>
 
