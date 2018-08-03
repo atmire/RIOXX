@@ -45,9 +45,9 @@ This documentation will help you deploy and configure the RIOXXv2 Application Pr
 ## Areas of DSpace affected by the RIOXX patch <a name="Areas-of-DSpace-affected"></a> 
 
 Following areas of the DSpace codebase are affected by the RIOXX patch:  
-  **Metadata Registries**: a new RIOXX metadata registry will be added with a number of new fields. This does not affect your existing metadata schema's or items  
-**OAI Endpoint**: a new RIOXX endpoint will become available in your OAI-PMH interface, in order to allow external harvesters to harvest your repository metadata in RIOXX compliant format.  
-**SWORD V2 Endpoint (DSpace 5.7 RIOXX patch and later only)**: The SWORD V2 ingest will be improved to allow for RIOXX compliant SWORD V2 ingests into DSpace.
+- **Metadata Registries**: a new RIOXX metadata registry will be added with a number of new fields. This does not affect your existing metadata schema's or items  
+- **OAI Endpoint**: a new RIOXX endpoint will become available in your OAI-PMH interface, in order to allow external harvesters to harvest your repository metadata in RIOXX compliant format.  
+- **SWORD V2 Endpoint (DSpace 5.7 RIOXX patch and later only)**: The SWORD V2 ingest will be improved to allow for RIOXX compliant SWORD V2 ingests into DSpace.
 
 It is important to realize that your existing item metadata and item display pages will **NOT** be modified as part of the RIOXX patch.
 
