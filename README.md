@@ -265,10 +265,22 @@ The XML schema allows for project/funder information to be supplied in two XML e
 <pubr:sponsorship>Funder: Some Funder Name, Grant no: Project/Grant-Number, Funder ID:  Identifier-URL </pubr:sponsorship>
 ```
 
-The RIOXX patch will attempt to match the rioxxterms:project details against funders in the fundref-registry (see https://github.com/atmire/RIOXX#XMLUI-only) first on funder_id and, as a fallback, on funder_name. If a match is found, the DSpace metadata fields rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled with respectively the Project/grant-number, the Funder name, and the internal key registered in DSpace for this project. If no match can be found, the metadata field rioxxterms.newfunderprojectpair will be filled with the full details, with the intention that these are curated by a repository manager/reviewer and funder details manually added to the registry.
+<p><b>rioxxterms:project</b> 
+<br> 
+The RIOXX patch will attempt to match the rioxxterms:project details against funders in the fundref-registry (see <a href="https://github.com/atmire/RIOXX#XMLUI-only">https://github.com/atmire/RIOXX#XMLUI-only</a>) first on funder_id and, as a fallback, on funder_name. If a match is found, the DSpace metadata fields rioxxterms.identifier.project, rioxxterms.funder and rioxxterms.funder.project will be filled with respectively the Project/grant-number, the Funder name, and the internal key registered in DSpace for this project. If no match can be found, the metadata field rioxxterms.newfunderprojectpair will be filled with the full details, with the intention that these are curated by a repository manager/reviewer and funder details manually added to the registry.</p> 
+<p><b>rioxxterms.newfunderprojectpair</b> 
+<br> 
+This metadata field is created when no funder is found in the DSpace Funder Registry that matches that supplied via SWORD in the rioxxterms:project XML element. The value of this field is filled in with the information received via SWORD in this format: 
+</p> 
+<pre>funder-ID::funder-name::project-code</pre> 
+<p>Note that it is possible to receive a project-code without any funder details. In that case this would be presented as: 
+</p> 
+<pre>null::null::project-code</pre> 
 
-
-The contents of the pubr:sponsorship element are always added to the Dspace metadata field dc.description.sponsorship as a textual description of the funding (without modification by the ingester) and will never be exposed on the RIOXX OAI endpoint.
+<p><b> pubr:sponsorship</b> 
+<br> 
+The contents of the pubr:sponsorship element are always added to the Dspace metadata field dc.description.sponsorship as a textual description of the funding (without modification by the ingester) and will never be exposed on the RIOXX OAI endpoint. 
+</p> 
 
 ### SWORD V2 Author attributes <a name="swordv2-author-attrib"></a>
 
