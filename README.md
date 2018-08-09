@@ -254,6 +254,7 @@ simplerioxx.pubr.embargo_date = dc.rights.embargodate
 simplerioxx.rioxxterms.project = workflow.newfunderprojectpair
 simplerioxx.rioxxterms.version = rioxxterms.version
 simplerioxx.pubr.sponsorship = dc.description.sponsorship
+simplerioxx.pubr.openaccess_uri = rioxxterms.openaccess.uri
 ```
 Please note that if you are already using the simpledc mapping from the same configuration file for your SWORD deposit, they will still be considered unless they conflict with the simplerioxx mappings (if the same MD field is involved in both a simpledc mapping and a simplerioxx mapping, the simplerioxx mapping will have priority).
 
