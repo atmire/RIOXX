@@ -29,6 +29,7 @@
 		- [5. Restart your tomcat](#Restart-tomcat)
 		- [6. Populate the RIOXX OAI-PMH end point](#Populate-RIOXX)
 		- [7. XMLUI only: Load Fundref authority data](#XMLUI-only)
+		- [8. Compatibility with the REF patch](#REF-comp)
 	- [Configure Submission forms or other metadata ingest mechanisms](#Configure-submission)
 - [Verification](#Verification)
 	- [RIOXX Metadata Registry](#RIOXX-metadata-registry)
@@ -444,6 +445,28 @@ arguments:
 
 Note: Using the above PopulateFunderAuthorityFromXML script is the only way to create funders in DSpace.
 If an item is ingested into DSpace, for example by using SWORD V2, and this item contains a funder project pair with a funder that does not yet exists in DSpace, then DSpace will not attempt to create this funder but will instead store the project funder pair in metadata field workflow.newfunderprojectpair. 
+
+### 8. Compatibility with the REF patch <a name="#REF-comp"></a>
+
+The RIOXX patch is compatible with the REF patch (https://github.com/atmire/REF#patch-installation). Both are often installed at the same time.
+The following files are updated by both patches and require merge conflicts to be managed manually :
+```
+dspace/modules/xmlui/src/main/webapp/themes/Mirage/lib/xsl/custom/core/forms.xsl
+dspace/modules/xmlui/src/main/webapp/themes/Mirage/lib/css/style.css
+dspace/modules/xmlui/src/main/webapp/themes/Mirage/Mirage.xsl
+dspace/modules/xmlui/src/main/webapp/i18n/messages.xml
+dspace/modules/xmlui/src/main/java/org/dspace/app/xmlui/objectmanager/ItemAdapter.java
+dspace/modules/xmlui-mirage2/src/main/webapp/themes/Mirage2/xsl/theme.xsl
+dspace/modules/xmlui-mirage2/src/main/webapp/themes/Mirage2/xsl/custom/core/forms.xsl
+dspace/modules/xmlui-mirage2/src/main/webapp/themes/Mirage2/styles/_style.scss
+dspace/modules/additions/src/main/java/org/dspace/storage/rdbms/DatabaseRegistryUpdater.java
+dspace/modules/additions/src/main/java/org/dspace/scripts/Script.java
+dspace/modules/additions/src/main/java/org/dspace/scripts/ContextScript.java
+dspace/modules/additions/pom.xml
+dspace/config/registries/rioxxterms-types.xml
+dspace/config/input-forms.xml
+dspace/config/dspace.cfg
+```
 
 ## Configure Submission forms or other metadata ingest mechanisms <a name="Configure-submission"></a>
 
