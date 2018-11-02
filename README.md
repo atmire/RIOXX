@@ -448,7 +448,7 @@ If an item is ingested into DSpace, for example by using SWORD V2, and this item
 
 ### 8. Compatibility with the REF patch <a name="#REF-comp"></a>
 
-The RIOXX patch is compatible with the REF patch (https://github.com/atmire/REF#patch-installation). Both are often installed at the same time.
+The RIOXX patch is compatible with the REF patch (https://github.com/atmire/REF). Both are often installed at the same time.
 The following files are updated by both patches and require merge conflicts to be managed manually :
 ```
 dspace/modules/xmlui/src/main/webapp/themes/Mirage/lib/xsl/custom/core/forms.xsl
